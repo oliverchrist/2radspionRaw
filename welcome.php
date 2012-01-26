@@ -18,7 +18,7 @@
 		<div class="text">Der online-Markt für neue und gebrauchte Zweiräder / vom Hobby bis zum professionellen Einsatz / von privat oder vom Händler</div>
 		<div class="border"></div>
 	</div>
-	<img src="/fileadmin/templates/img/logo_folgeseiten.png" id="imgLogoHome" />
+	<img src="resources/images/logo_folgeseiten.png" id="imgLogoHome" />
 	<div class="menu">
 		<a href="#" >suchen</a>
 		<a href="#" >anbieten</a>
