@@ -66,3 +66,493 @@ a img {
 article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
   display: block;
 }
+
+/* line 12, ../sass/screen.scss */
+body {
+  font-family: Arial;
+  background-color: #f5d36e;
+  font-size: 16px;
+}
+
+/* line 14, ../sass/screen.scss */
+.clear {
+  clear: both;
+  line-height: 0;
+  font-size: 0;
+}
+
+/* line 15, ../sass/screen.scss */
+.txtLnk {
+  color: #fff;
+  background: url(../images/link.png) right no-repeat;
+  padding-right: 15px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+/* line 16, ../sass/screen.scss */
+.txtLnk:hover {
+  text-decoration: underline;
+}
+
+/* line 18, ../sass/screen.scss */
+#home {
+  background-color: #eeb200;
+}
+
+/* line 20, ../sass/screen.scss */
+#home .logoBgr {
+  background: url(../images/logo_start_a.png) center center no-repeat;
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  height: 407px;
+  filter: alpha(opacity=50);
+  /* IE */
+  opacity: 0.5;
+  /* allgemein */
+}
+
+/* line 29, ../sass/screen.scss */
+#home .logoBgr2 {
+  background: url(../images/logo_start_b.png) center center no-repeat;
+  position: absolute;
+  top: 15%;
+  width: 100%;
+  height: 407px;
+  filter: alpha(opacity=50);
+  /* IE */
+  opacity: 0.5;
+  /* allgemein */
+  -moz-opacity: 0.5;
+  /* Mozilla */
+  -khtml-opacity: 0.5;
+  /* KTHML */
+  -opera-opacity: 0.5;
+  /* Opera */
+  -webkit-transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -o-transition: all 1s ease-in-out;
+  -ms-transition: all 1s ease-in-out;
+  transition: all 1s ease-in-out;
+}
+
+/* line 46, ../sass/screen.scss */
+#home .logoBgr2:hover {
+  filter: alpha(opacity=80);
+  /* IE */
+  opacity: 0.8;
+  /* allgemein */
+  -moz-opacity: 0.8;
+  /* Mozilla */
+  -khtml-opacity: 0.8;
+  /* KTHML */
+  -opera-opacity: 0.8;
+  /* Opera */
+}
+
+/* line 54, ../sass/screen.scss */
+#home .headerBgr {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #69674f;
+  height: 5em;
+}
+
+/* line 56, ../sass/screen.scss */
+#home .borderBottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* line 57, ../sass/screen.scss */
+#home .borderBottom .border {
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
+  margin: 0 2em 2em 0;
+  height: 1em;
+  -moz-border-radius-bottomright: 1em;
+  border-bottom-right-radius: 1em;
+}
+
+/* line 61, ../sass/screen.scss */
+#home .borderRight {
+  position: fixed;
+  right: 0;
+  height: 100%;
+}
+
+/* line 62, ../sass/screen.scss */
+#home .borderRight .border {
+  border-left: 1px solid #fff;
+  height: 100%;
+  position: relative;
+  top: -3em;
+  width: 2em;
+}
+
+/* line 64, ../sass/screen.scss */
+#std .borderBottom {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+/* line 65, ../sass/screen.scss */
+#std .borderBottom .border {
+  border-bottom: 1px solid #fff;
+  border-left: 1px solid #fff;
+  margin: 0 0 2em 13em;
+  height: 1em;
+  -moz-border-radius-bottomleft: 1em;
+  border-bottom-left-radius: 1em;
+}
+
+/* line 69, ../sass/screen.scss */
+#std .borderLeft {
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+}
+
+/* line 70, ../sass/screen.scss */
+#std .borderLeft .border {
+  border-right: 1px solid #fff;
+  height: 100%;
+  position: relative;
+  top: -3em;
+  width: 13em;
+}
+
+/* line 72, ../sass/screen.scss */
+#home .menu {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  text-align: right;
+  padding: 1em 4em 3em 0;
+}
+
+/* line 73, ../sass/screen.scss */
+#home .menu a {
+  color: #2a2725;
+  text-decoration: none;
+  font-size: 1em;
+  font-size: 1em;
+  margin-left: 1em;
+}
+
+/* line 74, ../sass/screen.scss */
+#home .menu a:hover {
+  text-decoration: underline;
+}
+
+/* line 76, ../sass/screen.scss */
+#home .claim {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* line 77, ../sass/screen.scss */
+#home .claim .text {
+  color: #fff;
+  padding: 0 4em 1em 0;
+  text-align: right;
+  font-size: 1em;
+}
+
+/* line 78, ../sass/screen.scss */
+#home .claim .border {
+  border-left: 1px solid #fff;
+  border-top: 1px solid #fff;
+  height: 13em;
+  margin-left: 10em;
+  -moz-border-radius-topleft: 1em;
+  border-top-left-radius: 1em;
+}
+
+/* line 82, ../sass/screen.scss */
+img {
+  border: none;
+}
+
+/* line 84, ../sass/screen.scss */
+#header {
+  position: relative;
+  margin: 0 4em 0 0;
+  height: 115px;
+  border-bottom: 1px solid #fff;
+  border-right: 1px solid #fff;
+  -moz-border-radius-bottomright: 1em;
+  border-bottom-right-radius: 1em;
+}
+
+/* line 88, ../sass/screen.scss */
+#imgLogo {
+  position: absolute;
+  top: 39px;
+  right: 2em;
+  z-index: 1;
+}
+
+/* line 89, ../sass/screen.scss */
+#imgLogoHome {
+  position: absolute;
+  right: 4em;
+  bottom: 71px;
+}
+
+/* line 90, ../sass/screen.scss */
+#mainnavi {
+  position: absolute;
+  bottom: 0;
+  right: 0px;
+  width: 100%;
+  background: #676653;
+  -moz-border-radius: 0 0 12px 0;
+  -webkit-border-radius: 0 0 12px 0;
+  -o-border-radius: 0 0 12px 0;
+  -ms-border-radius: 0 0 12px 0;
+  -khtml-border-radius: 0 0 12px 0;
+  border-radius: 0 0 12px 0;
+  padding: 1em;
+}
+/* line 93, ../sass/screen.scss */
+#mainnavi ul {
+  margin: 0;
+  float: right;
+}
+/* line 94, ../sass/screen.scss */
+#mainnavi li {
+  display: inline;
+  margin-left: 1em;
+}
+/* line 95, ../sass/screen.scss */
+#mainnavi li a, #mainnavi li a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+/* line 99, ../sass/screen.scss */
+.button {
+  border: black solid 1px;
+  padding: 7px 10px;
+  position: relative;
+  -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  /* Firefox */
+  -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  /* Safari, Chrome */
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  /* W3C Standard, Opera, Firefox4, IE9 */
+  text-decoration: none;
+  color: black;
+}
+
+/* line 109, ../sass/screen.scss */
+.buttonHi {
+  border: black solid 1px;
+  padding: 7px 10px;
+  position: relative;
+  top: 2px;
+  left: 2px;
+  -moz-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  /* Firefox */
+  -webkit-box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  /* Safari, Chrome */
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.5);
+  /* W3C Standard, Opera, Firefox4, IE9 */
+  font-weight: bold;
+  text-decoration: none;
+  color: black;
+  text-shadow: 3px 3px 0 #cccccc, -3px -3px 3px #dddddd, 0 0 3px #aaaaaa;
+}
+
+/* line 128, ../sass/screen.scss */
+input[type=submit]:hover,
+input[type=reset]:hover,
+.button:hover,
+.buttonHi:hover {
+  top: 3px;
+  left: 3px;
+  -moz-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  /* Firefox */
+  -webkit-box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  /* Safari, Chrome */
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.5);
+  /* W3C Standard, Opera, Firefox4, IE9 */
+}
+
+/* line 135, ../sass/screen.scss */
+.buttonList {
+  padding-left: 0;
+}
+
+/* line 136, ../sass/screen.scss */
+.buttonList li {
+  display: inline;
+  margin-right: 1em;
+}
+
+/* line 137, ../sass/screen.scss */
+#content {
+  width: 60em;
+  margin: 1em 0 5em 15em;
+}
+
+/* line 140, ../sass/screen.scss */
+.bikeEdit label {
+  clear: left;
+  float: left;
+  width: 200px;
+  margin-top: 11px;
+}
+
+/* line 142, ../sass/screen.scss */
+.bikeEdit input[type=text],
+.bikeEdit input[type=file] {
+  float: left;
+  width: 200px;
+  margin-top: 10px;
+}
+
+/* line 143, ../sass/screen.scss */
+.bikeEdit input[type=reset] {
+  float: left;
+  clear: left;
+  margin: 10px 10px 0 0;
+}
+
+/* line 144, ../sass/screen.scss */
+.bikeEdit input[type=submit] {
+  float: left;
+  margin: 10px 10px 0 0;
+}
+
+/* line 146, ../sass/screen.scss */
+.bikeNew {
+  margin-top: 10px;
+}
+
+/* line 147, ../sass/screen.scss */
+.bikeNew input {
+  margin: 10px 10px 0 0;
+}
+
+/* line 149, ../sass/screen.scss */
+.bikeListElement {
+  width: 510px;
+  border: #fff solid 1px;
+  padding: 12px;
+  margin-bottom: 17px;
+  -moz-border-radius: 1em;
+  border-radius: 1em;
+  background: #eeb200;
+  position: relative;
+}
+
+/* line 150, ../sass/screen.scss */
+.bikeListElement .thumb {
+  float: left;
+  margin-right: 10px;
+  width: 125px;
+}
+
+/* line 151, ../sass/screen.scss */
+.bikeListElement .thumb img {
+  border-radius: 1em;
+}
+
+/* line 152, ../sass/screen.scss */
+.bikeListElement .cnt {
+  float: left;
+  margin-right: 10px;
+}
+
+/* line 153, ../sass/screen.scss */
+.bikeListElement .links {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  text-align: right;
+}
+
+/* line 157, ../sass/screen.scss */
+fieldset,
+.shadow {
+  border: black solid 1px;
+  -moz-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  /* Firefox */
+  -webkit-box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  /* Safari, Chrome */
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  /* W3C Standard, Opera, Firefox4, IE9 */
+}
+
+/* line 163, ../sass/screen.scss */
+.detailImage {
+  margin: 20px 20px 0 0;
+}
+
+/* line 166, ../sass/screen.scss */
+.contentFooter {
+  margin-top: 30px;
+}
+
+/* line 167, ../sass/screen.scss */
+fieldset legend {
+  margin-top: 1em;
+}
+
+/* line 169, ../sass/screen.scss */
+.fahrradSingle {
+  width: 510px;
+  border-radius: 1em;
+  background: #eeb200;
+  padding: 12px;
+}
+
+/* line 170, ../sass/screen.scss */
+.fahrradSingle h1 {
+  margin: 0 0 10px;
+}
+
+/* line 171, ../sass/screen.scss */
+.fahrradSingle img {
+  border-radius: 1em;
+  margin: 7px 0;
+}
+
+/* line 174, ../sass/screen.scss */
+#std form .formField {
+  margin-bottom: 10px;
+}
+/* line 175, ../sass/screen.scss */
+#std form .formField label {
+  width: 200px;
+  display: inline-block;
+}
+/* line 176, ../sass/screen.scss */
+#std form .formField input {
+  width: 200px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -o-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -khtml-border-radius: 15px;
+  border-radius: 15px;
+  border-width: 0;
+  padding: 5px 10px;
+}
+/* line 177, ../sass/screen.scss */
+#std form .formField input.submit {
+  margin-left: 200px;
+  width: 220px;
+  background: #e30613;
+  color: white;
+}
