@@ -1,5 +1,0 @@
-127.0.0.1 - - [26/Jan/2012:20:08:43 +0100] "HEAD / HTTP/1.1" 200 339 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2"
-127.0.0.1 - - [26/Jan/2012:20:08:49 +0100] "GET / HTTP/1.1" 200 785 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2"
-127.0.0.1 - - [26/Jan/2012:20:08:49 +0100] "GET /css/styles.css HTTP/1.1" 404 508 "http://2radspionraw.localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2"
-127.0.0.1 - - [26/Jan/2012:20:08:49 +0100] "GET /img/logo_folgeseiten.png HTTP/1.1" 404 518 "http://2radspionraw.localhost/" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2"
-127.0.0.1 - - [26/Jan/2012:20:08:49 +0100] "GET /favicon.ico HTTP/1.1" 404 507 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/535.2 (KHTML, like Gecko) Ubuntu/11.10 Chromium/15.0.874.106 Chrome/15.0.874.106 Safari/535.2"
