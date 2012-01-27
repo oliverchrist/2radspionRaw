@@ -34,9 +34,6 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
   height: 407px;
   filter:alpha(opacity=50); /* IE */
   opacity:0.5; /* allgemein */
-  -moz-opacity:0.5; /* Mozilla */
-  -khtml-opacity:0.5; /* KTHML */
-  -opera-opacity:0.5; /* Opera */
   -webkit-transition: all 1s ease-in-out;
   -moz-transition: all 1s ease-in-out;
   -o-transition: all 1s ease-in-out;
@@ -46,9 +43,6 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
 #home .logoBgr2:hover {
   filter:alpha(opacity=80); /* IE */
   opacity:0.8; /* allgemein */
-  -moz-opacity:0.8; /* Mozilla */
-  -khtml-opacity:0.8; /* KTHML */
-  -opera-opacity:0.8; /* Opera */
 }
 
 #home .headerBgr  { position: fixed; bottom: 0; width: 100%; background-color: #69674f; height: 5em; }
@@ -172,6 +166,10 @@ fieldset legend { margin-top: 1em; }
 
 #std form {
     .formField { margin-bottom:10px;
+        p.error { display:none; padding-bottom:5px; }
+        &.error { color:$red;
+            p.error { display:block; }
+        }
         label { width:200px; display:inline-block; }
         input { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
         input.submit { margin-left:200px; width:220px; background:$red; color:white; }
