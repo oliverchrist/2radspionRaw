@@ -10,7 +10,7 @@ echo '<div id="header">
         <div id="mainnavi">
             <ul>';
             if(isset($_SESSION['uid'])){
-                echo '<li class="hi"><a href="#">Add Bike</a></li>';
+                echo '<li class="hi"><a href="bike.php?action=new">Add Bike</a></li>';
                 echo '<li class="hi"><a href="logout.php?action=logout">Logout</a></li>';
             }else{
                 echo '<li><a href="login.php">Login</a></li>';
