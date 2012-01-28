@@ -1,12 +1,16 @@
 <?php
-    $con = mysql_connect("localhost", "root", "");
+    $con = mysql_connect("localhost", "root", "2radklettern");
     if (!$con)
     {
         die('Could not connect: ' . mysql_error());
     }else{
-        echo 'connected<br>';
+        echo 'connected with SQL-Server localhost<br>';
     }
     
     $selectDB = mysql_select_db("2radspionraw", $con);
-    echo 'mysql_select_db: ' . $selectDB . '<br>';
+    if(!$selectDB){
+        die ('Could not connect to 2radspionraw<br>');
+    }else{
+        echo 'connected with DB 2radspionraw<br>';
+    }
 ?>

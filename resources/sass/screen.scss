@@ -14,6 +14,7 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
 .clear  { clear: both; line-height: 0; font-size: 0; }
 .txtLnk { color: #fff; background: url(../images/link.png) right no-repeat; padding-right: 15px; text-decoration: none; font-weight: bold; }
 .txtLnk:hover { text-decoration: underline; }
+.error { color:$red; }
 
 #home { background-color: #eeb200; }
 
@@ -75,20 +76,18 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
   border-top-left-radius: 1em; }
 img { border: none; }
 
-#header     { position: relative; margin:0 4em 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;;
-  -moz-border-radius-bottomright: 1em;
-  border-bottom-right-radius: 1em; 
-}
-#imgLogo    { position: absolute; top: 39px; right: 2em; z-index: 1; }
-#imgLogoHome  { position: absolute; right: 4em; bottom: 71px; }
-#mainnavi   { position:absolute; bottom:0; right:0px; width: 100%; background: #676653;
-  @include border-radius(0 0 12px 0);
- padding: 1em;
-  ul  { margin: 0; float:right; }
-  li  { display:inline; margin-left:1em; }
-  li a, li a:visited  { color: #fff; text-decoration: none; }
-}
+#header     { position: relative; margin:0 4em 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;
+    @include border-radius(0 0 12px 0);
 
+    #imgLogo    { position: absolute; top: 39px; right: 2em; z-index: 1; }
+    #imgLogoHome  { position: absolute; right: 4em; bottom: 71px; }
+    #mainnavi   { position:absolute; bottom:0; right:0px; width: 100%; background: #676653; @include border-radius(0 0 12px 0); padding: 12px;
+        ul  { margin: 0; float:right; }
+        li  { display:inline; margin-left:1em; }
+        li a, li a:visited  { color: #fff; text-decoration: none; }
+    }
+    .sessionData { position:absolute; right:20px; top:20px; }
+}
 
 .button {
   border:black solid 1px;

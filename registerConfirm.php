@@ -4,12 +4,14 @@
 	<div id="content">
 	    <?php
             $hash = $_GET['x'];
-            echo '<p>' . $hash . '</p>';
-            include 'includes/dbConnect.php';
+            if(!$hash) die ('Es wurde kein Hash übergeben<br>');
+            echo '<p>Hash: ' . $hash . '</p>';
             
-            $result = mysql_query("SELECT * FROM userunconfirmed WHERE hash = " . $hash);
+            include 'includes/dbConnect.php';
+            $result = mysql_query("SELECT * FROM userunconfirmed WHERE hash = '" . mysql_real_escape_string($hash) . "'");
                 
             $row = mysql_fetch_assoc($result);
+            if(!$row) die ('<span class="error">Could not find hash</span><br>');
             
             $uid = $row['uid'];
             $hash = $row['hash'];
@@ -17,13 +19,25 @@
             $password = $row['password'];
             $email = $row['email'];
             
-            $result = mysql_query("INSERT INTO userunconfirmed (hash, username, password, email) VALUES ('"
+            $result = mysql_query("INSERT INTO user (hash, username, password, email) VALUES ('"
                     . $hash . "', '"
                     . $username . "', '"
                     . $password . "', '"
                     . $email . "')");
+
+            if(!$result){
+                die('<span class="error">Could not write to table user</span><br>');
+            }else{
+                echo 'User wurde in bestätigte Tabelle geschrieben.<br>';
+            }
             
-            
+            $result = mysql_query("DELETE FROM userunconfirmed WHERE hash = '" . $hash . "'");
+            if(!$result){
+                die('<span class="error">Could not delete user with hash' . $hash . '</span><br>');
+            }else{
+                echo 'User with hash' . $hash . ' wurde in Tabelle userunconfirmed gelöscht.<br>';
+            }
+                        
                 
 	    ?>
     </div>

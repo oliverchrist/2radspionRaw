@@ -31,31 +31,60 @@
                 && !empty($password2)
                 && !empty($email)
             ){
-                echo '<p>Eine Email wurde an Sie versand, bitte bestätigen Sie diese</p>';
-                $showForm = false;
-                                
+                # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
+                $uniqueUser = true;
                 include 'includes/dbConnect.php';
+                echo "select uid from user where username='" . $username ."'<br>";
+                $mysqlQuerySelect = mysql_query("select uid from user where username='" . mysql_real_escape_string($username) ."'");
+                if(mysql_num_rows($mysqlQuerySelect) > 0){
+                    echo '<span class="error">Diesen Benutzer gibt es bereits in der Tabelle user, bitte geben Sie einen anderen Benutzernamen ein.</span><br>';
+                    $uniqueUser = false;
+                }else{
+                    echo 'Benutzer ist nicht in Tabelle user<br>';
+                }
+                $mysqlQuerySelect = mysql_query("select uid from userunconfirmed where username='" . mysql_real_escape_string($username) ."'");
+                if(mysql_num_rows($mysqlQuerySelect) > 0){
+                    echo '<span class="error">Diesen Benutzer gibt es bereits in der Tabelle userunconfirmed, bitte geben Sie einen anderen Benutzernamen ein.</span><br>';
+                    $uniqueUser = false;
+                }else{
+                    echo 'Benutzer ist nicht in Tabelle userunconfirmed<br>';
+                }
                 
-                $hash = hash_init('md5');
-                hash_update($hash, 'aitrntrahoaonb35brn3');
-                hash_update($hash, $email);
-                $hashFinal = hash_final($hash);
-                
-                $mysqlQueryInsert = mysql_query("INSERT INTO userunconfirmed (hash, username, password, email) VALUES ('"
-                    . $hashFinal . "', '"
-                    . $username . "', '"
-                    . $password . "', '"
-                    . $email . "')");
-                echo 'mysqlQueryInsert: ' . $mysqlQueryInsert . '<br>';
-                
-
-
-                $header = 'From: webmaster@2radspion.de' . "\r\n" .
-                    'Reply-To: webmaster@2radspion.de' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
-                $message = 'Guten Tag ' . $username . ',
-klicken Sie bitte auf diesen Link: http://2radspionRaw.localhost/registerConfirm.php?x=' . $hashFinal;
-                mail('christ@mediaman.de', '2radspion Confirm', $message, $header);
+                # Wenn User unique ist
+                if($uniqueUser){
+                    # Eindeutigen Hash erstellen
+                    $hash = hash_init('md5');
+                    hash_update($hash, rand());
+                    hash_update($hash, $email);
+                    $hashFinal = hash_final($hash);
+                    
+                    # TODO CURDATE() ergänzen
+                    $mysqlQueryInsert = mysql_query("INSERT INTO userunconfirmed (hash, username, password, email) VALUES ('"
+                        . mysql_real_escape_string(trim($hashFinal)) . "', '"
+                        . mysql_real_escape_string(trim($username)) . "', '"
+                        . md5($password) . "', '"
+                        . mysql_real_escape_string(trim($email)) . "')");
+                    if(!$mysqlQueryInsert){
+                        die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');
+                    }else{
+                        echo 'User wurde in Datenbank useruncorfirmed geschrieben<br>';
+                        $showForm = false;
+                    }
+                    
+    
+    
+                    $header = 'From: webmaster@2radspion.de' . "\r\n" .
+                        'Reply-To: webmaster@2radspion.de' . "\r\n" .
+                        'X-Mailer: PHP/' . phpversion();
+                    $message = 'Guten Tag ' . $username . ",\nklicken Sie bitte auf diesen Link: http://2radspionRaw.localhost/registerConfirm.php?x=" . $hashFinal;
+                    $mailSend = mail('christ@mediaman.de', '2radspion Confirm', $message, $header);
+                    if(!$mailSend){
+                        die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
+                    }else{
+                        echo 'Mail wurde an den User zur Überprüfung geschickt<br>';
+                        echo '<p>Eine Email wurde an Sie versand, bitte bestätigen Sie diese</p>';
+                    }
+                }
             }
         }
         if($showForm){
@@ -63,19 +92,19 @@ klicken Sie bitte auf diesen Link: http://2radspionRaw.localhost/registerConfirm
 	    <form method="post">
 	        <div class="formField<?=$usernameErr?>">
                 <p class="error">Bitte geben Sie einen Benutzernamen ein</p>
-                <label>Benutzername</label><input type="text" name="username" />
+                <label>Benutzername</label><input type="text" name="username" value="<?=$username?>" />
             </div>
             <div class="formField<?=$passwordErr?>">
                 <p class="error">Bitte geben Sie ein Passwort ein</p>
-                <label>Passwort</label><input type="text" name="password" />
+                <label>Passwort</label><input type="text" name="password" value="<?=$password?>" />
             </div>
             <div class="formField<?=$passwordErr?>">
                 <p class="error">Die Passwörter stimmen nicht überein</p>
-                <label>Passwort wiederholen</label><input type="text" name="password2" />
+                <label>Passwort wiederholen</label><input type="text" name="password2" value="<?=$password2?>" />
             </div>
             <div class="formField<?=$emailErr?>">
                 <p class="error">Bitte geben Sie eine Email ein</p>
-                <label>Email</label><input type="text" name="email" />
+                <label>Email</label><input type="text" name="email" value="<?=$email?>" />
             </div>
             <div class="formField">
                 <input class="submit" type="submit" />
