@@ -9,6 +9,7 @@
             $action = 'new';
             
             if($_POST){
+                $uid = $_POST['uid'];
                 $hersteller = $_POST['hersteller'];
                 $modell = $_POST['modell'];
                 $preis = $_POST['preis'];
@@ -21,26 +22,50 @@
                     && !empty($modell)
                     && !empty($preis)
                 ){
-                    # TODO CURDATE() ergänzen
                     include 'includes/dbConnect.php';
-                    $mysqlQueryInsert = mysql_query("INSERT INTO bike (pid, hersteller, modell, preis, erstellt) VALUES ('"
-                        . $_SESSION['uid'] . "', '"
-                        . mysql_real_escape_string(trim($hersteller)) . "', '"
-                        . mysql_real_escape_string(trim($modell)) . "', '"
-                        . mysql_real_escape_string(trim($preis))
-                        . "', 'CURRENT_TIMESTAMP')");
-                    if(!$mysqlQueryInsert){
-                        die ('<span class="error">Fahrrad konnte nicht in die Datenbank bike geschrieben werden</span><br>');
+                    # insert
+                    if(empty($uid)){
+                        $result = mysql_query("INSERT INTO bike (pid, hersteller, modell, preis, erstellt) VALUES ('"
+                            . $_SESSION['uid'] . "', '"
+                            . mysql_real_escape_string(trim($hersteller)) . "', '"
+                            . mysql_real_escape_string(trim($modell)) . "', '"
+                            . mysql_real_escape_string(trim($preis))
+                            . "', 'CURRENT_TIMESTAMP')");
+                        if(!$result){
+                            die ('<span class="error">Fahrrad konnte nicht in die Datenbank bike geschrieben werden</span><br>');
+                        }else{
+                            echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
+                            $showForm = false;
+                        }
+                    # update
                     }else{
-                        echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
-                        $showForm = false;
+                        $result = mysql_query('UPDATE bike SET '
+                            . 'hersteller="' . mysql_real_escape_string(trim($hersteller)) . '", '
+                            . 'modell="' . mysql_real_escape_string(trim($modell)) . '", '
+                            . 'preis="' . mysql_real_escape_string(trim($preis)) . '"'
+                            . 'WHERE uid=' . mysql_real_escape_string(trim($uid)));
+                        if(!$result){
+                            die ('<span class="error">Fahrrad konnte nicht in der Datenbank bike upgedated werden</span><br>');
+                        }else{
+                            echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
+                            $showForm = false;
+                        }
                     }
                 }
+            }elseif(isset($_GET['uid'])){
+                include 'includes/dbConnect.php';
+                $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']));
+                $row = mysql_fetch_assoc($result);
+                $uid = $row['uid'];
+                $hersteller = $row['hersteller'];
+                $modell = $row['modell'];
+                $preis = $row['preis'];
             }
     
             if($showForm){
             ?>
             <form method="post" action="bike.php">
+                <input type="hidden" name="uid" value="<?=$uid?>" />
                 <div class="formField<?=$herstellerErr?>">
                     <p class="error">Bitte geben Sie einen Herrsteller ein</p>
                     <label>Hersteller</label><input type="text" name="hersteller" value="<?=$hersteller?>" />
