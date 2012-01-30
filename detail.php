@@ -22,6 +22,7 @@
             geaendert: <?=$row['geaendert']?><br>
             <? if(!empty($row['name'])){
                 $imageObj = new ScaleImage($row['name'], $row['extension'], 'images');
+                #echo $imageObj->getOriginalImagePath();
                 $imagePath = $imageObj->getImagePath(510, 'auto');
                 echo '<img alt="a" src="' . $imagePath . '" width="510" />';
             } ?>
