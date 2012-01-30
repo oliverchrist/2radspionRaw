@@ -139,12 +139,13 @@ input[type=reset]:hover,
 .bikeNew  { margin-top:10px; }
 .bikeNew input    { margin:10px 10px 0 0; }
 
+.search { padding:20px 0; }
 .bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 12px; border-radius: 12px; background: #eeb200; position: relative;
-    .thumb { float: left; margin-right: 10px; width: 200px; }
-    .thumb img { border-radius:12px; width:200px; }
+    .thumb { float: left; margin-right: 10px; width: 200px;
+        img { border-radius:12px; width:200px; }
+    }
     .cnt { float: left; margin-right: 10px; }
-    .links { position: absolute; right: 12px; bottom: 12px; text-align: right; }
-    .links a { }
+    .links { clear:both; }
 }
 fieldset,
 .shadow {

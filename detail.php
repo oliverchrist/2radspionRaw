@@ -24,7 +24,7 @@
                 $imageObj = new ScaleImage($row['name'], $row['extension'], 'images');
                 #echo $imageObj->getOriginalImagePath();
                 $imagePath = $imageObj->getImagePath(510, 'auto');
-                echo '<img alt="a" src="' . $imagePath . '" width="510" />';
+                echo '<img alt="' . $row['modell'] . '" src="' . $imagePath . '" width="510" />';
             } ?>
             <? if($row['pid'] == $_SESSION['uid']){ ?>
             <a class="txtLnk" href="bike.php?uid=<?=$row['uid']?>">Bearbeiten</a><br />

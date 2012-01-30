@@ -43,13 +43,15 @@ class ScaleImage {
 
     public function getImagePath($width, $height){
         $path = $this->directory . $this->name . '_' . $width . '.jpg';
-        if(file_exists($path)){
+        echo $path . ', ' . file_exists($path);
+        if(!file_exists($path)){
             if($height == 'auto'){
                 $height = ceil($this->height * $width / $this->width);
             }
             $scaledImage = imagecreatetruecolor($width, $height);
             imagecopyresampled($scaledImage, $this->image, 0, 0, 0, 0, $width, $height, $this->width, $this->height);
             imagejpeg($scaledImage, $path, 80);
+            echo $path . ' erzeugt<br>';
         }
         return $path;
     }

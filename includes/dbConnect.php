@@ -1,5 +1,5 @@
 <?php
-    $con = mysql_connect("localhost", "root", "");
+    $con = mysql_connect("localhost", "root", "2radklettern");
     if (!$con)
     {
         die('Could not connect: ' . mysql_error());
