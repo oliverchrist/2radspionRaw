@@ -1,4 +1,7 @@
-<?php include 'includes/head.php'; ?>
+<?php
+    include 'includes/head.php';
+    include 'includes/ScaleImage.php';
+?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
@@ -17,9 +20,11 @@
             preis: <?=$row['preis']?><br>
             erstellt: <?=$row['erstellt']?><br>
             geaendert: <?=$row['geaendert']?><br>
-            <? if(!empty($row['name'])){ ?>
-                <img alt="a" src="images/<?=$row['name']?>.<?=$row['extension']?>" width="510" />
-            <? } ?>
+            <? if(!empty($row['name'])){
+                $imageObj = new ScaleImage($row['name'], $row['extension'], 'images');
+                $imagePath = $imageObj->getImagePath(510, 'auto');
+                echo '<img alt="a" src="' . $imagePath . '" width="510" />';
+            } ?>
             <? if($row['pid'] == $_SESSION['uid']){ ?>
             <a class="txtLnk" href="bike.php?uid=<?=$row['uid']?>">Bearbeiten</a><br />
             <? } ?>
