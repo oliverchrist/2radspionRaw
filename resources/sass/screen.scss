@@ -46,44 +46,44 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
   opacity:0.8; /* allgemein */
 }
 
-#home .headerBgr  { position: fixed; bottom: 0; width: 100%; background-color: #69674f; height: 5em; }
+#home .headerBgr  { position: fixed; bottom: 0; width: 100%; background-color: #69674f; height: 60px; }
 
 #home .borderBottom { position: fixed; bottom: 0; width: 100%; }
-#home .borderBottom .border { border-bottom: 1px solid #fff; border-right: 1px solid #fff; margin: 0 2em 2em 0; height: 1em;
-  -moz-border-radius-bottomright: 1em;
-  border-bottom-right-radius: 1em; 
+#home .borderBottom .border { border-bottom: 1px solid #fff; border-right: 1px solid #fff; margin: 0 24px 24px 0; height: 12px;
+  -moz-border-radius-bottomright: 12px;
+  border-bottom-right-radius: 12px; 
 }
 #home .borderRight  { position: fixed; right: 0; height: 100%; }
-#home .borderRight .border  { border-left: 1px solid #fff; height: 100%; position: relative; top: -3em; width: 2em; }
+#home .borderRight .border  { border-left: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 24px; }
 
 #std .borderBottom  { position: fixed; bottom: 0; left: 0; width: 100%; }
-#std .borderBottom .border  { border-bottom: 1px solid #fff; border-left: 1px solid #fff; margin: 0 0 2em 13em; height: 1em;
-  -moz-border-radius-bottomleft: 1em;
-  border-bottom-left-radius: 1em; 
+#std .borderBottom .border  { border-bottom: 1px solid #fff; border-left: 1px solid #fff; margin: 0 0 24px 156px; height: 12px;
+  -moz-border-radius-bottomleft: 12px;
+  border-bottom-left-radius: 12px; 
 }
 #std .borderLeft  { position: fixed; left: 0; top: 0; height: 100%; }
-#std .borderLeft .border  { border-right: 1px solid #fff; height: 100%; position: relative; top: -3em; width: 13em; }
+#std .borderLeft .border  { border-right: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 156px; }
 
-#home .menu   { position: fixed; bottom: 0; right: 0; width: 100%; text-align: right; padding: 1em 4em 3em 0; }
-#home .menu a { color: #2a2725; text-decoration: none; font-size: 1em; font-size: 1em; margin-left: 1em; }
+#home .menu   { position: fixed; bottom: 0; right: 0; width: 100%; text-align: right; padding: 12px 48px 36px 0; }
+#home .menu a { color: #2a2725; text-decoration: none; font-size: 12px; font-size: 12px; margin-left: 12px; }
 #home .menu a:hover { text-decoration: underline; }
 
 #home .claim  { position: fixed; bottom: 0; width: 100%; }
-#home .claim .text  { color: #fff; padding: 0 4em 1em 0; text-align: right; font-size: 1em; }
+#home .claim .text  { color: #fff; padding: 0 48px 12px 0; text-align: right; font-size: 12px; }
 #home .claim .border  {
-  border-left: 1px solid #fff; border-top: 1px solid #fff; height: 13em; margin-left: 10em;
-  -moz-border-radius-topleft: 1em;
-  border-top-left-radius: 1em; }
+  border-left: 1px solid #fff; border-top: 1px solid #fff; height: 156px; margin-left: 120px;
+  -moz-border-radius-topleft: 12px;
+  border-top-left-radius: 12px; }
 img { border: none; }
 
-#header     { position: relative; margin:0 4em 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;
+#header     { position: relative; margin:0 48px 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;
     @include border-radius(0 0 12px 0);
 
-    #imgLogo    { position: absolute; top: 39px; right: 2em; z-index: 1; }
-    #imgLogoHome  { position: absolute; right: 4em; bottom: 71px; }
+    #imgLogo    { position: absolute; top: 39px; right: 24px; z-index: 1; }
+    #imgLogoHome  { position: absolute; right: 48px; bottom: 71px; }
     #mainnavi   { position:absolute; bottom:0; right:0px; width: 100%; background: #676653; @include border-radius(0 0 12px 0); padding: 12px;
         ul  { margin: 0; float:right; }
-        li  { display:inline; margin-left:1em; }
+        li  { display:inline; margin-left:12px; }
         li a, li a:visited  { color: #fff; text-decoration: none; }
     }
     .sessionData { position:absolute; right:20px; top:20px; }
@@ -126,8 +126,8 @@ input[type=reset]:hover,
   box-shadow:2px 2px 2px rgba(0,0,0,0.5); /* W3C Standard, Opera, Firefox4, IE9 */
 }
 .buttonList   { padding-left: 0; }
-.buttonList li  { display:inline; margin-right: 1em; }
-#content    { width:60em; margin:1em 0 5em 15em; }
+.buttonList li  { display:inline; margin-right: 12px; }
+#content    { width:720px; margin:12px 0 60px 180px; }
 
 .bikeEdit {}
 .bikeEdit label   { clear:left; float:left; width:200px; margin-top:11px; }
@@ -139,13 +139,13 @@ input[type=reset]:hover,
 .bikeNew  { margin-top:10px; }
 .bikeNew input    { margin:10px 10px 0 0; }
 
-.bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 1em; border-radius: 1em; background: #eeb200; position: relative; }
-.bikeListElement .thumb { float: left; margin-right: 10px; width: 125px; }
-.bikeListElement .thumb img { border-radius:1em; }
-.bikeListElement .cnt { float: left; margin-right: 10px; }
-.bikeListElement .links { position: absolute; right: 12px; bottom: 12px; text-align: right; }
-.bikeListElement .links a { }
-
+.bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 12px; border-radius: 12px; background: #eeb200; position: relative;
+    .thumb { float: left; margin-right: 10px; width: 200px; }
+    .thumb img { border-radius:12px; width:200px; }
+    .cnt { float: left; margin-right: 10px; }
+    .links { position: absolute; right: 12px; bottom: 12px; text-align: right; }
+    .links a { }
+}
 fieldset,
 .shadow {
   border:black solid 1px;
@@ -157,11 +157,11 @@ fieldset,
   margin:20px 20px 0 0;
 }
 .contentFooter    { margin-top: 30px; }
-fieldset legend { margin-top: 1em; }
+fieldset legend { margin-top: 12px; }
 
-.fahrradSingle { width: 510px; border-radius: 1em; background: #eeb200; padding: 12px; }
+.fahrradSingle { width: 510px; border-radius: 12px; background: #eeb200; padding: 12px; }
 .fahrradSingle h1 { margin: 0 0 10px; }
-.fahrradSingle img { border-radius:1em; margin: 7px 0; }
+.fahrradSingle img { border-radius:12px; margin: 7px 0; }
 
 #std form {
     .formField { margin-bottom:10px;

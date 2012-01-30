@@ -1,9 +1,11 @@
 <?php
-session_start();
 echo '<div id="header">
-        <img src="resources/images/logo_folgeseiten.png" id="imgLogo" />
-        <div class="sessionData">uid: ' . $_SESSION['uid'] . ', username: ' . $_SESSION['username'] . ', email: ' . $_SESSION['email'] . '</div>
-        <div id="mainnavi">
+        <img src="resources/images/logo_folgeseiten.png" id="imgLogo" />';
+# Session Daten anzeigen, wenn Benutzer eingeloggt ist        
+if($_SESSION){
+    echo '<div class="sessionData">uid: ' . $_SESSION['uid'] . ', username: ' . $_SESSION['username'] . ', email: ' . $_SESSION['email'] . '</div>';
+}
+echo '  <div id="mainnavi">
             <ul>';
             # egal ob eingeloggt oder nicht
             echo '<li><a href="index.php">Alle bikes</a></li>';

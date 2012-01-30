@@ -5,6 +5,13 @@
 	    <?php
 	    # ist Benutzer eingeloggt?
 	    if(isset($_SESSION['uid'])){
+            $uid = '';
+            $herstellerErr = '';
+            $hersteller = '';
+            $modellErr = '';
+            $modell = '';
+            $preisErr = '';
+            $preis = '';
             $showForm = true;
             $action = 'new';
             
@@ -54,7 +61,7 @@
                 }
             }elseif(isset($_GET['uid'])){
                 include 'includes/dbConnect.php';
-                $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']));
+                $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
                 $row = mysql_fetch_assoc($result);
                 $uid = $row['uid'];
                 $hersteller = $row['hersteller'];
@@ -81,6 +88,11 @@
                 <div class="formField">
                     <input class="submit" type="submit" value="<?=$action?>" />
                 </div>
+                <?php
+                if(isset($uid)){
+                ?>
+                    <a class="txtLnk" href="addPicture.php?uid=<?=$uid?>">Bild hinzufügen</a>  
+                <?}?>
             </form>
             <? }
         } ?>

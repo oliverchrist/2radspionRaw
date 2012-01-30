@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.4.5deb1
+-- version 3.3.9
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 29. Jan 2012 um 16:22
--- Server Version: 5.1.58
--- PHP-Version: 5.3.6-13ubuntu3.3
+-- Erstellungszeit: 30. Januar 2012 um 16:39
+-- Server Version: 5.5.8
+-- PHP-Version: 5.3.5
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -35,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `bike` (
   `erstellt` timestamp NULL DEFAULT NULL,
   `geaendert` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`uid`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=4 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 COLLATE=latin1_german1_ci AUTO_INCREMENT=5 ;
 
 --
 -- Daten für Tabelle `bike`
@@ -44,7 +43,32 @@ CREATE TABLE IF NOT EXISTS `bike` (
 INSERT INTO `bike` (`uid`, `pid`, `hersteller`, `modell`, `preis`, `erstellt`, `geaendert`) VALUES
 (1, 2, 'Retrovelo', 'Paul', 1300, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 2, 'Retrovelo', 'Paul', 1300, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 2, 'Stevens', '105', 1000, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(3, 2, 'Stevens', '105', 1000, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 0, 'Wheeler', 'e-operator', 3001, '0000-00-00 00:00:00', '2012-01-30 13:39:56');
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `images`
+--
+
+CREATE TABLE IF NOT EXISTS `images` (
+  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `pid` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `extension` varchar(255) NOT NULL,
+  `erstellt` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `geaendert` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `reihenfolge` int(11) NOT NULL,
+  PRIMARY KEY (`uid`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Daten für Tabelle `images`
+--
+
+INSERT INTO `images` (`uid`, `pid`, `name`, `extension`, `erstellt`, `geaendert`, `reihenfolge`) VALUES
+(3, 4, '1327934248', 'jpg', '0000-00-00 00:00:00', '0000-00-00 00:00:00', 0);
 
 -- --------------------------------------------------------
 
@@ -53,20 +77,20 @@ INSERT INTO `bike` (`uid`, `pid`, `hersteller`, `modell`, `preis`, `erstellt`, `
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
-  `hash` varchar(255) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `username` varchar(255) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `password` varchar(255) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  `email` varchar(255) CHARACTER SET latin1 COLLATE latin1_german1_ci NOT NULL,
-  PRIMARY KEY (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+  `uid` int(11) NOT NULL,
+  `hash` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `username` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `password` varchar(255) CHARACTER SET utf8 NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8 NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `user`
 --
 
 INSERT INTO `user` (`uid`, `hash`, `username`, `password`, `email`) VALUES
-(2, '5d0f965ba01c7fe26b6fd1f1c68c2b1f', 'olli2', '917a34072663f9c8beea3b45e8f129c5', 'oliver.christ@web.de');
+(0, '39c71ab7f03724db244c08a849c9cd2b', 'olli2', 'e22389783ad773f31ace79a78fe28adc', 'christ@mediaman.de'),
+(0, '917a34072663f9c8beea3b45e8f129c5', '', 'e22389783ad773f31ace79a78fe28adc', '');
 
 -- --------------------------------------------------------
 
@@ -75,21 +99,15 @@ INSERT INTO `user` (`uid`, `hash`, `username`, `password`, `email`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `userunconfirmed` (
-  `uid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
   `hash` varchar(255) CHARACTER SET utf8 NOT NULL,
   `username` varchar(255) CHARACTER SET utf8 NOT NULL,
   `password` varchar(255) CHARACTER SET utf8 NOT NULL,
   `email` varchar(255) CHARACTER SET utf8 NOT NULL,
   KEY `uid` (`uid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=14 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `userunconfirmed`
 --
 
-INSERT INTO `userunconfirmed` (`uid`, `hash`, `username`, `password`, `email`) VALUES
-(13, 'f9cdc36553b743a6740ee688258e31a4', 'olli3', '917a34072663f9c8beea3b45e8f129c5', 'oliver.christ@web.de');
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -3,9 +3,13 @@
     <?php include 'includes/header.php'; ?>
 	<div id="content">
 	    <?php
+	    $username = '';
         $usernameErr = '';
+        $password = '';
         $passwordErr = '';
+        $password2 = '';
         $password2Err = '';
+        $email = '';
         $emailErr = '';
         $showForm = true;
 	    if($_POST){
@@ -34,7 +38,6 @@
                 # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
                 $uniqueUser = true;
                 include 'includes/dbConnect.php';
-                echo "select uid from user where username='" . $username ."'<br>";
                 $mysqlQuerySelect = mysql_query("select uid from user where username='" . mysql_real_escape_string($username) ."'");
                 if(mysql_num_rows($mysqlQuerySelect) > 0){
                     echo '<span class="error">Diesen Benutzer gibt es bereits in der Tabelle user, bitte geben Sie einen anderen Benutzernamen ein.</span><br>';
@@ -77,7 +80,7 @@
                         'Reply-To: webmaster@2radspion.de' . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
                     $message = 'Guten Tag ' . $username . ",\nklicken Sie bitte auf diesen Link: http://2radspionRaw.localhost/registerConfirm.php?x=" . $hashFinal;
-                    $mailSend = mail('christ@mediaman.de', '2radspion Confirm', $message, $header);
+                    $mailSend = mail($email, '2radspion Confirm', $message, $header);
                     if(!$mailSend){
                         die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
                     }else{

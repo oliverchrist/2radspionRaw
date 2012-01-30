@@ -37,9 +37,8 @@
             }else{
                 echo 'User with hash' . $hash . ' wurde in Tabelle userunconfirmed gelöscht.<br>';
             }
-                        
-                
 	    ?>
+	    <p><a href="login.php">Login</a></p>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>
