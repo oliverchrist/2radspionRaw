@@ -8,9 +8,13 @@
             echo '<p>Hash: ' . $hash . '</p>';
             
             include 'includes/dbConnect.php';
-            $result = mysql_query("SELECT * FROM userunconfirmed WHERE hash = '" . mysql_real_escape_string($hash) . "'");
-                
+            $sql = 'SELECT * FROM userunconfirmed WHERE hash = "' . mysql_real_escape_string($hash) . '"';
+            echo $sql . '<br>';
+            $result = mysql_query($sql);
+            var_dump($result);
+            var_dump(mysql_num_rows($result));
             $row = mysql_fetch_assoc($result);
+            var_dump($row);
             if(!$row) die ('<span class="error">Could not find hash</span><br>');
             
             $uid = $row['uid'];
