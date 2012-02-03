@@ -24,7 +24,7 @@
                     $header = 'From: webmaster@2radspion.de' . "\r\n" .
                         'Reply-To: webmaster@2radspion.de' . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
-                    $message = 'Guten Tag ' . $username . ",\nSie haben eine Passwortanfrage geschickt. klicken Sie bitte auf diesen Link: http://2radspionRaw.localhost/changePassword.php?x=" . $password;
+                    $message = 'Guten Tag ' . $username . ",\nSie haben eine Passwortanfrage geschickt. klicken Sie bitte auf diesen Link: http://2radspion.de/changePassword.php?x=" . $password;
                     $mailSend = mail($email, '2radspion Confirm', $message, $header);
                     if(!$mailSend){
                         die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
