@@ -1,4 +1,8 @@
-<?php include 'includes/head.php'; ?>
+<?php
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+use de\zweiradspion\DatabaseHelper;
+?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
@@ -11,7 +15,7 @@
             return strtolower($ext);
         }
         	    
-	    include 'includes/dbConnect.php';
+	    $dbObject = new DatabaseHelper();
         $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
         # sollte unique sein
 	    if(mysql_num_rows($result) == 1){

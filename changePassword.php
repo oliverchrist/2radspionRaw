@@ -1,4 +1,10 @@
-<?php include 'includes/head.php'; ?>
+<?php
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+include 'includes/FormHelper.php';
+use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\FormHelper;
+?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
@@ -7,7 +13,7 @@
         $passwordErr = '';
         $password2 = '';
         $password2Err = '';
-        $showForm = true;
+        $showForm = false;
         if(isset($_GET['x'])){
             $hash = $_GET['x'];
             if(!$hash) die ('Es wurde kein Hash übergeben<br>');
@@ -20,6 +26,7 @@
             if(!$row) die ('<span class="error">Could not find hash</span><br>');
             
             $uid = $row['uid'];
+            $showForm = true;
         }
         if($_POST){
             $password = $_POST['password'];
@@ -47,6 +54,8 @@
                     echo 'Passwort wurde in Tabelle user geschrieben.<br>';
                     $showForm = false;
                 }
+            }else{
+                $showForm = true;
             }
         }
 	    if($showForm){ ?>

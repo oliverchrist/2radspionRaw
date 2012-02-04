@@ -1,4 +1,8 @@
-<?php include 'includes/head.php'; ?>
+<?php
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+use de\zweiradspion\DatabaseHelper;
+?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
@@ -29,7 +33,7 @@
                     && !empty($modell)
                     && !empty($preis)
                 ){
-                    include 'includes/dbConnect.php';
+                    $dbObject = new DatabaseHelper();
                     # insert
                     if(empty($uid)){
                         $result = mysql_query("INSERT INTO bike (pid, hersteller, modell, preis, erstellt) VALUES ('"
@@ -60,7 +64,7 @@
                     }
                 }
             }elseif(isset($_GET['uid'])){
-                include 'includes/dbConnect.php';
+                $dbObject = new DatabaseHelper();
                 $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
                 $row = mysql_fetch_assoc($result);
                 $uid = $row['uid'];

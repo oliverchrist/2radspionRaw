@@ -1,4 +1,9 @@
-<?php include 'includes/head.php'; ?>
+<?php
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+use de\zweiradspion;
+use de\zweiradspion\DatabaseHelper;
+?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
@@ -12,7 +17,7 @@
                 $emailErr = ' error';
             }
             if(!empty($email)){
-                include 'includes/dbConnect.php';
+                $dbObject = new DatabaseHelper();
                 $sql = "select * from user where email='" . mysql_real_escape_string($_POST['email']) . "'";
                 $result = mysql_query($sql)
                     or die('Email wurde nicht in Datenbank user gefunden.');
@@ -24,7 +29,7 @@
                     $header = 'From: webmaster@2radspion.de' . "\r\n" .
                         'Reply-To: webmaster@2radspion.de' . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
-                    $message = 'Guten Tag ' . $username . ",\nSie haben eine Passwortanfrage geschickt. klicken Sie bitte auf diesen Link: http://2radspion.de/changePassword.php?x=" . $password;
+                    $message = 'Guten Tag ' . $username . ",\nSie haben eine Passwortanfrage geschickt. klicken Sie bitte auf diesen Link: http://" . DOMAIN . "/changePassword.php?x=" . $password;
                     $mailSend = mail($email, '2radspion Confirm', $message, $header);
                     if(!$mailSend){
                         die('<span class="error">Mail konnte nicht verschickt werden</span><br>');

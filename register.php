@@ -1,12 +1,15 @@
-<?php include 'includes/head.php'; ?>
+<?php
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+include 'includes/FormHelper.php';
+use de\zweiradspion;
+use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\FormHelper;
+?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
 	    <?php
-        include 'includes/DatabaseHelper.php';
-        include 'includes/FormHelper.php';
-	    use de\zweiradspion\DatabaseHelper;
-        use de\zweiradspion\FormHelper;
 	    $username = '';
         $usernameErr = '';
         $password = '';
@@ -80,7 +83,7 @@
                     $header = 'From: webmaster@2radspion.de' . "\r\n" .
                         'Reply-To: webmaster@2radspion.de' . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
-                    $message = 'Guten Tag ' . $username . ",\nklicken Sie bitte auf diesen Link: http://2radspionRaw.localhost/registerConfirm.php?x=" . $hashFinal;
+                    $message = 'Guten Tag ' . $username . ',' . "\n" . 'klicken Sie bitte auf diesen Link: http://' . DB_DOMAIN . '/registerConfirm.php?x=' . $hashFinal;
                     $mailSend = mail($email, '2radspion Confirm', $message, $header);
                     if(!$mailSend){
                         die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
@@ -100,11 +103,11 @@
             </div>
             <div class="formField<?=$passwordErr?>">
                 <p class="error">Bitte geben Sie ein Passwort ein</p>
-                <label>Passwort</label><input type="text" name="password" value="<?=$password?>" />
+                <label>Passwort</label><input type="password" name="password" value="<?=$password?>" />
             </div>
             <div class="formField<?=$password2Err?>">
                 <p class="error">Die Passwörter stimmen nicht überein</p>
-                <label>Passwort wiederholen</label><input type="text" name="password2" value="<?=$password2?>" />
+                <label>Passwort wiederholen</label><input type="password" name="password2" value="<?=$password2?>" />
             </div>
             <div class="formField<?=$emailErr?>">
                 <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>

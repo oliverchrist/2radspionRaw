@@ -1,12 +1,14 @@
 <?php
-    include 'includes/head.php';
-    include 'includes/ScaleImage.php';
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+include 'includes/ScaleImage.php';
+use de\zweiradspion\DatabaseHelper;
 ?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
 	    <?php
-	    include 'includes/dbConnect.php';
+	    $dbObject = new DatabaseHelper();
         $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT OUTER JOIN images ON bike.uid = images.pid where bike.uid=" . mysql_real_escape_string($_GET['uid']);
         $result = mysql_query($sql);
         $row = mysql_fetch_assoc($result)

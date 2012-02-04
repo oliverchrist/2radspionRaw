@@ -1,14 +1,15 @@
 <?php
     include 'includes/head.php';
+    include 'includes/DatabaseHelper.php';
     include 'includes/ScaleImage.php';
+    use de\zweiradspion\DatabaseHelper;
 ?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
 	<div id="content">
 	    <?php
-        include 'includes/dbConnect.php';
-        
         echo '<form class="search" method="post">';
+        $dbObject = new DatabaseHelper();
         $sql = "select distinct hersteller from bike";
         $result = mysql_query($sql);
         if($result){

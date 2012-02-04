@@ -1,4 +1,7 @@
 <?php
+include 'includes/DatabaseHelper.php';
+use de\zweiradspion\DatabaseHelper;
+
 $showForm = true;
 $showError = false;
 $usernameErr = '';
@@ -8,7 +11,7 @@ $password = '';
 if($_POST){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    include 'includes/dbConnect.php';
+    $dbObject = new DatabaseHelper();
     $mysqlQuerySelect = mysql_query("select * from user where username='" . mysql_real_escape_string(trim($username)) ."' and password='" . md5(trim($password)) . "'");
     if (mysql_num_rows($mysqlQuerySelect)==1){ 
         $row = mysql_fetch_assoc($mysqlQuerySelect);
