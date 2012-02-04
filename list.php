@@ -2,7 +2,9 @@
     include 'includes/head.php';
     include 'includes/DatabaseHelper.php';
     include 'includes/ScaleImage.php';
+    include 'includes/DebugHelper.php';
     use de\zweiradspion\DatabaseHelper;
+    use de\zweiradspion\DebugHelper;
 ?>
 <body id="std">
     <?php include 'includes/header.php'; ?>
@@ -53,8 +55,8 @@
                         </a>
                     <?php } ?>
                     <div class="cnt">
-                        uid: <?=$row['uid']?><br>
-                        pid: <?=$row['pid']?><br>
+                        <?=DebugHelper::info('uid: ' . $row['uid'])?>
+                        <?=DebugHelper::info('pid: ' . $row['pid'])?>
                         hersteller: <?=$row['hersteller']?><br>
                         modell: <?=$row['modell']?><br>
                         preis: <?=$row['preis']?><br>

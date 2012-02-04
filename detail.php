@@ -28,7 +28,7 @@ use de\zweiradspion\DatabaseHelper;
                 $imagePath = $imageObj->getImagePath(510, 'auto');
                 echo '<img alt="' . $row['modell'] . '" src="' . $imagePath . '" width="510" />';
             } ?>
-            <? if($row['pid'] == $_SESSION['uid']){ ?>
+            <? if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){ ?>
             <a class="txtLnk" href="bike.php?uid=<?=$row['uid']?>">Bearbeiten</a><br />
             <? } ?>
             <a class="txtLnk" href="#">Kontakt</a><br />

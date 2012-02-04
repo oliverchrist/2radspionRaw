@@ -43,7 +43,7 @@ class ScaleImage {
 
     public function getImagePath($width, $height){
         $path = $this->directory . $this->name . '_' . $width . '.jpg';
-        echo $path . ', ' . file_exists($path);
+        #echo $path . ', ' . file_exists($path);
         if(!file_exists($path)){
             if($height == 'auto'){
                 $height = ceil($this->height * $width / $this->width);
