@@ -39,7 +39,6 @@
         }
         $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT OUTER JOIN images ON bike.uid = images.pid";
         if(!empty($condition)) $sql .= ' where ' . implode(' and ', $condition);
-        echo $sql;
         $result = mysql_query($sql);
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>

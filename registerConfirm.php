@@ -3,19 +3,27 @@
     <?php include 'includes/header.php'; ?>
 	<div id="content">
 	    <?php
+	        include 'includes/DatabaseHelper.php';
+            include 'includes/FormHelper.php';
+            use de\zweiradspion\DatabaseHelper;
+            use de\zweiradspion\FormHelper;
+            # Hash aus Url holen
             $hash = $_GET['x'];
             if(!$hash) die ('Es wurde kein Hash übergeben<br>');
             echo '<p>Hash: ' . $hash . '</p>';
             
-            include 'includes/dbConnect.php';
+            $dbObject = new DatabaseHelper();
+            
+            # Prüfen ob User schon confirmed wurde
+            if($dbObject->valueInTable($hash,'hash','user')){
+                die('<span class="error">Dieser Benutzer wurde bereits bestätigt.</span>');
+            }
+            
+            # User aus userunconfirmed Tabelle holen
             $sql = 'SELECT * FROM userunconfirmed WHERE hash = "' . mysql_real_escape_string($hash) . '"';
-            echo $sql . '<br>';
             $result = mysql_query($sql);
-            var_dump($result);
-            var_dump(mysql_num_rows($result));
             $row = mysql_fetch_assoc($result);
-            var_dump($row);
-            if(!$row) die ('<span class="error">Could not find hash</span><br>');
+            if(!$row) die ('<span class="error">Konnte Hash nicht in Tabelle userunconfirmed finden</span><br>');
             
             $uid = $row['uid'];
             $hash = $row['hash'];
@@ -23,23 +31,24 @@
             $password = $row['password'];
             $email = $row['email'];
             
+            # User in Tabelle user übertragen
             $result = mysql_query("INSERT INTO user (hash, username, password, email) VALUES ('"
                     . $hash . "', '"
                     . $username . "', '"
                     . $password . "', '"
                     . $email . "')");
-
             if(!$result){
                 die('<span class="error">Could not write to table user</span><br>');
             }else{
                 echo 'User wurde in bestätigte Tabelle geschrieben.<br>';
             }
             
-            $result = mysql_query("DELETE FROM userunconfirmed WHERE hash = '" . $hash . "'");
+            # User in Tabelle userunconfirmed löschen
+            $result = mysql_query("DELETE FROM userunconfirmed WHERE hash = '" . mysql_real_escape_string($hash) . "'");
             if(!$result){
-                die('<span class="error">Could not delete user with hash' . $hash . '</span><br>');
+                die('<span class="error">User mit Hash' . $hash . ' konnte nicht gelöscht werden</span><br>');
             }else{
-                echo 'User with hash' . $hash . ' wurde in Tabelle userunconfirmed gelöscht.<br>';
+                echo 'User mit Hash ' . $hash . ' wurde in Tabelle userunconfirmed gelöscht.<br>';
             }
 	    ?>
 	    <p><a href="login.php">Login</a></p>

@@ -3,6 +3,10 @@
     <?php include 'includes/header.php'; ?>
 	<div id="content">
 	    <?php
+        include 'includes/DatabaseHelper.php';
+        include 'includes/FormHelper.php';
+	    use de\zweiradspion\DatabaseHelper;
+        use de\zweiradspion\FormHelper;
 	    $username = '';
         $usernameErr = '';
         $password = '';
@@ -23,34 +27,33 @@
             if(empty($password)){
                 $passwordErr = ' error';
             }
-            if(empty($password2)){
+            if(empty($password2) || $password != $password2){
                 $password2Err = ' error';
             }
-            if(empty($email)){
+            if(empty($email) || !FormHelper::isEmail($email)){
                 $emailErr = ' error';
             }
             if(
                 !empty($username)
                 && !empty($password)
                 && !empty($password2)
-                && !empty($email)
+                && FormHelper::isEmail($email)
             ){
                 # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
                 $uniqueUser = true;
-                include 'includes/dbConnect.php';
-                $mysqlQuerySelect = mysql_query("select uid from user where username='" . mysql_real_escape_string($username) ."'");
-                if(mysql_num_rows($mysqlQuerySelect) > 0){
-                    echo '<span class="error">Diesen Benutzer gibt es bereits in der Tabelle user, bitte geben Sie einen anderen Benutzernamen ein.</span><br>';
+                $dbObject = new DatabaseHelper();
+                if($dbObject->valueInTable($username,'username','user') || $dbObject->valueInTable($username,'username','userunconfirmed')){
+                    echo '<span class="error">Diesen Benutzer gibt es bereits, bitte geben Sie einen anderen Benutzernamen ein.</span><br>';
                     $uniqueUser = false;
                 }else{
-                    echo 'Benutzer ist nicht in Tabelle user<br>';
+                    echo 'Benutzer ist nicht in Tabelle user oder userunconfirmed<br>';
                 }
-                $mysqlQuerySelect = mysql_query("select uid from userunconfirmed where username='" . mysql_real_escape_string($username) ."'");
-                if(mysql_num_rows($mysqlQuerySelect) > 0){
-                    echo '<span class="error">Diesen Benutzer gibt es bereits in der Tabelle userunconfirmed, bitte geben Sie einen anderen Benutzernamen ein.</span><br>';
+                # Prüfen ob email bereits existiert in Tabelle user und userunconfirmed
+                if($dbObject->valueInTable($username,'email','user') || $dbObject->valueInTable($username,'email','userunconfirmed')){
+                    echo '<span class="error">Diese Email-Adresse gibt es bereits.</span><br>';
                     $uniqueUser = false;
                 }else{
-                    echo 'Benutzer ist nicht in Tabelle userunconfirmed<br>';
+                    echo 'Email ist nicht in Tabelle user oder userunconfirmed<br>';
                 }
                 
                 # Wenn User unique ist
@@ -62,19 +65,17 @@
                     $hashFinal = hash_final($hash);
                     
                     # TODO CURDATE() ergänzen
-                    $mysqlQueryInsert = mysql_query("INSERT INTO userunconfirmed (hash, username, password, email) VALUES ('"
+                    $result = mysql_query("INSERT INTO userunconfirmed (hash, username, password, email) VALUES ('"
                         . mysql_real_escape_string(trim($hashFinal)) . "', '"
                         . mysql_real_escape_string(trim($username)) . "', '"
                         . md5($password) . "', '"
                         . mysql_real_escape_string(trim($email)) . "')");
-                    if(!$mysqlQueryInsert){
+                    if(!$result){
                         die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');
                     }else{
                         echo 'User wurde in Datenbank useruncorfirmed geschrieben<br>';
                         $showForm = false;
                     }
-                    
-    
     
                     $header = 'From: webmaster@2radspion.de' . "\r\n" .
                         'Reply-To: webmaster@2radspion.de' . "\r\n" .
@@ -101,12 +102,12 @@
                 <p class="error">Bitte geben Sie ein Passwort ein</p>
                 <label>Passwort</label><input type="text" name="password" value="<?=$password?>" />
             </div>
-            <div class="formField<?=$passwordErr?>">
+            <div class="formField<?=$password2Err?>">
                 <p class="error">Die Passwörter stimmen nicht überein</p>
                 <label>Passwort wiederholen</label><input type="text" name="password2" value="<?=$password2?>" />
             </div>
             <div class="formField<?=$emailErr?>">
-                <p class="error">Bitte geben Sie eine Email ein</p>
+                <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>
                 <label>Email</label><input type="text" name="email" value="<?=$email?>" />
             </div>
             <div class="formField">
