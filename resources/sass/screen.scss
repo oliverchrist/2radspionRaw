@@ -15,6 +15,7 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
 .txtLnk { color: #fff; background: url(../images/link.png) right no-repeat; padding-right: 15px; text-decoration: none; font-weight: bold; }
 .txtLnk:hover { text-decoration: underline; }
 .error { color:$red; }
+img { border: none; }
 
 #home { background-color: #eeb200; }
 
@@ -69,18 +70,19 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
 #home .menu a:hover { text-decoration: underline; }
 
 #home .claim  { position: fixed; bottom: 0; width: 100%; }
-#home .claim .text  { color: #fff; padding: 0 48px 12px 0; text-align: right; font-size: 12px; }
+#home .claim .text  { color: #fff; padding: 0 48px 12px 0; text-align: right; }
 #home .claim .border  {
   border-left: 1px solid #fff; border-top: 1px solid #fff; height: 156px; margin-left: 120px;
   -moz-border-radius-topleft: 12px;
-  border-top-left-radius: 12px; }
-img { border: none; }
+  border-top-left-radius: 12px;
+  #imgLogoHome  { position: absolute; right: 48px; bottom: 51px; }
+}
+
 
 #header     { position: relative; margin:0 48px 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;
     @include border-radius(0 0 12px 0);
 
     #imgLogo    { position: absolute; top: 39px; right: 24px; z-index: 1; }
-    #imgLogoHome  { position: absolute; right: 48px; bottom: 71px; }
     #mainnavi   { position:absolute; bottom:0; right:0px; width: 100%; background: #676653; @include border-radius(0 0 12px 0); padding: 12px;
         ul  { margin: 0; float:right; }
         li  { display:inline; margin-left:12px; }

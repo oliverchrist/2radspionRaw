@@ -8,7 +8,7 @@ if($_SESSION){
 echo '  <div id="mainnavi">
             <ul>';
             # egal ob eingeloggt oder nicht
-            echo '<li><a href="index.php">Alle bikes</a></li>';
+            echo '<li><a href="list.php">Alle bikes</a></li>';
             # eingeloggt
             if(isset($_SESSION['uid'])){
                 echo '<li class="hi"><a href="bike.php?action=new">Add Bike</a></li>';

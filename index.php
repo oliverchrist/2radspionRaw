@@ -1,78 +1,32 @@
-<?php
-    include 'includes/head.php';
-    include 'includes/DatabaseHelper.php';
-    include 'includes/ScaleImage.php';
-    use de\zweiradspion\DatabaseHelper;
-?>
-<body id="std">
-    <?php include 'includes/header.php'; ?>
-	<div id="content">
-	    <?php
-        echo '<form class="search" method="post">';
-        $dbObject = new DatabaseHelper();
-        $sql = "select distinct hersteller from bike";
-        $result = mysql_query($sql);
-        if($result){
-            echo '<select name="hersteller"><option value="-1">Hersteller</option>';
-            while ($row = mysql_fetch_assoc($result)) {
-                $selected = ($row['hersteller'] != -1 && $row['hersteller'] == $_POST['hersteller'])?' selected':'';
-                echo '<option' . $selected . '>' . $row['hersteller'] . '</option>';
-            }
-            echo '</select>';
-        }
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link href="resources/stylesheets/screen.css" type="text/css" rel="stylesheet">
+	<script type="text/javascript" src="/fileadmin/templates/js/jquery-1.5.min.js"></script>
+	<script type="text/javascript" src="/fileadmin/templates/js/script.js"></script>
 
-        $sql = "select distinct modell from bike";
-        $result = mysql_query($sql);
-        if($result){
-            echo '<select name="modell"><option value="-1">Modell</option>';
-            while ($row = mysql_fetch_assoc($result)) {
-                $selected = ($row['modell'] != -1 && $row['modell'] == $_POST['modell'])?' selected':'';
-                echo '<option' . $selected . '>' . $row['modell'] . '</option>';
-            }
-            echo '</select>';
-        }
-        echo '</form>';
+	<title>2radspion</title>
+</head>
+<body id="home">
+	<div class="logoBgr"></div>
+	<a href="list.php" class="logoBgr2"></a>
+	<div class="headerBgr"></div>
+	<div class="borderBottom"><div class="border"></div></div>
+	<div class="borderRight"><div class="border"></div></div>
+	<div class="claim">
+		<div class="text">Der online-Markt für neue und gebrauchte Zweiräder / vom Hobby bis zum professionellen Einsatz / von privat oder vom Händler</div>
+		<div class="border"><img src="resources/images/logo_folgeseiten.png" id="imgLogoHome" /></div>
+	</div>
+	
+	<div class="menu">
+		<a href="#" >suchen</a>
+		<a href="#" >anbieten</a>
+		<a href="#" style="margin-left: 10em;">Kontakt</a>
+		<a href="#" >Datenschutz</a>
+		<a href="#" >AGB</a>
+		<a href="#" >Impressum</a>
+	</div>
 
-        $condition = array();
-        if($_POST){
-            if($_POST['hersteller'] != -1) $condition[] = 'hersteller = "' . $_POST['hersteller'] . '"';
-            if($_POST['modell'] != -1) $condition[] = 'modell = "' . $_POST['modell'] . '"';
-        }
-        $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT OUTER JOIN images ON bike.uid = images.pid";
-        if(!empty($condition)) $sql .= ' where ' . implode(' and ', $condition);
-        $result = mysql_query($sql);
-        if($result){
-            while ($row = mysql_fetch_assoc($result)) { ?>
-                <div class="bikeListElement">
-                    <?php if(!empty($row['name'])){
-                        $imageObj = new ScaleImage($row['name'], $row['extension'], 'images');
-                        $imagePath = $imageObj->getImagePath(200, 'auto');
-                        ?>
-                        <a class="thumb" href="detail.php?uid=<?=$row['uid']?>">
-                            <img alt="<?=$row['modell']?>" src="<?=$imagePath?>" width="200" />
-                        </a>
-                    <?php } ?>
-                    <div class="cnt">
-                        uid: <?=$row['uid']?><br>
-                        pid: <?=$row['pid']?><br>
-                        hersteller: <?=$row['hersteller']?><br>
-                        modell: <?=$row['modell']?><br>
-                        preis: <?=$row['preis']?><br>
-                        erstellt: <?=$row['erstellt']?><br>
-                        geaendert: <?=$row['geaendert']?><br>
-                    </div>
-                    <div class="links">
-                        <a class="txtLnk" href="detail.php?uid=<?=$row['uid']?>">Ansehen</a>
-                    </div>
-                    <div class="clear"></div>
-                </div>            
-            <?php }
-         }else{
-             echo '<p class="error">Fehler in der Datenbankabfrage</p>';
-         }
-        
-    ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
 </body>
 </html>
