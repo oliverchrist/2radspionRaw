@@ -36,12 +36,12 @@ use de\zweiradspion\DatabaseHelper;
                     $dbObject = new DatabaseHelper();
                     # insert
                     if(empty($uid)){
-                        $result = mysql_query("INSERT INTO bike (pid, hersteller, modell, preis, erstellt) VALUES ('"
+                        $result = mysql_query("INSERT INTO bike (pid, hersteller, modell, preis, erstellt, geaendert) VALUES ('"
                             . $_SESSION['uid'] . "', '"
                             . mysql_real_escape_string(trim($hersteller)) . "', '"
                             . mysql_real_escape_string(trim($modell)) . "', '"
                             . mysql_real_escape_string(trim($preis))
-                            . "', 'CURRENT_TIMESTAMP')");
+                            . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
                         if(!$result){
                             die ('<span class="error">Fahrrad konnte nicht in die Datenbank bike geschrieben werden</span><br>');
                         }else{
@@ -96,7 +96,8 @@ use de\zweiradspion\DatabaseHelper;
                 if(isset($uid)){
                 ?>
                     <a class="txtLnk" href="addPicture.php?uid=<?=$uid?>">Bild hinzufügen</a>  
-                <?}?>
+                    <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>  
+                <?php } ?>
             </form>
             <? }
         } ?>

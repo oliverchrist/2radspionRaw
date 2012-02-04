@@ -16,46 +16,61 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
 .txtLnk:hover { text-decoration: underline; }
 .error { color:$red; }
 img { border: none; }
+h1 { font-size:30px; line-height:40px; color:white; }
 
-#home { background-color: #eeb200; }
+#home { background-color: #eeb200;
 
-#home .logoBgr  {
-  background: url(../images/logo_start_a.png) center center no-repeat;
-  position: absolute;
-  top: 15%;
-  width: 100%;
-  height: 407px;
-  filter:alpha(opacity=50); /* IE */
-  opacity:0.5; /* allgemein */
+    .logoBgr  {
+      background: url(../images/logo_start_a.png) center center no-repeat;
+      position: absolute;
+      top: 15%;
+      width: 100%;
+      height: 407px;
+      filter:alpha(opacity=50); /* IE */
+      opacity:0.5; /* allgemein */
+    }
+    .logoBgr2 {
+      background: url(../images/logo_start_b.png) center center no-repeat;
+      position: absolute;
+      top: 15%;
+      width: 100%;
+      height: 407px;
+      filter:alpha(opacity=50); /* IE */
+      opacity:0.5; /* allgemein */
+      -webkit-transition: all 1s ease-in-out;
+      -moz-transition: all 1s ease-in-out;
+      -o-transition: all 1s ease-in-out;
+      -ms-transition: all 1s ease-in-out;
+      transition: all 1s ease-in-out; 
+    }
+    .logoBgr2:hover {
+      filter:alpha(opacity=80); /* IE */
+      opacity:0.8; /* allgemein */
+    }
+    
+    .headerBgr  { position: fixed; bottom: 0; width: 100%; background-color: #69674f; height: 60px; }
+    
+    .borderBottom { position: fixed; bottom: 0; width: 100%; }
+    .borderBottom .border { border-bottom: 1px solid #fff; border-right: 1px solid #fff; margin: 0 24px 24px 0; height: 12px;
+      -moz-border-radius-bottomright: 12px;
+      border-bottom-right-radius: 12px; 
+    }
+    .borderRight  { position: fixed; right: 0; height: 100%; }
+    .borderRight .border  { border-left: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 24px; }
+    
+    .menu   { position: fixed; bottom: 0; right: 0; width: 100%; text-align: right; padding: 12px 48px 36px 0; }
+    .menu a { color: #2a2725; text-decoration: none; font-size: 12px; font-size: 12px; margin-left: 12px; }
+    .menu a:hover { text-decoration: underline; }
+    
+    .claim  { position: fixed; bottom: 0; width: 100%; }
+    .claim .text  { color: #fff; padding: 0 48px 12px 0; text-align: right; }
+    .claim .border  {
+      border-left: 1px solid #fff; border-top: 1px solid #fff; height: 156px; margin-left: 120px;
+      -moz-border-radius-topleft: 12px;
+      border-top-left-radius: 12px;
+      #imgLogoHome  { position: absolute; right: 48px; bottom: 51px; }
+    }
 }
-#home .logoBgr2 {
-  background: url(../images/logo_start_b.png) center center no-repeat;
-  position: absolute;
-  top: 15%;
-  width: 100%;
-  height: 407px;
-  filter:alpha(opacity=50); /* IE */
-  opacity:0.5; /* allgemein */
-  -webkit-transition: all 1s ease-in-out;
-  -moz-transition: all 1s ease-in-out;
-  -o-transition: all 1s ease-in-out;
-  -ms-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out; 
-}
-#home .logoBgr2:hover {
-  filter:alpha(opacity=80); /* IE */
-  opacity:0.8; /* allgemein */
-}
-
-#home .headerBgr  { position: fixed; bottom: 0; width: 100%; background-color: #69674f; height: 60px; }
-
-#home .borderBottom { position: fixed; bottom: 0; width: 100%; }
-#home .borderBottom .border { border-bottom: 1px solid #fff; border-right: 1px solid #fff; margin: 0 24px 24px 0; height: 12px;
-  -moz-border-radius-bottomright: 12px;
-  border-bottom-right-radius: 12px; 
-}
-#home .borderRight  { position: fixed; right: 0; height: 100%; }
-#home .borderRight .border  { border-left: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 24px; }
 
 #std .borderBottom  { position: fixed; bottom: 0; left: 0; width: 100%; }
 #std .borderBottom .border  { border-bottom: 1px solid #fff; border-left: 1px solid #fff; margin: 0 0 24px 156px; height: 12px;
@@ -65,28 +80,17 @@ img { border: none; }
 #std .borderLeft  { position: fixed; left: 0; top: 0; height: 100%; }
 #std .borderLeft .border  { border-right: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 156px; }
 
-#home .menu   { position: fixed; bottom: 0; right: 0; width: 100%; text-align: right; padding: 12px 48px 36px 0; }
-#home .menu a { color: #2a2725; text-decoration: none; font-size: 12px; font-size: 12px; margin-left: 12px; }
-#home .menu a:hover { text-decoration: underline; }
-
-#home .claim  { position: fixed; bottom: 0; width: 100%; }
-#home .claim .text  { color: #fff; padding: 0 48px 12px 0; text-align: right; }
-#home .claim .border  {
-  border-left: 1px solid #fff; border-top: 1px solid #fff; height: 156px; margin-left: 120px;
-  -moz-border-radius-topleft: 12px;
-  border-top-left-radius: 12px;
-  #imgLogoHome  { position: absolute; right: 48px; bottom: 51px; }
-}
-
 
 #header     { position: relative; margin:0 48px 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;
     @include border-radius(0 0 12px 0);
 
-    #imgLogo    { position: absolute; top: 39px; right: 24px; z-index: 1; }
-    #mainnavi   { position:absolute; bottom:0; right:0px; width: 100%; background: #676653; @include border-radius(0 0 12px 0); padding: 12px;
-        ul  { margin: 0; float:right; }
-        li  { display:inline; margin-left:12px; }
-        li a, li a:visited  { color: #fff; text-decoration: none; }
+    #imgLogo    { position: absolute; bottom: 40px; right: 24px; z-index: 1; }
+    #mainnavi   { position:absolute; bottom:0; right:0px; width: 100%; background: #676653; @include border-radius(0 0 12px 0); height:40px;
+        h1 { position:absolute; left:180px; top:0; }
+        ul  { position:absolute; right:25px; top:10px;
+            li  { display:inline; margin-left:12px; }
+            li a, li a:visited  { color: #fff; text-decoration: none; }
+        }
     }
     .sessionData { position:absolute; right:20px; top:20px; }
 }
@@ -129,17 +133,13 @@ input[type=reset]:hover,
 }
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
-#content    { width:720px; margin:12px 0 60px 180px; }
-
-.bikeEdit {}
-.bikeEdit label   { clear:left; float:left; width:200px; margin-top:11px; }
-.bikeEdit input[type=text],
-.bikeEdit input[type=file]    { float:left; width:200px; margin-top:10px; }
-.bikeEdit input[type=reset]   { float:left; clear:left; margin:10px 10px 0 0; }
-.bikeEdit input[type=submit]    { float:left; margin:10px 10px 0 0; }
-
-.bikeNew  { margin-top:10px; }
-.bikeNew input    { margin:10px 10px 0 0; }
+#content    { width:720px; margin:12px 0 60px 180px; position:relative;
+    .subnavi { position:absolute; left:-160px; top:0; z-index:1;
+        a { color:white; text-decoration:none; font-weight:bold;
+            &:hover { text-decoration:underline; }
+        }
+    }
+}
 
 .search { padding:20px 0; }
 .bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 12px; border-radius: 12px; background: #eeb200; position: relative;
@@ -149,13 +149,7 @@ input[type=reset]:hover,
     .cnt { float: left; margin-right: 10px; }
     .links { clear:both; }
 }
-fieldset,
-.shadow {
-  border:black solid 1px;
-  -moz-box-shadow:5px 5px 5px rgba(0,0,0,0.5); /* Firefox */
-  -webkit-box-shadow:5px 5px 5px rgba(0,0,0,0.5); /* Safari, Chrome */
-  box-shadow:5px 5px 5px rgba(0,0,0,0.5); /* W3C Standard, Opera, Firefox4, IE9 */
-}
+
 .detailImage  {
   margin:20px 20px 0 0;
 }
@@ -177,3 +171,4 @@ fieldset legend { margin-top: 12px; }
         input.submit { margin-left:200px; width:220px; background:$red; color:white; }
     }
 }
+

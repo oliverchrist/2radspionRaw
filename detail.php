@@ -32,7 +32,7 @@ use de\zweiradspion\DatabaseHelper;
             <a class="txtLnk" href="bike.php?uid=<?=$row['uid']?>">Bearbeiten</a><br />
             <? } ?>
             <a class="txtLnk" href="#">Kontakt</a><br />
-            <a class="txtLnk" href="index.php">Back to list</a><br />
+            <a class="txtLnk" href="list.php">Back to list</a><br />
         </div>
     
     </div>          

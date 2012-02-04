@@ -3,12 +3,19 @@
     include 'includes/DatabaseHelper.php';
     include 'includes/ScaleImage.php';
     include 'includes/DebugHelper.php';
+    include 'includes/HeaderHelper.php';
     use de\zweiradspion\DatabaseHelper;
     use de\zweiradspion\DebugHelper;
+    use de\zweiradspion\HeaderHelper;
 ?>
 <body id="std">
-    <?php include 'includes/header.php'; ?>
+    <?=HeaderHelper::printHeader('Alle Angebote')?>
 	<div id="content">
+	    <div class="subnavi">
+	        <?php if(isset($_SESSION['uid'])){ ?>
+	        <a href="list.php?filter=myOffers">Meine Angebote</a>
+	        <?php } ?>
+	    </div>
 	    <?php
         echo '<form class="search" method="post">';
         $dbObject = new DatabaseHelper();
@@ -39,6 +46,9 @@
         if($_POST){
             if($_POST['hersteller'] != -1) $condition[] = 'hersteller = "' . $_POST['hersteller'] . '"';
             if($_POST['modell'] != -1) $condition[] = 'modell = "' . $_POST['modell'] . '"';
+        }
+        if(isset($_GET['filter']) && isset($_SESSION['uid'])){
+            $condition[] = 'bike.pid = ' . $_SESSION['uid'];
         }
         $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT OUTER JOIN images ON bike.uid = images.pid";
         if(!empty($condition)) $sql .= ' where ' . implode(' and ', $condition);
