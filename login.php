@@ -22,8 +22,6 @@ if($_POST){
     $mysqlQuerySelect = mysql_query("select * from user where username='" . mysql_real_escape_string(trim($username)) ."' and password='" . md5(trim($password)) . "'");
     if (mysql_num_rows($mysqlQuerySelect)==1){ 
         $row = mysql_fetch_assoc($mysqlQuerySelect);
-        echo "<h4>Willkommen ".$row['username']."</h4>\n"; 
-        echo "Sie wurden erfolgreich eingeloggt.<br>\n";
         $showForm = false; 
         session_start();
         $_SESSION['uid'] = $row['uid'];
@@ -55,7 +53,7 @@ if($_POST){
                 </div>
                 <div class="formField<?=$passwordErr?>">
                     <p class="error">Bitte geben Sie das richtige Passwort ein</p>
-                    <label>Passwort</label><input type="text" name="password" value="<?=$password?>" />
+                    <label>Passwort</label><input type="password" name="password" value="<?=$password?>" />
                 </div>
                 <div class="formField">
                     <input class="submit" type="submit" />
