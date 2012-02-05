@@ -1,6 +1,13 @@
 <?php
 include 'includes/DatabaseHelper.php';
+include 'includes/ScaleImage.php';
+include 'includes/DebugHelper.php';
+include 'includes/HeaderHelper.php';
+include 'includes/NavigationHelper.php';
 use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DebugHelper;
+use de\zweiradspion\HeaderHelper;
+use de\zweiradspion\NavigationHelper;
 
 $showForm = true;
 $showError = false;
@@ -31,8 +38,9 @@ if($_POST){
 ?>
 <?php include 'includes/head.php'; ?>
 <body id="std">
-    <?php include 'includes/header.php'; ?>
+    <?=HeaderHelper::getHeader('Login')?>
 	<div id="content">
+        <?=NavigationHelper::getSubnavigation()?>
         <? if(isset($_SESSION['uid'])){
             $showForm = false;
         } ?>

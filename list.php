@@ -1,21 +1,22 @@
 <?php
-    include 'includes/head.php';
-    include 'includes/DatabaseHelper.php';
-    include 'includes/ScaleImage.php';
-    include 'includes/DebugHelper.php';
-    include 'includes/HeaderHelper.php';
-    use de\zweiradspion\DatabaseHelper;
-    use de\zweiradspion\DebugHelper;
-    use de\zweiradspion\HeaderHelper;
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+include 'includes/ScaleImage.php';
+include 'includes/DebugHelper.php';
+include 'includes/HeaderHelper.php';
+include 'includes/NavigationHelper.php';
+use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DebugHelper;
+use de\zweiradspion\HeaderHelper;
+use de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
-    <?=HeaderHelper::printHeader('Alle Angebote')?>
+    <?
+    $title = (isset($_GET['filter']))?'Meine Angebote':'Alle Angebote';
+    echo HeaderHelper::getHeader($title);
+    ?>
 	<div id="content">
-	    <div class="subnavi">
-	        <?php if(isset($_SESSION['uid'])){ ?>
-	        <a href="list.php?filter=myOffers">Meine Angebote</a>
-	        <?php } ?>
-	    </div>
+	    <?=NavigationHelper::getSubnavigation()?>
 	    <?php
         echo '<form class="search" method="post">';
         $dbObject = new DatabaseHelper();

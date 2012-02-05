@@ -84,7 +84,7 @@ h1 { font-size:30px; line-height:40px; color:white; }
 #header     { position: relative; margin:0 48px 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;
     @include border-radius(0 0 12px 0);
 
-    #imgLogo    { position: absolute; bottom: 40px; right: 24px; z-index: 1; }
+    #imgLogo    { position: absolute; bottom: 31px; right: 24px; z-index: 1; }
     #mainnavi   { position:absolute; bottom:0; right:0px; width: 100%; background: #676653; @include border-radius(0 0 12px 0); height:40px;
         h1 { position:absolute; left:180px; top:0; }
         ul  { position:absolute; right:25px; top:10px;
@@ -135,7 +135,7 @@ input[type=reset]:hover,
 .buttonList li  { display:inline; margin-right: 12px; }
 #content    { width:720px; margin:12px 0 60px 180px; position:relative;
     .subnavi { position:absolute; left:-160px; top:0; z-index:1;
-        a { color:white; text-decoration:none; font-weight:bold;
+        a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
             &:hover { text-decoration:underline; }
         }
     }

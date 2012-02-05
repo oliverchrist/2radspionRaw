@@ -1,11 +1,22 @@
 <?php
 include 'includes/head.php';
 include 'includes/DatabaseHelper.php';
+include 'includes/ScaleImage.php';
+include 'includes/DebugHelper.php';
+include 'includes/HeaderHelper.php';
+include 'includes/NavigationHelper.php';
 use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DebugHelper;
+use de\zweiradspion\HeaderHelper;
+use de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
-    <?php include 'includes/header.php'; ?>
+    <?
+    $title = (isset($_GET['uid']))?'Angebot ändern':'Angebot hinzufügen';
+    echo HeaderHelper::getHeader($title);
+    ?>
 	<div id="content">
+        <?=NavigationHelper::getSubnavigation()?>
 	    <?php
 	    # ist Benutzer eingeloggt?
 	    if(isset($_SESSION['uid'])){

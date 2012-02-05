@@ -1,13 +1,15 @@
-<html>
-<head>
-    <meta charset="utf-8">
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<link href="resources/stylesheets/screen.css" type="text/css" rel="stylesheet">
-	<script type="text/javascript" src="/fileadmin/templates/js/jquery-1.5.min.js"></script>
-	<script type="text/javascript" src="/fileadmin/templates/js/script.js"></script>
-
-	<title>2radspion</title>
-</head>
+<?php
+include 'includes/head.php';
+include 'includes/DatabaseHelper.php';
+include 'includes/ScaleImage.php';
+include 'includes/DebugHelper.php';
+include 'includes/HeaderHelper.php';
+include 'includes/NavigationHelper.php';
+use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DebugHelper;
+use de\zweiradspion\HeaderHelper;
+use de\zweiradspion\NavigationHelper;
+?>
 <body id="home">
 	<div class="logoBgr"></div>
 	<a href="list.php" class="logoBgr2"></a>

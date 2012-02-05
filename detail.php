@@ -2,11 +2,18 @@
 include 'includes/head.php';
 include 'includes/DatabaseHelper.php';
 include 'includes/ScaleImage.php';
+include 'includes/DebugHelper.php';
+include 'includes/HeaderHelper.php';
+include 'includes/NavigationHelper.php';
 use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DebugHelper;
+use de\zweiradspion\HeaderHelper;
+use de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
-    <?php include 'includes/header.php'; ?>
+    <?=HeaderHelper::getHeader('Detailansicht')?>
 	<div id="content">
+        <?=NavigationHelper::getSubnavigation()?>
 	    <?php
 	    $dbObject = new DatabaseHelper();
         $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT OUTER JOIN images ON bike.uid = images.pid where bike.uid=" . mysql_real_escape_string($_GET['uid']);
