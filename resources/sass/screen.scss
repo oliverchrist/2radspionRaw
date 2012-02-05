@@ -17,6 +17,7 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
 .error { color:$red; }
 img { border: none; }
 h1 { font-size:30px; line-height:40px; color:white; }
+a.lightbox { text-decoration:none; }
 
 #home { background-color: #eeb200;
 
@@ -156,9 +157,10 @@ input[type=reset]:hover,
 .contentFooter    { margin-top: 30px; }
 fieldset legend { margin-top: 12px; }
 
-.fahrradSingle { width: 510px; border-radius: 12px; background: #eeb200; padding: 12px; }
-.fahrradSingle h1 { margin: 0 0 10px; }
-.fahrradSingle img { border-radius:12px; margin: 7px 0; }
+.fahrradSingle { width: 510px; border-radius: 12px; background: #eeb200; padding: 12px;
+    h1 { margin: 0 0 10px; }
+    img { border-radius:12px; margin: 7px 15px 7px 0; }
+}
 
 #std form {
     .formField { margin-bottom:10px;

@@ -24,7 +24,8 @@ use de\zweiradspion\NavigationHelper;
         }
         	    
 	    $dbObject = new DatabaseHelper();
-        $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
+        $uid = mysql_real_escape_string($_GET['uid']);
+        $result = mysql_query("select * from bike where uid=" . $uid . " && pid=" . $_SESSION['uid']);
         # sollte unique sein
 	    if(mysql_num_rows($result) == 1){
 	        $image = '';
@@ -59,6 +60,11 @@ use de\zweiradspion\NavigationHelper;
                     <input class="submit" type="submit" />
                 </div>
             </form>
+            <?php
+            if(isset($uid)){
+            ?>
+                <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>  
+            <?php } ?>            
         <? } ?>             
     </div>
     <?php include 'includes/footer.php'; ?>

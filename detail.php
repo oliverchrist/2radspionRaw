@@ -16,9 +16,11 @@ use de\zweiradspion\NavigationHelper;
         <?=NavigationHelper::getSubnavigation()?>
 	    <?php
 	    $dbObject = new DatabaseHelper();
-        $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT OUTER JOIN images ON bike.uid = images.pid where bike.uid=" . mysql_real_escape_string($_GET['uid']);
+        $sql = "select * from bike where uid=" . mysql_real_escape_string($_GET['uid']);
+        $sql2 = "select * from images where pid=" . mysql_real_escape_string($_GET['uid']);
         $result = mysql_query($sql);
-        $row = mysql_fetch_assoc($result)
+        $result2 = mysql_query($sql2);
+        $row = mysql_fetch_assoc($result);
         ?>
         <div class="fahrradSingle" >
             <h1>Single View for Fahrrad</h1>
@@ -29,12 +31,18 @@ use de\zweiradspion\NavigationHelper;
             preis: <?=$row['preis']?><br>
             erstellt: <?=$row['erstellt']?><br>
             geaendert: <?=$row['geaendert']?><br>
-            <? if(!empty($row['name'])){
-                $imageObj = new ScaleImage($row['name'], $row['extension'], 'images');
+            <?
+            $imageWidth = 510;
+            while ($row2 = mysql_fetch_assoc($result2)) {
+                $imageObj = new ScaleImage($row2['name'], $row2['extension'], 'images');
                 #echo $imageObj->getOriginalImagePath();
-                $imagePath = $imageObj->getImagePath(510, 'auto');
-                echo '<img alt="' . $row['modell'] . '" src="' . $imagePath . '" width="510" />';
+                $imagePath = $imageObj->getImagePath($imageWidth, 'auto');
+                echo '<a class="lightbox" title="' . $row['modell'] . '" href="images/' . $row2['name'] . '.' . $row2['extension'] . '">
+                    <img alt="' . $row['modell'] . '" src="' . $imagePath . '" width="' . $imageWidth . '" />
+                </a>';
+                $imageWidth = 160;
             } ?>
+            <br>
             <? if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){ ?>
             <a class="txtLnk" href="bike.php?uid=<?=$row['uid']?>">Bearbeiten</a><br />
             <? } ?>

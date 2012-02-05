@@ -103,13 +103,13 @@ use de\zweiradspion\NavigationHelper;
                 <div class="formField">
                     <input class="submit" type="submit" value="<?=$action?>" />
                 </div>
-                <?php
-                if(isset($uid)){
-                ?>
-                    <a class="txtLnk" href="addPicture.php?uid=<?=$uid?>">Bild hinzufügen</a>  
-                    <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>  
-                <?php } ?>
             </form>
+            <?php
+            if(isset($uid)){
+            ?>
+                <a class="txtLnk" href="addPicture.php?uid=<?=$uid?>">Bild hinzufügen</a>  
+                <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>  
+            <?php } ?>            
             <? }
         } ?>
     </div>
