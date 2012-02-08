@@ -48,14 +48,16 @@ use de\zweiradspion\NavigationHelper;
             if($_POST['hersteller'] != -1) $condition[] = 'hersteller = "' . $_POST['hersteller'] . '"';
             if($_POST['modell'] != -1) $condition[] = 'modell = "' . $_POST['modell'] . '"';
         }
-        if(isset($_GET['filter']) && isset($_SESSION['uid'])){
+        if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
             $condition[] = 'bike.pid = ' . $_SESSION['uid'];
+        }
+        if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['uid'])){
+            #TODO
         }
         $sqlAdditionalCondition = '';
         if(!empty($condition)) $sqlAdditionalCondition = 'where ' . implode(' and ', $condition);
         $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT JOIN images ON bike.uid = images.pid $sqlAdditionalCondition group by bike.uid";
         
-        echo $sql;
         $result = mysql_query($sql);
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>

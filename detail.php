@@ -45,9 +45,10 @@ use de\zweiradspion\NavigationHelper;
             <br>
             <? if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){ ?>
             <a class="txtLnk" href="bike.php?uid=<?=$row['uid']?>">Bearbeiten</a><br />
+            <a class="txtLnk" href="notepad.php?uid=<?=$row['uid']?>">Merkzettel</a><br />
             <? } ?>
             <a class="txtLnk" href="#">Kontakt</a><br />
-            <a class="txtLnk" href="location.php?uid=<?=$row['pid']?>">Ort auf Karte zeigen</a><br />
+            <a class="txtLnk" href="location.php?pid=<?=$row['pid']?>&uid=<?=$row['uid']?>">Ort auf Karte zeigen</a><br />
             <a class="txtLnk" href="list.php">Back to list</a><br />
         </div>
     

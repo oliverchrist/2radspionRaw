@@ -15,9 +15,9 @@ use de\zweiradspion\NavigationHelper;
 	<div id="content">
 	    <?=NavigationHelper::getSubnavigation()?>
 	    <?php
-	        if(isset($_GET['uid'])){
+	        if(isset($_GET['pid'])){
                 $dbObject = new DatabaseHelper();
-                $result = mysql_query("select * from user where uid=" . mysql_real_escape_string($_GET['uid']));
+                $result = mysql_query("select * from user where uid=" . mysql_real_escape_string($_GET['pid']));
                 $row = mysql_fetch_assoc($result);
                 $uid = $row['uid'];
                 $latlng = $row['latLng'];
@@ -45,8 +45,9 @@ use de\zweiradspion\NavigationHelper;
                     <div id="map_canvas" style="height:500px"></div>
                 <? }else{ ?>
                     <p class="error">Keine Koordinaten in Userdaten gefunden</p>
-                <? }
-               } ?>
+                <? } ?>
+                <a class="txtLnk" href="detail.php?uid=<?=$_GET['uid']?>">Zurück</a>  
+               <?} ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>
