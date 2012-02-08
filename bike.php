@@ -74,6 +74,37 @@ use de\zweiradspion\NavigationHelper;
                         }
                     }
                 }
+            }
+            # DELETE
+            elseif(isset($_GET['uid']) && isset($_GET['process']) && $_GET['process'] == 'delete'){
+                $dbObject = new DatabaseHelper();
+                $sql = 'DELETE FROM bike WHERE uid = ' . $_GET['uid'] . ' and pid = ' . $_SESSION['uid'];
+                $result = mysql_query($sql);
+                if($result){
+                    echo 'Angebot mit der uid ' . $_GET['uid'] . ' erfolgreich gelöscht.';
+                    # Bilder finden und sicher sein, daß dem User das Bike gehörte (session), deshalb im if Zweig
+                    $sql = 'SELECT * FROM images WHERE pid = ' . $_GET['uid'];
+                    $result = mysql_query($sql);
+                    while($row = mysql_fetch_assoc($result)){
+                        $filename = 'images/' . $row['name'] . '.' . $row['extension'];
+                        if(unlink($filename)){
+                            echo '<br>' . $filename . ' wurde gelöscht.';
+                        }else{
+                            echo '<br>' . $filename . ' konnte nicht gelöscht werden.';
+                        }
+                    }
+                    $sql = 'DELETE FROM images WHERE pid = ' . $_GET['uid'];
+                    $result = mysql_query($sql);
+                    if($result){
+                        echo "Bilder mit der pid {$_GET['uid']} erfolgreich gelöscht";
+                    }else{
+                        echo "Bilder mit der pid {$_GET['uid']} konnten nicht gelöscht werden";
+                    }
+                }else{
+                    echo 'Angebot mit der uid ' . $_GET['uid'] . ' konnte nicht gelöscht werden.';
+                }
+                
+                $showForm = false;
             }elseif(isset($_GET['uid'])){
                 $dbObject = new DatabaseHelper();
                 $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
@@ -108,6 +139,7 @@ use de\zweiradspion\NavigationHelper;
             if(isset($uid)){
             ?>
                 <a class="txtLnk" href="addPicture.php?uid=<?=$uid?>">Bild hinzufügen</a>  
+                <a class="txtLnk delete" href="bike.php?uid=<?=$uid?>&process=delete">Löschen</a>  
                 <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>  
             <?php } ?>            
             <? }

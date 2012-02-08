@@ -17,17 +17,27 @@ $(document).ready(function(){
         //alert(postcode + ' ' + city);
         codeAddress(postcode + ' ' + city);
     });
+    
+    $('.delete').click(function(e){
+        
+        var link = $(this).attr('href');
+        var answere = confirm("Wirklich löschen?");
+        if(!answere){
+            e.preventDefault();
+        }
+        
+    });
 });
 
-  function codeAddress(address) {
+function codeAddress(address) {
     geocoder = new google.maps.Geocoder();
     geocoder.geocode( { 'address': address}, function(results, status) {
-      if (status == google.maps.GeocoderStatus.OK) {
-          latlng = results[0].geometry.location;
-          $('form input[name="latlng"]').val(latlng);
-          $('#register, #userdata').submit();
-      }else{
-          alert('Fehler in Adresse ' + address);
-      }
+          if (status == google.maps.GeocoderStatus.OK) {
+              latlng = results[0].geometry.location;
+              $('form input[name="latlng"]').val(latlng);
+              $('#register, #userdata').submit();
+          }else{
+              alert('Fehler in Adresse ' + address);
+          }
     });
-  }  
+}  

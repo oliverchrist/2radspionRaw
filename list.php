@@ -51,8 +51,11 @@ use de\zweiradspion\NavigationHelper;
         if(isset($_GET['filter']) && isset($_SESSION['uid'])){
             $condition[] = 'bike.pid = ' . $_SESSION['uid'];
         }
-        $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT OUTER JOIN images ON bike.uid = images.pid";
-        if(!empty($condition)) $sql .= ' where ' . implode(' and ', $condition);
+        $sqlAdditionalCondition = '';
+        if(!empty($condition)) $sqlAdditionalCondition = 'where ' . implode(' and ', $condition);
+        $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT JOIN images ON bike.uid = images.pid $sqlAdditionalCondition group by bike.uid";
+        
+        echo $sql;
         $result = mysql_query($sql);
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>
