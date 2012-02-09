@@ -34,8 +34,13 @@ function codeAddress(address) {
     geocoder.geocode( { 'address': address}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
               latlng = results[0].geometry.location;
+              lat = results[0].geometry.location.lat();
+              lng = results[0].geometry.location.lng();
+              
               $('form input[name="latlng"]').val(latlng);
-              $('#register, #userdata').submit();
+              $('form input[name="lat"]').val(lat);
+              $('form input[name="lng"]').val(lng);
+              //$('#register, #userdata').submit();
           }else{
               alert('Fehler in Adresse ' + address);
           }

@@ -46,8 +46,12 @@ use de\zweiradspion\NavigationHelper;
                 <? }else{ ?>
                     <p class="error">Keine Koordinaten in Userdaten gefunden</p>
                 <? } ?>
-                <a class="txtLnk" href="detail.php?uid=<?=$_GET['uid']?>">Zurück</a>  
-               <?} ?>
+                <? if(isset($_GET['uid'])){ ?>
+                <a class="txtLnk" href="detail.php?uid=<?=$_GET['uid']?>">Zurück</a>
+                <? }else{ ?>  
+                <a class="txtLnk" href="user.php?uid=<?=$_GET['pid']?>">Zurück</a>
+                <? } ?>
+             <?} ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

@@ -40,6 +40,8 @@ use de\zweiradspion\FormHelper;
             $postcode = $_POST['postcode'];
             $city = $_POST['city'];
             $latlng = $_POST['latlng'];
+            $lat = $_POST['lat'];
+            $lng = $_POST['lng'];
             if(empty($username)){
                 $usernameErr = ' error';
             }
@@ -76,7 +78,7 @@ use de\zweiradspion\FormHelper;
                     echo 'Benutzer ist nicht in Tabelle user oder userunconfirmed<br>';
                 }
                 # Prüfen ob email bereits existiert in Tabelle user und userunconfirmed
-                if($dbObject->valueInTable($username,'email','user') || $dbObject->valueInTable($username,'email','userunconfirmed')){
+                if($dbObject->valueInTable($email,'email','user') || $dbObject->valueInTable($email,'email','userunconfirmed')){
                     echo '<span class="error">Diese Email-Adresse gibt es bereits.</span><br>';
                     $uniqueUser = false;
                 }else{
@@ -92,14 +94,16 @@ use de\zweiradspion\FormHelper;
                     $hashFinal = hash_final($hash);
                     
                     # TODO CURDATE() ergänzen
-                    $sql = "INSERT INTO userunconfirmed (hash, username, password, email, postcode, city, latLng) VALUES ('"
+                    $sql = "INSERT INTO userunconfirmed (hash, username, password, email, postcode, city, latLng, lat, lng) VALUES ('"
                         . mysql_real_escape_string(trim($hashFinal)) . "', '"
                         . mysql_real_escape_string(trim($username)) . "', '"
                         . md5($password) . "', '"
                         . mysql_real_escape_string(trim($email)) . "', "
                         . mysql_real_escape_string(trim($postcode)) . ", '"
                         . mysql_real_escape_string(trim($city)) . "', '"
-                        . mysql_real_escape_string(trim($latlng)) . "')";
+                        . mysql_real_escape_string(trim($latlng)) . "', '"
+                        . mysql_real_escape_string(trim($lat)) . "', '"
+                        . mysql_real_escape_string(trim($lng)) . "')";
                     $result = mysql_query($sql);
                     if(!$result){
                         die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');
@@ -125,7 +129,9 @@ use de\zweiradspion\FormHelper;
         if($showForm){
 	    ?>
 	    <form method="post" id="register">
-	        <input type="hidden" name="latlng" />
+            <input type="hidden" name="latlng" />
+            <input type="hidden" name="lat" />
+            <input type="hidden" name="lng" />
 	        <div class="formField<?=$usernameErr?>">
                 <p class="error">Bitte geben Sie einen Benutzernamen ein</p>
                 <label>Benutzername</label><input type="text" name="username" value="<?=$username?>" />

@@ -42,6 +42,8 @@ use de\zweiradspion\NavigationHelper;
                 $postcode = $_POST['postcode'];
                 $city = $_POST['city'];
                 $latlng = $_POST['latlng'];
+                $lat = $_POST['lat'];
+                $lng = $_POST['lng'];
                 if(empty($username)){
                     $usernameErr = ' error';
                 }
@@ -68,7 +70,9 @@ use de\zweiradspion\NavigationHelper;
                     $sql = 'UPDATE user SET '
                             . 'postcode="' . mysql_real_escape_string(trim($postcode)) . '", '
                             . 'city="' . mysql_real_escape_string(trim($city)) . '", '
-                            . 'latLng="' . mysql_real_escape_string(trim($latlng)) . '" '
+                            . 'latLng="' . mysql_real_escape_string(trim($latlng)) . '", '
+                            . 'lat="' . mysql_real_escape_string(trim($lat)) . '", '
+                            . 'lng="' . mysql_real_escape_string(trim($lng)) . '" '
                             . 'WHERE uid=' . $_SESSION['uid'];
                     $result = mysql_query($sql);
                     if(!$result){
@@ -99,6 +103,8 @@ use de\zweiradspion\NavigationHelper;
             ?>
             <form method="post" id="userdata">
                 <input type="hidden" name="latlng" />
+                <input type="hidden" name="lat" />
+                <input type="hidden" name="lng" />
                 <div class="formField<?=$postcodeErr?>">
                     <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
                     <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$postcode?>" />
@@ -112,7 +118,7 @@ use de\zweiradspion\NavigationHelper;
                 </div>
             </form>          
             <? } ?>
-            <a class="txtLnk" href="location.php?uid=<?=$_SESSION['uid']?>">Ort auf Karte zeigen</a>
+            <a class="txtLnk" href="location.php?pid=<?=$_SESSION['uid']?>">Ort auf Karte zeigen</a>
         <? } ?>
     </div>
     <?php include 'includes/footer.php'; ?>

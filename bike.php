@@ -88,20 +88,20 @@ use de\zweiradspion\NavigationHelper;
                     while($row = mysql_fetch_assoc($result)){
                         $filename = 'images/' . $row['name'] . '.' . $row['extension'];
                         if(unlink($filename)){
-                            echo '<br>' . $filename . ' wurde gelöscht.';
+                            echo '<p>' . $filename . ' wurde gelöscht.</p>';
                         }else{
-                            echo '<br>' . $filename . ' konnte nicht gelöscht werden.';
+                            echo '<p>' . $filename . ' konnte nicht gelöscht werden.</p>';
                         }
                     }
                     $sql = 'DELETE FROM images WHERE pid = ' . $_GET['uid'];
                     $result = mysql_query($sql);
                     if($result){
-                        echo "Bilder mit der pid {$_GET['uid']} erfolgreich gelöscht";
+                        echo "<p>Bilder mit der pid {$_GET['uid']} erfolgreich gelöscht</p>";
                     }else{
-                        echo "Bilder mit der pid {$_GET['uid']} konnten nicht gelöscht werden";
+                        echo "<p>Bilder mit der pid {$_GET['uid']} konnten nicht gelöscht werden</p>";
                     }
                 }else{
-                    echo 'Angebot mit der uid ' . $_GET['uid'] . ' konnte nicht gelöscht werden.';
+                    echo '<p class="error">Angebot mit der uid ' . $_GET['uid'] . ' konnte nicht gelöscht werden.</p>';
                 }
                 
                 $showForm = false;

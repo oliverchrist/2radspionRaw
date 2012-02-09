@@ -49,7 +49,7 @@ use de\zweiradspion\NavigationHelper;
             <? } ?>
             <a class="txtLnk" href="#">Kontakt</a><br />
             <a class="txtLnk" href="location.php?pid=<?=$row['pid']?>&uid=<?=$row['uid']?>">Ort auf Karte zeigen</a><br />
-            <a class="txtLnk" href="list.php">Back to list</a><br />
+            <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
         </div>
     
     </div>          
