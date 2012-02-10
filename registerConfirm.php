@@ -15,6 +15,7 @@ use de\zweiradspion\NavigationHelper;
 	<div id="content">
         <?=NavigationHelper::getSubnavigation()?>
 	    <?php
+	    if(isset($_GET['x'])){
             # Hash aus Url holen
             $hash = $_GET['x'];
             if(!$hash) die ('Es wurde kein Hash übergeben<br>');
@@ -38,13 +39,21 @@ use de\zweiradspion\NavigationHelper;
             $username = $row['username'];
             $password = $row['password'];
             $email = $row['email'];
+            $postcode = $row['postcode'];
+            $city = $row['city'];
+            $latlng = $row['latLng'];
             
             # User in Tabelle user übertragen
-            $result = mysql_query("INSERT INTO user (hash, username, password, email) VALUES ('"
+            $result = mysql_query("INSERT INTO user (hash, username, password, email, postcode, city, latLng, lat, lng) VALUES ('"
                     . $hash . "', '"
                     . $username . "', '"
                     . $password . "', '"
-                    . $email . "')");
+                    . $email . "', "
+                    . $postcode . ", '"
+                    . $city . "', '"
+                    . $latlng . "', '"
+                    . $lat . "', '"
+                    . $lng . "')");
             if(!$result){
                 die('<span class="error">Could not write to table user</span><br>');
             }else{
@@ -58,8 +67,9 @@ use de\zweiradspion\NavigationHelper;
             }else{
                 echo 'User mit Hash ' . $hash . ' wurde in Tabelle userunconfirmed gelöscht.<br>';
             }
+        }
 	    ?>
-	    <p><a href="login.php">Login</a></p>
+	    <p><a class="txtLnk" href="login.php">Login</a></p>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

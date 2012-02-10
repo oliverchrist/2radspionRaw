@@ -7,5 +7,5 @@ const DB_PASSWORD = '';
 const DB_DATABASE = '2radspionraw';
 
 const DOMAIN = '2radspionRaw.localhost';
-const DEBUG = false;
+const DEBUG = true;
 ?>

@@ -31,7 +31,7 @@ class DatabaseHelper {
     
     public function valueInTable($value, $field, $table){
         $sql = 'select ' . $field . ' from ' . $table . ' where ' . $field . '="' . mysql_real_escape_string($value) . '"';
-        #print_r($sql);
+        print_r($sql);
         $result = mysql_query($sql);
         #print_r(mysql_num_rows($result));
         if(mysql_num_rows($result) > 0){

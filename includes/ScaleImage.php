@@ -25,8 +25,8 @@ class ScaleImage {
         $this->extension = $extension;
         $this->directory = $this->checkPath($directory);
         $this->path = $this->directory . $this->name . '.' . $this->extension;
-        list($this->width, $this->height) = getimagesize($this->path);
-        $this->image = imagecreatefromstring(file_get_contents($this->path));
+        
+        
     }
     
     private function checkPath($path) {
@@ -42,16 +42,17 @@ class ScaleImage {
 
 
     public function getImagePath($width, $height){
-        $path = $this->directory . $this->name . '_' . $width . '.jpg';
+        $path = 'images_cache/' . $this->name . '_' . $width . '.jpg';
         #echo $path . ', ' . file_exists($path);
         if(!file_exists($path)){
+            list($this->width, $this->height) = getimagesize($this->path);
             if($height == 'auto'){
                 $height = ceil($this->height * $width / $this->width);
             }
             $scaledImage = imagecreatetruecolor($width, $height);
+            $this->image = imagecreatefromstring(file_get_contents($this->path));
             imagecopyresampled($scaledImage, $this->image, 0, 0, 0, 0, $width, $height, $this->width, $this->height);
             imagejpeg($scaledImage, $path, 80);
-            echo $path . ' erzeugt<br>';
         }
         return $path;
     }

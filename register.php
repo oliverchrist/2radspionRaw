@@ -1,16 +1,20 @@
 <?php
+include 'includes/config/properties.php';
 include 'includes/head.php';
 include 'includes/DatabaseHelper.php';
 include 'includes/ScaleImage.php';
 include 'includes/DebugHelper.php';
 include 'includes/HeaderHelper.php';
 include 'includes/NavigationHelper.php';
+include 'includes/FormHelper.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
 use de\zweiradspion\NavigationHelper;
+use de\zweiradspion\FormHelper;
 ?>
 <body id="std">
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <?=HeaderHelper::getHeader('Registrierung')?>
 	<div id="content">
         <?=NavigationHelper::getSubnavigation()?>
@@ -23,12 +27,21 @@ use de\zweiradspion\NavigationHelper;
         $password2Err = '';
         $email = '';
         $emailErr = '';
+        $postcode = '';
+        $postcodeErr = '';
+        $city = '';
+        $cityErr = '';
         $showForm = true;
 	    if($_POST){
     	    $username = $_POST['username'];
             $password = $_POST['password'];
             $password2 = $_POST['password2'];
             $email = $_POST['email'];
+            $postcode = $_POST['postcode'];
+            $city = $_POST['city'];
+            $latlng = $_POST['latlng'];
+            $lat = $_POST['lat'];
+            $lng = $_POST['lng'];
             if(empty($username)){
                 $usernameErr = ' error';
             }
@@ -41,11 +54,19 @@ use de\zweiradspion\NavigationHelper;
             if(empty($email) || !FormHelper::isEmail($email)){
                 $emailErr = ' error';
             }
+            if(empty($postcode)){
+                $postcodeErr = ' error';
+            }
+            if(empty($city)){
+                $cityErr = ' error';
+            }
             if(
                 !empty($username)
                 && !empty($password)
                 && !empty($password2)
                 && FormHelper::isEmail($email)
+                && !empty($postcode)
+                && !empty($city)
             ){
                 # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
                 $uniqueUser = true;
@@ -57,7 +78,7 @@ use de\zweiradspion\NavigationHelper;
                     echo 'Benutzer ist nicht in Tabelle user oder userunconfirmed<br>';
                 }
                 # Prüfen ob email bereits existiert in Tabelle user und userunconfirmed
-                if($dbObject->valueInTable($username,'email','user') || $dbObject->valueInTable($username,'email','userunconfirmed')){
+                if($dbObject->valueInTable($email,'email','user') || $dbObject->valueInTable($email,'email','userunconfirmed')){
                     echo '<span class="error">Diese Email-Adresse gibt es bereits.</span><br>';
                     $uniqueUser = false;
                 }else{
@@ -73,11 +94,17 @@ use de\zweiradspion\NavigationHelper;
                     $hashFinal = hash_final($hash);
                     
                     # TODO CURDATE() ergänzen
-                    $result = mysql_query("INSERT INTO userunconfirmed (hash, username, password, email) VALUES ('"
+                    $sql = "INSERT INTO userunconfirmed (hash, username, password, email, postcode, city, latLng, lat, lng) VALUES ('"
                         . mysql_real_escape_string(trim($hashFinal)) . "', '"
                         . mysql_real_escape_string(trim($username)) . "', '"
                         . md5($password) . "', '"
-                        . mysql_real_escape_string(trim($email)) . "')");
+                        . mysql_real_escape_string(trim($email)) . "', "
+                        . mysql_real_escape_string(trim($postcode)) . ", '"
+                        . mysql_real_escape_string(trim($city)) . "', '"
+                        . mysql_real_escape_string(trim($latlng)) . "', '"
+                        . mysql_real_escape_string(trim($lat)) . "', '"
+                        . mysql_real_escape_string(trim($lng)) . "')";
+                    $result = mysql_query($sql);
                     if(!$result){
                         die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');
                     }else{
@@ -88,7 +115,7 @@ use de\zweiradspion\NavigationHelper;
                     $header = 'From: webmaster@2radspion.de' . "\r\n" .
                         'Reply-To: webmaster@2radspion.de' . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
-                    $message = 'Guten Tag ' . $username . ',' . "\n" . 'klicken Sie bitte auf diesen Link: http://' . DB_DOMAIN . '/registerConfirm.php?x=' . $hashFinal;
+                    $message = 'Guten Tag ' . $username . ',' . "\n" . 'klicken Sie bitte auf diesen Link: http://' . de\zweiradspion\DOMAIN . '/registerConfirm.php?x=' . $hashFinal;
                     $mailSend = mail($email, '2radspion Confirm', $message, $header);
                     if(!$mailSend){
                         die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
@@ -101,7 +128,10 @@ use de\zweiradspion\NavigationHelper;
         }
         if($showForm){
 	    ?>
-	    <form method="post">
+	    <form method="post" id="register">
+            <input type="hidden" name="latlng" />
+            <input type="hidden" name="lat" />
+            <input type="hidden" name="lng" />
 	        <div class="formField<?=$usernameErr?>">
                 <p class="error">Bitte geben Sie einen Benutzernamen ein</p>
                 <label>Benutzername</label><input type="text" name="username" value="<?=$username?>" />
@@ -118,8 +148,16 @@ use de\zweiradspion\NavigationHelper;
                 <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>
                 <label>Email</label><input type="text" name="email" value="<?=$email?>" />
             </div>
+            <div class="formField<?=$postcodeErr?>">
+                <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
+                <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$postcode?>" />
+            </div>
+            <div class="formField<?=$cityErr?>">
+                <p class="error">Bitte geben Sie einen gültigen Ort ein</p>
+                <label>Ort</label><input type="text" name="city" value="<?=$city?>" />
+            </div>
             <div class="formField">
-                <input class="submit" type="submit" />
+                <input class="submit" type="button" value="Senden" />
             </div>
 	    </form>
 	    <? } ?>
