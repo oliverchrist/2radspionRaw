@@ -142,7 +142,7 @@ input[type=reset]:hover,
     }
 }
 
-.search { padding:20px 0; }
+
 .bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 12px; border-radius: 12px; background: #eeb200; position: relative;
     .thumb { float: left; margin-right: 10px; width: 200px;
         img { border-radius:12px; width:200px; }
@@ -169,8 +169,13 @@ fieldset legend { margin-top: 12px; }
             p.error { display:block; }
         }
         label { width:200px; display:inline-block; }
-        input { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
-        input.submit { margin-left:200px; width:220px; background:$red; color:white; }
+        
+        
     }
+    input[type=text],input[type=submit] { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
+    input.submit { margin-left:200px; width:220px; background:$red; color:white; }
 }
 
+#std form.search { padding:20px 0;
+    .submit { margin-left:20px; width:auto; }
+}

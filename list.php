@@ -41,10 +41,14 @@ use de\zweiradspion\NavigationHelper;
             }
             echo '</select>';
         }
+        $orderDistanceChecked = (isset($_POST['orderDistance'])) ? ' checked="checked"' : '';
+        echo '<input name="orderDistance" type="checkbox"' . $orderDistanceChecked . '><label>Nahe Angebote zuerst</label>';
+        echo '<input type="submit" class="submit" value="Filtern">';
         echo '</form>';
 
         $condition = array();
         $join = array();
+        $order = array();
         if($_POST){
             if($_POST['hersteller'] != -1) $condition[] = 'hersteller = "' . $_POST['hersteller'] . '"';
             if($_POST['modell'] != -1) $condition[] = 'modell = "' . $_POST['modell'] . '"';
@@ -58,6 +62,7 @@ use de\zweiradspion\NavigationHelper;
         }
         $sqlAdditionalCondition = '';
         $sqlAdditionalJoin = '';
+        $sqlOrder = (isset($_POST['orderDistance'])) ? 'distance ASC, ' : '';
         if(!empty($condition)) $sqlAdditionalCondition = 'where ' . implode(' and ', $condition);
         if(!empty($join)) $sqlAdditionalJoin = ' ' . implode(' ', $join);
         $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert"
@@ -65,7 +70,7 @@ use de\zweiradspion\NavigationHelper;
             . ",user.lat, user.lng, (111.3 * ({$_SESSION['lat']} - user.lat)) as dy, (71.5 * ({$_SESSION['lng']} - user.lng)) as dx"
             . ", sqrt( POW((71.5 * ({$_SESSION['lng']} - user.lng)),2) + POW((111.3 * ({$_SESSION['lat']} - user.lat)),2) ) as distance"
             . " from bike LEFT JOIN images ON bike.uid = images.pid LEFT JOIN user ON user.uid = bike.pid {$sqlAdditionalJoin}"
-            . " {$sqlAdditionalCondition} group by bike.uid order by bike.erstellt";
+            . " {$sqlAdditionalCondition} group by bike.uid order by {$sqlOrder}bike.erstellt";
         $result = mysql_query($sql);
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>
@@ -86,6 +91,7 @@ use de\zweiradspion\NavigationHelper;
                         <?=DebugHelper::info('dx: ' . $row['dx'])?>
                         <?=DebugHelper::info('dy: ' . $row['dy'])?>
                         <?=DebugHelper::info('distance: ' . $row['distance'])?>
+                        Entfernung: <?printf("%.2f", $row['distance']);?> km<br>
                         hersteller: <?=$row['hersteller']?><br>
                         modell: <?=$row['modell']?><br>
                         preis: <?=$row['preis']?><br>
