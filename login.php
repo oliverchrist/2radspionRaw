@@ -27,6 +27,8 @@ if($_POST){
         $_SESSION['uid'] = $row['uid'];
         $_SESSION['username'] = $row['username'];
         $_SESSION['email'] = $row['email'];
+        $_SESSION['lat'] = $row['lat'];
+        $_SESSION['lng'] = $row['lng'];
         $showForm = false;
     } 
     else{

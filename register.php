@@ -101,9 +101,9 @@ use de\zweiradspion\FormHelper;
                         . mysql_real_escape_string(trim($email)) . "', "
                         . mysql_real_escape_string(trim($postcode)) . ", '"
                         . mysql_real_escape_string(trim($city)) . "', '"
-                        . mysql_real_escape_string(trim($latlng)) . "', '"
-                        . mysql_real_escape_string(trim($lat)) . "', '"
-                        . mysql_real_escape_string(trim($lng)) . "')";
+                        . mysql_real_escape_string(trim($latlng)) . "', "
+                        . mysql_real_escape_string(trim($lat)) . ", "
+                        . mysql_real_escape_string(trim($lng)) . ")";
                     $result = mysql_query($sql);
                     if(!$result){
                         die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');

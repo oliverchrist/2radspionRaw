@@ -51,9 +51,9 @@ use de\zweiradspion\NavigationHelper;
                     . $email . "', "
                     . $postcode . ", '"
                     . $city . "', '"
-                    . $latlng . "', '"
-                    . $lat . "', '"
-                    . $lng . "')");
+                    . $latlng . "', "
+                    . $lat . ", "
+                    . $lng . ")");
             if(!$result){
                 die('<span class="error">Could not write to table user</span><br>');
             }else{

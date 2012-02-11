@@ -13,7 +13,13 @@ class HeaderHelper {
             <img src="resources/images/logo_folgeseiten.png" id="imgLogo" />';
             # Session Daten anzeigen, wenn Benutzer eingeloggt ist        
             if($_SESSION && DEBUG){
-                $header .= '<div class="sessionData">uid: ' . $_SESSION['uid'] . ', username: ' . $_SESSION['username'] . ', email: ' . $_SESSION['email'] . '</div>';
+                $header .= '<div class="sessionData">uid: ' 
+                    . $_SESSION['uid'] 
+                    . ', username: ' . $_SESSION['username'] 
+                    . ', email: ' . $_SESSION['email'] 
+                    . ', lat: ' . $_SESSION['lat']
+                    . ', lng: ' . $_SESSION['lng']
+                    . '</div>';
             }
             $header .= '<div id="mainnavi"><h1>' . $headline . '</h1>
             <ul>';

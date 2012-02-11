@@ -60,7 +60,12 @@ use de\zweiradspion\NavigationHelper;
         $sqlAdditionalJoin = '';
         if(!empty($condition)) $sqlAdditionalCondition = 'where ' . implode(' and ', $condition);
         if(!empty($join)) $sqlAdditionalJoin = ' ' . implode(' ', $join);
-        $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert,name,extension,reihenfolge from bike LEFT JOIN images ON bike.uid = images.pid {$sqlAdditionalJoin} {$sqlAdditionalCondition} group by bike.uid order by bike.erstellt";
+        $sql = "select bike.uid,bike.pid,hersteller,modell,preis,bike.erstellt,bike.geaendert"
+            . ",name,extension,reihenfolge"
+            . ",user.lat, user.lng, (111.3 * ({$_SESSION['lat']} - user.lat)) as dy, (71.5 * ({$_SESSION['lng']} - user.lng)) as dx"
+            . ", sqrt( POW((71.5 * ({$_SESSION['lng']} - user.lng)),2) + POW((111.3 * ({$_SESSION['lat']} - user.lat)),2) ) as distance"
+            . " from bike LEFT JOIN images ON bike.uid = images.pid LEFT JOIN user ON user.uid = bike.pid {$sqlAdditionalJoin}"
+            . " {$sqlAdditionalCondition} group by bike.uid order by bike.erstellt";
         $result = mysql_query($sql);
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>
@@ -76,6 +81,11 @@ use de\zweiradspion\NavigationHelper;
                     <div class="cnt">
                         <?=DebugHelper::info('uid: ' . $row['uid'])?>
                         <?=DebugHelper::info('pid: ' . $row['pid'])?>
+                        <?=DebugHelper::info('lat: ' . $row['lat'])?>
+                        <?=DebugHelper::info('lng: ' . $row['lng'])?>
+                        <?=DebugHelper::info('dx: ' . $row['dx'])?>
+                        <?=DebugHelper::info('dy: ' . $row['dy'])?>
+                        <?=DebugHelper::info('distance: ' . $row['distance'])?>
                         hersteller: <?=$row['hersteller']?><br>
                         modell: <?=$row['modell']?><br>
                         preis: <?=$row['preis']?><br>
