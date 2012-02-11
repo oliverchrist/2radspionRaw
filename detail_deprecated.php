@@ -26,7 +26,7 @@ use de\zweiradspion\NavigationHelper;
             <h1>Single View for Fahrrad</h1>
             uid: <?=$row['uid']?><br>
             pid: <?=$row['pid']?><br>
-            hersteller: <?=$row['hersteller']?><br>
+            Marke: <?=$row['marke']?><br>
             modell: <?=$row['modell']?><br>
             preis: <?=$row['preis']?><br>
             erstellt: <?=$row['erstellt']?><br>

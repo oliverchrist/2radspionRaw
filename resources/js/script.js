@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('.search select[name=hersteller], .search select[name=modell]').change(function(){
+    $('.search select[name=marke], .search select[name=modell]').change(function(){
         $(this).parent().submit();
     });
     $('a.lightbox').lightBox({

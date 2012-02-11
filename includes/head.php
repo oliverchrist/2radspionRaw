@@ -1,4 +1,11 @@
 <?php
+include 'includes/properties/properties.php';
+function __autoload($className){
+    $fileName = 'includes/' . str_replace('\\', '/', $className) . '.php';
+    #echo "load Class: $fileName<br>";
+    require $fileName;
+}
+
 if(!isset($_SESSION)) session_start();
 echo '
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

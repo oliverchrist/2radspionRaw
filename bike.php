@@ -1,10 +1,5 @@
 <?php
 include 'includes/head.php';
-include 'includes/DatabaseHelper.php';
-include 'includes/ScaleImage.php';
-include 'includes/DebugHelper.php';
-include 'includes/HeaderHelper.php';
-include 'includes/NavigationHelper.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -21,8 +16,8 @@ use de\zweiradspion\NavigationHelper;
 	    # ist Benutzer eingeloggt?
 	    if(isset($_SESSION['uid'])){
             $uid = '';
-            $herstellerErr = '';
-            $hersteller = '';
+            $markeErr = '';
+            $marke = '';
             $modellErr = '';
             $modell = '';
             $preisErr = '';
@@ -32,24 +27,24 @@ use de\zweiradspion\NavigationHelper;
             
             if($_POST){
                 $uid = $_POST['uid'];
-                $hersteller = $_POST['hersteller'];
+                $marke = $_POST['marke'];
                 $modell = $_POST['modell'];
                 $preis = $_POST['preis'];
-                if(empty($hersteller)) $herstellerErr = ' error';
+                if(empty($marke)) $markeErr = ' error';
                 if(empty($modell)) $modellErr = ' error';
                 if(empty($preis)) $preisErr = ' error';
                 # Wenn alle Eingaben ok sind
                 if(
-                    !empty($hersteller)
+                    !empty($marke)
                     && !empty($modell)
                     && !empty($preis)
                 ){
                     $dbObject = new DatabaseHelper();
                     # insert
                     if(empty($uid)){
-                        $result = mysql_query("INSERT INTO bike (pid, hersteller, modell, preis, erstellt, geaendert) VALUES ('"
+                        $result = mysql_query("INSERT INTO bike (pid, marke, modell, preis, erstellt, geaendert) VALUES ('"
                             . $_SESSION['uid'] . "', '"
-                            . mysql_real_escape_string(trim($hersteller)) . "', '"
+                            . mysql_real_escape_string(trim($marke)) . "', '"
                             . mysql_real_escape_string(trim($modell)) . "', '"
                             . mysql_real_escape_string(trim($preis))
                             . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
@@ -62,7 +57,7 @@ use de\zweiradspion\NavigationHelper;
                     # update
                     }else{
                         $result = mysql_query('UPDATE bike SET '
-                            . 'hersteller="' . mysql_real_escape_string(trim($hersteller)) . '", '
+                            . 'marke="' . mysql_real_escape_string(trim($marke)) . '", '
                             . 'modell="' . mysql_real_escape_string(trim($modell)) . '", '
                             . 'preis="' . mysql_real_escape_string(trim($preis)) . '"'
                             . 'WHERE uid=' . mysql_real_escape_string(trim($uid)));
@@ -110,7 +105,7 @@ use de\zweiradspion\NavigationHelper;
                 $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
                 $row = mysql_fetch_assoc($result);
                 $uid = $row['uid'];
-                $hersteller = $row['hersteller'];
+                $marke = $row['marke'];
                 $modell = $row['modell'];
                 $preis = $row['preis'];
             }
@@ -119,9 +114,9 @@ use de\zweiradspion\NavigationHelper;
             ?>
             <form method="post" action="bike.php">
                 <input type="hidden" name="uid" value="<?=$uid?>" />
-                <div class="formField<?=$herstellerErr?>">
+                <div class="formField<?=$markeErr?>">
                     <p class="error">Bitte geben Sie einen Herrsteller ein</p>
-                    <label>Hersteller</label><input type="text" name="hersteller" value="<?=$hersteller?>" />
+                    <label>Marke</label><input type="text" name="marke" value="<?=$marke?>" />
                 </div>
                 <div class="formField<?=$modellErr?>">
                     <p class="error">Bitte geben Sie ein Modell ein</p>

@@ -172,7 +172,7 @@ fieldset legend { margin-top: 12px; }
         
         
     }
-    input[type=text],input[type=submit] { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
+    input[type=text],input[type=submit],input[type=password],input[type=button] { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
     input.submit { margin-left:200px; width:220px; background:$red; color:white; }
 }
 

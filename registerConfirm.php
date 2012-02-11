@@ -1,10 +1,5 @@
 <?php
 include 'includes/head.php';
-include 'includes/DatabaseHelper.php';
-include 'includes/ScaleImage.php';
-include 'includes/DebugHelper.php';
-include 'includes/HeaderHelper.php';
-include 'includes/NavigationHelper.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -42,6 +37,8 @@ use de\zweiradspion\NavigationHelper;
             $postcode = $row['postcode'];
             $city = $row['city'];
             $latlng = $row['latLng'];
+            $lat = $row['lat'];
+            $lng = $row['lng'];
             
             # User in Tabelle user übertragen
             $result = mysql_query("INSERT INTO user (hash, username, password, email, postcode, city, latLng, lat, lng) VALUES ('"

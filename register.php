@@ -1,12 +1,5 @@
 <?php
-include 'includes/config/properties.php';
 include 'includes/head.php';
-include 'includes/DatabaseHelper.php';
-include 'includes/ScaleImage.php';
-include 'includes/DebugHelper.php';
-include 'includes/HeaderHelper.php';
-include 'includes/NavigationHelper.php';
-include 'includes/FormHelper.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -54,7 +47,7 @@ use de\zweiradspion\FormHelper;
             if(empty($email) || !FormHelper::isEmail($email)){
                 $emailErr = ' error';
             }
-            if(empty($postcode)){
+            if(empty($postcode) || !preg_match('/\d{,5}/', $postcode)){
                 $postcodeErr = ' error';
             }
             if(empty($city)){
