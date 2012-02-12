@@ -10,8 +10,9 @@ use de\zweiradspion\HeaderHelper,
 	<div id="content">
         <?=NavigationHelper::getSubnavigation()?>
 	<?php
-	$fahrrad = new Fahrrad();
+	
         if(isset($_GET['uid'])){
+            $fahrrad = new Fahrrad();
             $fahrrad->loadFromDatabase($_GET['uid']);
         
             ?>

@@ -1,7 +1,8 @@
 <?php
 namespace de\zweiradspion;
 use de\zweiradspion\Bild,
-    de\zweiradspion\DatabaseHelper;
+    de\zweiradspion\DatabaseHelper,
+    de\zweiradspion\eigenschaft\Radtyp;
 
 /**
  * Das Rad
@@ -28,6 +29,9 @@ class Fahrrad extends Persistenz {
     protected $preis;
     protected $bilder;
 
+    public function __construct(){
+        $this->bilder = array();
+    }
 
     public function loadFromDatabase($uid) {
 	$dbObject = new DatabaseHelper();
@@ -70,7 +74,7 @@ class Fahrrad extends Persistenz {
 
 
     public function setPid($pid){ $this->pid = $pid; }
-    public function setRadtyp($radtyp){ $this->radtyp = $radtyp; }
+    public function setRadtyp($radtyp){ $this->radtyp = new Radtyp($radtyp); }
     public function setGeschlecht($geschlecht){ $this->geschlecht = $geschlecht; }
     public function setZustand($zustand){ $this->zustand = $zustand; }
     public function setLaufleistung($laufleistung){ $this->laufleistung = $laufleistung; }

@@ -57,7 +57,7 @@ include 'includes/head.php';
                     <input class="submit" type="submit" />
                 </div>
             </form>	    
-            <p><a href="passwordRequest.php">Passwort vergessen?</a></p>
+            <p><a href="passwordRequest.php" class="txtLnk">Passwort vergessen?</a></p>
         <? } ?>
     </div>
     <?php include 'includes/footer.php'; ?>

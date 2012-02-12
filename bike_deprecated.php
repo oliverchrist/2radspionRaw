@@ -1,9 +1,10 @@
 <?php
 include 'includes/init.php';
 include 'includes/head.php';
-use de\zweiradspion\HeaderHelper,
-    de\zweiradspion\NavigationHelper,
-    de\zweiradspion\Fahrrad;
+use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DebugHelper;
+use de\zweiradspion\HeaderHelper;
+use de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
     <?
@@ -15,11 +16,13 @@ use de\zweiradspion\HeaderHelper,
 	    <?php
 	    # ist Benutzer eingeloggt?
 	    if(isset($_SESSION['uid'])){
-	        $fahrrad = new Fahrrad();
-            
+            $uid = '';
             $markeErr = '';
+            $marke = '';
             $modellErr = '';
+            $modell = '';
             $preisErr = '';
+            $preis = '';
             $showForm = true;
             
             if($_POST){
@@ -36,6 +39,7 @@ use de\zweiradspion\HeaderHelper,
                     && !empty($modell)
                     && !empty($preis)
                 ){
+                    $dbObject = new DatabaseHelper();
                     # insert
                     if(empty($uid)){
                         $result = mysql_query("INSERT INTO bike (pid, marke, modell, preis, erstellt, geaendert) VALUES ('"
@@ -97,11 +101,13 @@ use de\zweiradspion\HeaderHelper,
                 
                 $showForm = false;
             }elseif(isset($_GET['uid'])){
-                $fahrrad->loadFromDatabase($_GET['uid']);
-                $uid = $fahrrad->getUid();
-                $marke = $fahrrad->getMarke();
-                $modell = $fahrrad->getModell();
-                $preis = $fahrrad->getPreis();
+                $dbObject = new DatabaseHelper();
+                $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
+                $row = mysql_fetch_assoc($result);
+                $uid = $row['uid'];
+                $marke = $row['marke'];
+                $modell = $row['modell'];
+                $preis = $row['preis'];
             }
     
             if($showForm){
@@ -121,11 +127,7 @@ use de\zweiradspion\HeaderHelper,
                     <label>Preis</label><input type="text" name="preis" value="<?=$preis?>" />
                 </div>
                 <div class="formField">
-                    <label>Radtyp</label>
-                    <?=$fahrrad->getRadtyp()->getDropdown()?>
-                </div>
-                <div class="formField">
-                    <input class="submit" type="submit" value="Senden" />
+                    <input class="submit" type="submit" value="<?=$action?>" />
                 </div>
             </form>
             <?php
