@@ -1,5 +1,5 @@
 <?php
-include 'includes/head.php';
+include 'includes/init.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -25,11 +25,13 @@ if($_POST){
         $_SESSION['lat'] = $row['lat'];
         $_SESSION['lng'] = $row['lng'];
         $showForm = false;
+        Header("Location: list.php"); 
     } 
     else{
         $showError = true; 
     } 
 }
+include 'includes/head.php';
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Login')?>

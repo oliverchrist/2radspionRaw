@@ -1,4 +1,5 @@
 <?php
+include 'includes/init.php';
 include 'includes/head.php';
 use de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
@@ -38,10 +39,12 @@ use de\zweiradspion\HeaderHelper,
                 <br>
                 <? if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
                 <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
-                <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Merkzettel</a><br />
+                <? } ?>
+                <? if(isset($_SESSION['uid'])){ ?>
+                <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
                 <? } ?>
                 <a class="txtLnk" href="#">Kontakt</a><br />
-                <a class="txtLnk" href="location.php?pid=<?=$fahrrad->getPid()?>&uid=<?=$fahrrad->getUid()?>">Ort auf Karte zeigen</a><br />
+                <a class="txtLnk" href="location.php?pid=<?=$fahrrad->getPid()?>&uid=<?=$fahrrad->getUid()?>">Karte</a><br />
                 <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
             </div>
         <? } ?>

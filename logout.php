@@ -1,4 +1,5 @@
 <?php
+include 'includes/init.php';
 include 'includes/head.php';
 
 $_SESSION = array(); 
