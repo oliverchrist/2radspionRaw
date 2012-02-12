@@ -12,9 +12,7 @@ use de\zweiradspion\HeaderHelper,
 	<?php
 	
         if(isset($_GET['uid'])){
-            $fahrrad = new Fahrrad();
-            $fahrrad->loadFromDatabase($_GET['uid']);
-        
+            $fahrrad = new Fahrrad($_GET['uid']);
             ?>
             <div class="fahrradSingle" >
                 <h1>Single View for Fahrrad</h1>
@@ -23,6 +21,18 @@ use de\zweiradspion\HeaderHelper,
                 Marke: <?=$fahrrad->getMarke()?><br>
                 modell: <?=$fahrrad->getModell()?><br>
                 preis: <?=$fahrrad->getPreis()?><br>
+                Radtyp: <?=$fahrrad->getRadtyp()?><br>
+                Geschlecht: <?=$fahrrad->getGeschlecht()?><br>
+                Zustand: <?=$fahrrad->getZustand()?><br>
+                Laufleistung: <?=$fahrrad->getLaufleistung()?><br>
+                Radgroesse: <?=$fahrrad->getRadgroesse()?><br>
+                Rahmenhoehe: <?=$fahrrad->getRahmenhoehe()?><br>
+                Farbe: <?=$fahrrad->getFarbe()?><br>
+                Bremssystem: <?=$fahrrad->getBremssystem()?><br>
+                Schaltungstyp: <?=$fahrrad->getSchaltungstyp()?><br>
+                Rahmenmaterial: <?=$fahrrad->getRahmenmaterial()?><br>
+                Beleuchtungsart: <?=$fahrrad->getBeleuchtungsart()?><br>
+                Einsatzbereich: <?=$fahrrad->getEinsatzbereich()?><br>                
                 erstellt: <?=$fahrrad->getErstellt()?><br>
                 geaendert: <?=$fahrrad->getGeaendert()?><br>
                 <? 
