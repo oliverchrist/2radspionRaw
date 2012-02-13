@@ -71,7 +71,7 @@ use de\zweiradspion\NavigationHelper;
             }
             $sql .= " from bike LEFT JOIN images ON bike.uid = images.pid LEFT JOIN user ON user.uid = bike.pid {$sqlAdditionalJoin}"
             . " {$sqlAdditionalCondition} group by bike.uid order by {$sqlOrder}bike.erstellt";
-            #echo $sql;
+        #echo $sql;
         $result = mysql_query($sql);
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>
