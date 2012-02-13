@@ -48,7 +48,7 @@ use de\zweiradspion\FormHelper;
             if(empty($email) || !FormHelper::isEmail($email)){
                 $emailErr = ' error';
             }
-            if(empty($postcode) || !preg_match('/\d{,5}/', $postcode)){
+            if(empty($postcode) || !preg_match('/\d{5}/', $postcode)){
                 $postcodeErr = ' error';
             }
             if(empty($city)){
@@ -98,6 +98,7 @@ use de\zweiradspion\FormHelper;
                         . mysql_real_escape_string(trim($latlng)) . "', "
                         . mysql_real_escape_string(trim($lat)) . ", "
                         . mysql_real_escape_string(trim($lng)) . ")";
+                    #echo $sql;
                     $result = mysql_query($sql);
                     if(!$result){
                         die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');

@@ -95,7 +95,7 @@ class Fahrrad extends Persistenz {
             . 'radgroesse="' . mysql_real_escape_string(trim($this->radgroesse->getValue())) . '", '
             . 'rahmenhoehe="' . mysql_real_escape_string(trim($this->rahmenhoehe->getValue())) . '", '
             . 'marke="' . mysql_real_escape_string(trim($this->marke->getValue())) . '", '
-            . 'modell="' . mysql_real_escape_string(trim($this->modell->getValue())) . '", '
+            . 'modell="' . mysql_real_escape_string(trim($this->modell)) . '", '
             . 'farbe="' . mysql_real_escape_string(trim($this->farbe->getValue())) . '", '
             . 'bremssystem="' . mysql_real_escape_string(trim($this->bremssystem->getValue())) . '", '
             . 'schaltungstyp="' . mysql_real_escape_string(trim($this->schaltungstyp->getValue())) . '", '
