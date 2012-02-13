@@ -1,9 +1,5 @@
 <?php
-include 'includes/DatabaseHelper.php';
-include 'includes/ScaleImage.php';
-include 'includes/DebugHelper.php';
-include 'includes/HeaderHelper.php';
-include 'includes/NavigationHelper.php';
+include 'includes/init.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -23,18 +19,20 @@ if($_POST){
     if (mysql_num_rows($mysqlQuerySelect)==1){ 
         $row = mysql_fetch_assoc($mysqlQuerySelect);
         $showForm = false; 
-        session_start();
         $_SESSION['uid'] = $row['uid'];
         $_SESSION['username'] = $row['username'];
         $_SESSION['email'] = $row['email'];
+        $_SESSION['lat'] = $row['lat'];
+        $_SESSION['lng'] = $row['lng'];
         $showForm = false;
+        Header("Location: list.php"); 
     } 
     else{
         $showError = true; 
     } 
 }
+include 'includes/head.php';
 ?>
-<?php include 'includes/head.php'; ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Login')?>
 	<div id="content">
@@ -59,7 +57,7 @@ if($_POST){
                     <input class="submit" type="submit" />
                 </div>
             </form>	    
-            <p><a href="passwordRequest.php">Passwort vergessen?</a></p>
+            <p><a href="passwordRequest.php" class="txtLnk">Passwort vergessen?</a></p>
         <? } ?>
     </div>
     <?php include 'includes/footer.php'; ?>

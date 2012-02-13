@@ -1,57 +1,64 @@
 <?php
+include 'includes/init.php';
 include 'includes/head.php';
-include 'includes/DatabaseHelper.php';
-include 'includes/ScaleImage.php';
-include 'includes/DebugHelper.php';
-include 'includes/HeaderHelper.php';
-include 'includes/NavigationHelper.php';
-use de\zweiradspion\DatabaseHelper;
-use de\zweiradspion\DebugHelper;
-use de\zweiradspion\HeaderHelper;
-use de\zweiradspion\NavigationHelper;
+use de\zweiradspion\HeaderHelper,
+    de\zweiradspion\NavigationHelper,
+    de\zweiradspion\Fahrrad;
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Detailansicht')?>
 	<div id="content">
         <?=NavigationHelper::getSubnavigation()?>
-	    <?php
-	    $dbObject = new DatabaseHelper();
-        $sql = "select * from bike where uid=" . mysql_real_escape_string($_GET['uid']);
-        $sql2 = "select * from images where pid=" . mysql_real_escape_string($_GET['uid']);
-        $result = mysql_query($sql);
-        $result2 = mysql_query($sql2);
-        $row = mysql_fetch_assoc($result);
-        ?>
-        <div class="fahrradSingle" >
-            <h1>Single View for Fahrrad</h1>
-            uid: <?=$row['uid']?><br>
-            pid: <?=$row['pid']?><br>
-            hersteller: <?=$row['hersteller']?><br>
-            modell: <?=$row['modell']?><br>
-            preis: <?=$row['preis']?><br>
-            erstellt: <?=$row['erstellt']?><br>
-            geaendert: <?=$row['geaendert']?><br>
-            <?
-            $imageWidth = 510;
-            while ($row2 = mysql_fetch_assoc($result2)) {
-                $imageObj = new ScaleImage($row2['name'], $row2['extension'], 'images');
-                #echo $imageObj->getOriginalImagePath();
-                $imagePath = $imageObj->getImagePath($imageWidth, 'auto');
-                echo '<a class="lightbox" title="' . $row['modell'] . '" href="images/' . $row2['name'] . '.' . $row2['extension'] . '">
-                    <img alt="' . $row['modell'] . '" src="' . $imagePath . '" width="' . $imageWidth . '" />
-                </a>';
-                $imageWidth = 160;
-            } ?>
-            <br>
-            <? if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){ ?>
-            <a class="txtLnk" href="bike.php?uid=<?=$row['uid']?>">Bearbeiten</a><br />
-            <a class="txtLnk" href="notepad.php?uid=<?=$row['uid']?>">Merkzettel</a><br />
-            <? } ?>
-            <a class="txtLnk" href="#">Kontakt</a><br />
-            <a class="txtLnk" href="location.php?pid=<?=$row['pid']?>&uid=<?=$row['uid']?>">Ort auf Karte zeigen</a><br />
-            <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
-        </div>
-    
+	<?php
+	
+        if(isset($_GET['uid'])){
+            $fahrrad = new Fahrrad($_GET['uid']);
+            ?>
+            <div class="fahrradSingle" >
+                <h1>Single View for Fahrrad</h1>
+                uid: <?=$fahrrad->getUid()?><br>
+                pid: <?=$fahrrad->getPid()?><br>
+                Marke: <?=$fahrrad->getMarke()?><br>
+                modell: <?=$fahrrad->getModell()?><br>
+                preis: <?=$fahrrad->getPreis()?><br>
+                Radtyp: <?=$fahrrad->getRadtyp()?><br>
+                Geschlecht: <?=$fahrrad->getGeschlecht()?><br>
+                Zustand: <?=$fahrrad->getZustand()?><br>
+                Laufleistung: <?=$fahrrad->getLaufleistung()?><br>
+                Radgroesse: <?=$fahrrad->getRadgroesse()?><br>
+                Rahmenhoehe: <?=$fahrrad->getRahmenhoehe()?><br>
+                Farbe: <?=$fahrrad->getFarbe()?><br>
+                Bremssystem: <?=$fahrrad->getBremssystem()?><br>
+                Schaltungstyp: <?=$fahrrad->getSchaltungstyp()?><br>
+                Rahmenmaterial: <?=$fahrrad->getRahmenmaterial()?><br>
+                Beleuchtungsart: <?=$fahrrad->getBeleuchtungsart()?><br>
+                Einsatzbereich: <?=$fahrrad->getEinsatzbereich()?><br>                
+                erstellt: <?=$fahrrad->getErstellt()?><br>
+                geaendert: <?=$fahrrad->getGeaendert()?><br>
+                <? 
+                $imageWidth = 510;
+                foreach($fahrrad->getBilder() as $bild) {
+                    $scaleObj = new ScaleImage($bild->getName(), $bild->getExtension(), 'images');
+                    #echo $imageObj->getOriginalImagePath();
+                    $imagePath = $scaleObj->getImagePath($imageWidth, 'auto');
+                    echo '<a class="lightbox" title="' . $fahrrad->getModell() . '" href="images/' . $bild->getFullName() . '">
+                        <img alt="' . $fahrrad->getModell() . '" src="' . $imagePath . '" width="' . $imageWidth . '" />
+                    </a>';
+                    $imageWidth = 160;
+                }
+                ?>
+                <br>
+                <? if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
+                <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
+                <? } ?>
+                <? if(isset($_SESSION['uid'])){ ?>
+                <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
+                <? } ?>
+                <a class="txtLnk" href="#">Kontakt</a><br />
+                <a class="txtLnk" href="location.php?pid=<?=$fahrrad->getPid()?>&uid=<?=$fahrrad->getUid()?>">Karte</a><br />
+                <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
+            </div>
+        <? } ?>
     </div>          
     <?php include 'includes/footer.php'; ?>
 </body>

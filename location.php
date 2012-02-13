@@ -1,10 +1,6 @@
 <?php
+include 'includes/init.php';
 include 'includes/head.php';
-include 'includes/DatabaseHelper.php';
-include 'includes/ScaleImage.php';
-include 'includes/DebugHelper.php';
-include 'includes/HeaderHelper.php';
-include 'includes/NavigationHelper.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -21,6 +17,8 @@ use de\zweiradspion\NavigationHelper;
                 $row = mysql_fetch_assoc($result);
                 $uid = $row['uid'];
                 $latlng = $row['latLng'];
+                $lat = $row['lat'];
+                $lng = $row['lng'];
                 $postcode = $row['postcode'];
                 $city = $row['city'];
                 if(!empty($latlng)){
@@ -32,7 +30,7 @@ use de\zweiradspion\NavigationHelper;
                       function initialize() {
                         var myOptions = {
                           zoom: 8,
-                          center: new google.maps.LatLng<?=$latlng?>,
+                          center: new google.maps.LatLng(<?=$lat?>, <?=$lng?>),
                           mapTypeId: google.maps.MapTypeId.ROADMAP
                         };
                         map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);

@@ -1,12 +1,6 @@
 <?php
-include 'includes/config/properties.php';
+include 'includes/init.php';
 include 'includes/head.php';
-include 'includes/DatabaseHelper.php';
-include 'includes/ScaleImage.php';
-include 'includes/DebugHelper.php';
-include 'includes/HeaderHelper.php';
-include 'includes/NavigationHelper.php';
-include 'includes/FormHelper.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -54,7 +48,7 @@ use de\zweiradspion\FormHelper;
             if(empty($email) || !FormHelper::isEmail($email)){
                 $emailErr = ' error';
             }
-            if(empty($postcode)){
+            if(empty($postcode) || !preg_match('/\d{,5}/', $postcode)){
                 $postcodeErr = ' error';
             }
             if(empty($city)){
@@ -101,9 +95,9 @@ use de\zweiradspion\FormHelper;
                         . mysql_real_escape_string(trim($email)) . "', "
                         . mysql_real_escape_string(trim($postcode)) . ", '"
                         . mysql_real_escape_string(trim($city)) . "', '"
-                        . mysql_real_escape_string(trim($latlng)) . "', '"
-                        . mysql_real_escape_string(trim($lat)) . "', '"
-                        . mysql_real_escape_string(trim($lng)) . "')";
+                        . mysql_real_escape_string(trim($latlng)) . "', "
+                        . mysql_real_escape_string(trim($lat)) . ", "
+                        . mysql_real_escape_string(trim($lng)) . ")";
                     $result = mysql_query($sql);
                     if(!$result){
                         die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');

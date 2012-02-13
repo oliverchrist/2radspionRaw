@@ -1,10 +1,10 @@
 <?php
 include 'includes/init.php';
 include 'includes/head.php';
-use de\zweiradspion\HeaderHelper,
-    de\zweiradspion\NavigationHelper,
-    de\zweiradspion\Fahrrad,
-    de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DatabaseHelper;
+use de\zweiradspion\DebugHelper;
+use de\zweiradspion\HeaderHelper;
+use de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
     <?
@@ -16,10 +16,13 @@ use de\zweiradspion\HeaderHelper,
 	    <?php
 	    # ist Benutzer eingeloggt?
 	    if(isset($_SESSION['uid'])){
-	        
+            $uid = '';
             $markeErr = '';
+            $marke = '';
             $modellErr = '';
+            $modell = '';
             $preisErr = '';
+            $preis = '';
             $showForm = true;
             
             if($_POST){
@@ -27,7 +30,6 @@ use de\zweiradspion\HeaderHelper,
                 $marke = $_POST['marke'];
                 $modell = $_POST['modell'];
                 $preis = $_POST['preis'];
-                $radtyp = $_POST['radtyp'];
                 if(empty($marke)) $markeErr = ' error';
                 if(empty($modell)) $modellErr = ' error';
                 if(empty($preis)) $preisErr = ' error';
@@ -37,37 +39,35 @@ use de\zweiradspion\HeaderHelper,
                     && !empty($modell)
                     && !empty($preis)
                 ){
+                    $dbObject = new DatabaseHelper();
                     # insert
                     if(empty($uid)){
-                        $fahrrad = new Fahrrad();
-                        $fahrrad->setMarke($marke);
-                        $fahrrad->setModell($modell);
-                        $fahrrad->setPreis($preis);
-                        $fahrrad->setRadtyp($radtyp);
-                        try{
-                            $fahrrad->insertInDatabase();
-                            echo 'Das Fahrrad wurde neu in die Datenbank bike geschrieben<br>';
-                        }catch(Exception $e){
-                            print $e->getMessage();
+                        $result = mysql_query("INSERT INTO bike (pid, marke, modell, preis, erstellt, geaendert) VALUES ('"
+                            . $_SESSION['uid'] . "', '"
+                            . mysql_real_escape_string(trim($marke)) . "', '"
+                            . mysql_real_escape_string(trim($modell)) . "', '"
+                            . mysql_real_escape_string(trim($preis))
+                            . "', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+                        if(!$result){
+                            die ('<span class="error">Fahrrad konnte nicht in die Datenbank bike geschrieben werden</span><br>');
+                        }else{
+                            echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
+                            $showForm = false;
                         }
-                        $showForm = false;
                     # update
                     }else{
-                        $fahrrad = new Fahrrad($uid);
-                        $fahrrad->setMarke($marke);
-                        $fahrrad->setModell($modell);
-                        $fahrrad->setPreis($preis);
-                        $fahrrad->setRadtyp($radtyp);
-                        try{
-                            $fahrrad->updateInDatabase();
+                        $result = mysql_query('UPDATE bike SET '
+                            . 'marke="' . mysql_real_escape_string(trim($marke)) . '", '
+                            . 'modell="' . mysql_real_escape_string(trim($modell)) . '", '
+                            . 'preis="' . mysql_real_escape_string(trim($preis)) . '"'
+                            . 'WHERE uid=' . mysql_real_escape_string(trim($uid)));
+                        if(!$result){
+                            die ('<span class="error">Fahrrad konnte nicht in der Datenbank bike upgedated werden</span><br>');
+                        }else{
                             echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
-                        }catch(Exception $e){
-                            print $e->getMessage();
+                            $showForm = false;
                         }
-                        $showForm = false;
                     }
-                }else{
-                    $fahrrad = new Fahrrad();
                 }
             }
             # DELETE
@@ -101,38 +101,33 @@ use de\zweiradspion\HeaderHelper,
                 
                 $showForm = false;
             }elseif(isset($_GET['uid'])){
-                $fahrrad = new Fahrrad($_GET['uid']);
-                $uid = $fahrrad->getUid();
-                $marke = $fahrrad->getMarke();
-                $modell = $fahrrad->getModell();
-                $preis = $fahrrad->getPreis();
-            }else{
-                $fahrrad = new Fahrrad(); 
+                $dbObject = new DatabaseHelper();
+                $result = mysql_query("select * from bike where uid=" . mysql_real_escape_string($_GET['uid']) . " && pid=" . $_SESSION['uid']);
+                $row = mysql_fetch_assoc($result);
+                $uid = $row['uid'];
+                $marke = $row['marke'];
+                $modell = $row['modell'];
+                $preis = $row['preis'];
             }
     
             if($showForm){
             ?>
             <form method="post" action="bike.php">
-                <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
+                <input type="hidden" name="uid" value="<?=$uid?>" />
                 <div class="formField<?=$markeErr?>">
                     <p class="error">Bitte geben Sie einen Herrsteller ein</p>
-                    <label>Marke</label>
-                    <?=$fahrrad->getMarke()->getDropdown()?>
+                    <label>Marke</label><input type="text" name="marke" value="<?=$marke?>" />
                 </div>
                 <div class="formField<?=$modellErr?>">
                     <p class="error">Bitte geben Sie ein Modell ein</p>
-                    <label>Modell</label><input type="text" name="modell" value="<?=$fahrrad->getModell()?>" />
+                    <label>Modell</label><input type="text" name="modell" value="<?=$modell?>" />
                 </div>
                 <div class="formField<?=$preisErr?>">
                     <p class="error">Bitte geben Sie einen Preis ein</p>
-                    <label>Preis</label><input type="text" name="preis" value="<?=$fahrrad->getPreis()?>" />
+                    <label>Preis</label><input type="text" name="preis" value="<?=$preis?>" />
                 </div>
                 <div class="formField">
-                    <label>Radtyp</label>
-                    <?=$fahrrad->getRadtyp()->getDropdown()?>
-                </div>
-                <div class="formField">
-                    <input class="submit" type="submit" value="Senden" />
+                    <input class="submit" type="submit" value="<?=$action?>" />
                 </div>
             </form>
             <?php

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    $('.search select[name=hersteller], .search select[name=modell]').change(function(){
+    $('.search select[name=marke], .search select[name=modell]').change(function(){
         $(this).parent().submit();
     });
     $('a.lightbox').lightBox({
@@ -40,7 +40,7 @@ function codeAddress(address) {
               $('form input[name="latlng"]').val(latlng);
               $('form input[name="lat"]').val(lat);
               $('form input[name="lng"]').val(lng);
-              //$('#register, #userdata').submit();
+              $('#register, #userdata').submit();
           }else{
               alert('Fehler in Adresse ' + address);
           }
