@@ -95,7 +95,7 @@ class Fahrrad extends Persistenz {
             . 'radgroesse="' . mysql_real_escape_string(trim($this->radgroesse->getValue())) . '", '
             . 'rahmenhoehe="' . mysql_real_escape_string(trim($this->rahmenhoehe->getValue())) . '", '
             . 'marke="' . mysql_real_escape_string(trim($this->marke->getValue())) . '", '
-            . 'modell="' . mysql_real_escape_string(trim($this->modell->getValue())) . '", '
+            . 'modell="' . mysql_real_escape_string(trim($this->modell)) . '", '
             . 'farbe="' . mysql_real_escape_string(trim($this->farbe->getValue())) . '", '
             . 'bremssystem="' . mysql_real_escape_string(trim($this->bremssystem->getValue())) . '", '
             . 'schaltungstyp="' . mysql_real_escape_string(trim($this->schaltungstyp->getValue())) . '", '
@@ -113,9 +113,8 @@ class Fahrrad extends Persistenz {
     
     public function insertInDatabase(){
         $dbObject = new DatabaseHelper();
-        $sql = 'INSERT INTO bike (pid, modell, preis, radtyp, geschlecht, zustand, laufleistung, radgroesse, rahmenhoehe, marke, modell, farbe, bremssystem, schaltungstyp, rahmenmaterial, beleuchtungsart, einsatzbereich, erstellt, geaendert) VALUES ('
+        $sql = 'INSERT INTO bike (pid, preis, radtyp, geschlecht, zustand, laufleistung, radgroesse, rahmenhoehe, marke, modell, farbe, bremssystem, schaltungstyp, rahmenmaterial, beleuchtungsart, einsatzbereich, erstellt, geaendert) VALUES ('
             . $_SESSION['uid'] . ', '
-            . '"' . mysql_real_escape_string(trim($this->modell)) . '", '
             . mysql_real_escape_string(trim($this->preis)) . ', '
             . mysql_real_escape_string(trim($this->radtyp->getValue())) . ', '
             . mysql_real_escape_string(trim($this->geschlecht->getValue())) . ', '
@@ -123,8 +122,8 @@ class Fahrrad extends Persistenz {
             . mysql_real_escape_string(trim($this->laufleistung->getValue())) . ', '
             . mysql_real_escape_string(trim($this->radgroesse->getValue())) . ', '
             . mysql_real_escape_string(trim($this->rahmenhoehe->getValue())) . ', '
-            . mysql_real_escape_string(trim($this->marke->getValue())) . ', '
-            . mysql_real_escape_string(trim($this->modell->getValue())) . ', '
+            . mysql_real_escape_string(trim($this->marke->getValue())) . ', "'
+            . mysql_real_escape_string(trim($this->modell)) . '", '
             . mysql_real_escape_string(trim($this->farbe->getValue())) . ', '
             . mysql_real_escape_string(trim($this->bremssystem->getValue())) . ', '
             . mysql_real_escape_string(trim($this->schaltungstyp->getValue())) . ', '
