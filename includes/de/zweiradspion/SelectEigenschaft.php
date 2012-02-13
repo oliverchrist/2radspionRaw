@@ -16,7 +16,7 @@ class SelectEigenschaft  {
     }
     
     public function getDropdown($className = ''){
-        $html = '<select name="' . $this->name . '" class="' . $className . '">';
+        $html = '<select name="' . $this->name . '" class="selectEigenschaft ' . $className . '">';
         foreach($this->text as $key => $option){
             $html .= '<option value="' . $key . '"';
             if($key == $this->value){
@@ -24,7 +24,9 @@ class SelectEigenschaft  {
             }
             $html .= '>' . $option . '</option>';
         }
+        $html .= '<option value="-1">sonstige</option>';
         $html .= '</select>';
+        $html .= '<input type="text" name="' . $this->name . 'Sonstige" class="hidden">';
         return $html;
     }
     

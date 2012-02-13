@@ -2,6 +2,7 @@ $(document).ready(function(){
     $('.search select[name=marke], .search select[name=modell]').change(function(){
         $(this).parent().submit();
     });
+    
     $('a.lightbox').lightBox({
         imageLoading: 'resources/images/lightbox-ico-loading.gif',
         imageBtnPrev: 'resources/images/lightbox-btn-prev.gif',
@@ -19,13 +20,19 @@ $(document).ready(function(){
     });
     
     $('.delete').click(function(e){
-        
         var link = $(this).attr('href');
         var answere = confirm("Wirklich löschen?");
         if(!answere){
             e.preventDefault();
         }
-        
+    });
+    
+    $('.selectEigenschaft').change(function(){
+        if($(this).val() == -1){
+            $(this).next('input').show();
+        }else{
+            $(this).next('input').hide();
+        }
     });
 });
 

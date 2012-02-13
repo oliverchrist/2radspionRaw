@@ -21,29 +21,30 @@ use de\zweiradspion\HeaderHelper,
             $modellErr = '';
             $preisErr = '';
             $showForm = true;
+            $keineFehler = true;
             
             if($_POST){
-                $uid = $_POST['uid'];
-                $marke = $_POST['marke'];
-                $modell = $_POST['modell'];
-                $preis = $_POST['preis'];
-                $radtyp = $_POST['radtyp'];
-                if(empty($marke)) $markeErr = ' error';
-                if(empty($modell)) $modellErr = ' error';
-                if(empty($preis)) $preisErr = ' error';
+                if($_POST['marke'] > 0){
+                    $markeErr = ' error';
+                    $keineFehler = false;
+                }
+                if(empty($_POST['modell'])){
+                    $modellErr = ' error';
+                    $keineFehler = false;
+                }
+                if(empty($_POST['preis'])){
+                    $preisErr = ' error';
+                    $keineFehler = false;
+                }
                 # Wenn alle Eingaben ok sind
-                if(
-                    !empty($marke)
-                    && !empty($modell)
-                    && !empty($preis)
-                ){
+                if($keineFehler){
                     # insert
                     if(empty($uid)){
                         $fahrrad = new Fahrrad();
-                        $fahrrad->setMarke($marke);
-                        $fahrrad->setModell($modell);
-                        $fahrrad->setPreis($preis);
-                        $fahrrad->setRadtyp($radtyp);
+                        $fahrrad->setMarke($_POST['marke']);
+                        $fahrrad->setModell($_POST['modell']);
+                        $fahrrad->setPreis($_POST['preis']);
+                        $fahrrad->setRadtyp($_POST['radtyp']);
                         try{
                             $fahrrad->insertInDatabase();
                             echo 'Das Fahrrad wurde neu in die Datenbank bike geschrieben<br>';
@@ -54,10 +55,10 @@ use de\zweiradspion\HeaderHelper,
                     # update
                     }else{
                         $fahrrad = new Fahrrad($uid);
-                        $fahrrad->setMarke($marke);
-                        $fahrrad->setModell($modell);
-                        $fahrrad->setPreis($preis);
-                        $fahrrad->setRadtyp($radtyp);
+                        $fahrrad->setMarke($_POST['marke']);
+                        $fahrrad->setModell($_POST['modell']);
+                        $fahrrad->setPreis($_POST['preis']);
+                        $fahrrad->setRadtyp($_POST['radtyp']);
                         try{
                             $fahrrad->updateInDatabase();
                             echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
