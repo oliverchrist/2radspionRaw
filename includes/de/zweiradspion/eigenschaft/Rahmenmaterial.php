@@ -10,9 +10,9 @@ use de\zweiradspion\SelectEigenschaft;
 class Rahmenmaterial extends SelectEigenschaft  {
     protected $name = 'rahmenmaterial'; 
     protected $text = array(
-        'Rahmenmaterial',
-        'Aluminium',
-        'Karbon',
-        'Stahl',
-        'Titan');
+        '-' => 'Rahmenmaterial',
+        'Aluminium' => 'Aluminium',
+        'Karbon' => 'Karbon',
+        'Stahl' => 'Stahl',
+        'Titan' => 'Titan');
 }

@@ -11,16 +11,16 @@ class SelectEigenschaft  {
     protected $name;
     protected $text;
     
-    public function __construct($value = 0){
+    public function __construct($value = '-'){
         $this->value = $value;
     }
     
     public function getDropdown($className = ''){
         $html = '<select name="' . $this->name . '" class="selectEigenschaft ' . $className . '">';
         $sonstige = true;
-        foreach($this->text as $option){
-            $html .= '<option value="' . $option . '"';
-            if($option == $this->value){
+        foreach($this->text as $key => $option){
+            $html .= '<option value="' . $key . '"';
+            if($key === $this->value){
                 $html .= ' selected="selected"';
                 $sonstige = false;
             }

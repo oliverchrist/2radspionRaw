@@ -10,8 +10,8 @@ use de\zweiradspion\SelectEigenschaft;
 class Beleuchtungsart extends SelectEigenschaft  {
     protected $name = 'beleuchtungsart'; 
     protected $text = array(
-        'Beleuchtungsart',
-        'Akku',
-        'Dynamo',
-        'Narbendynamo');
+        '-' => 'Beleuchtungsart',
+        'Akku' => 'Akku',
+        'Dynamo' => 'Dynamo',
+        'Nabendynamo' => 'Nabendynamo');
 }

@@ -16,18 +16,20 @@ use de\zweiradspion\HeaderHelper,
 	    <?php
 	    # ist Benutzer eingeloggt?
 	    if(isset($_SESSION['uid'])){
-	        
             $markeErr = '';
             $modellErr = '';
             $preisErr = '';
+            $radgroesseErr = '';
+            $rahmenhoeheErr = '';
             $laufleistungErr = '';
             $showForm = true;
             $keineFehler = true;
             $fahrrad = new Fahrrad();
             
+            # speichern
             if($_POST){
-                $fahrrad->loadFromPost($_POST);
-                /*
+                $fahrrad->loadFromPost($_POST, $_SESSION['uid']);
+
                 if($_POST['marke'] == -1 && empty($_POST['markeSonstige'])){
                     $markeErr = ' error';
                     $keineFehler = false;
@@ -40,28 +42,39 @@ use de\zweiradspion\HeaderHelper,
                     $preisErr = ' error';
                     $keineFehler = false;
                 }
+                if(empty($_POST['radgroesse'])){
+                    $radgroesseErr = ' error';
+                    $keineFehler = false;
+                }
+                if(empty($_POST['rahmenhoehe'])){
+                    $rahmenhoeheErr = ' error';
+                    $keineFehler = false;
+                }
+                if(empty($_POST['laufleistung'])){
+                    $laufleistungErr = ' error';
+                    $keineFehler = false;
+                }
                 # Wenn alle Eingaben ok sind
                 if($keineFehler){
                     # insert
-                    if(empty($uid)){
+                    if(empty($_POST['uid'])){
                         try{
                             $fahrrad->insertInDatabase();
-                            echo 'Das Fahrrad wurde neu in die Datenbank bike geschrieben<br>';
+                            echo 'Das Fahrrad wurde erfolgreich gespeichert<br>';
                         }catch(Exception $e){
                             print $e->getMessage();
                         }
-                        $showForm = false;
                     # update
                     }else{
                         try{
                             $fahrrad->updateInDatabase();
-                            echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
+                            echo 'Die Änderungen wurden erfolgreich gespeichert<br>';
                         }catch(Exception $e){
                             print $e->getMessage();
                         }
-                        $showForm = false;
                     }
-                }*/
+                    $showForm = false;
+                }
             }
             # DELETE
             elseif(isset($_GET['uid']) && isset($_GET['process']) && $_GET['process'] == 'delete'){
@@ -95,15 +108,12 @@ use de\zweiradspion\HeaderHelper,
                 $showForm = false;
             }elseif(isset($_GET['uid'])){
                 $fahrrad = new Fahrrad($_GET['uid']);
-                $uid = $fahrrad->getUid();
-                $marke = $fahrrad->getMarke();
-                $modell = $fahrrad->getModell();
-                $preis = $fahrrad->getPreis();
             }
     
             if($showForm){
             ?>
             <form method="post" action="bike.php">
+                <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
                 <div class="formField<?=$markeErr?>">
                     <p class="error">Bitte geben Sie einen Herrsteller ein</p>
                     <label>Marke</label>
@@ -117,7 +127,7 @@ use de\zweiradspion\HeaderHelper,
                 <div class="formField<?=$preisErr?>">
                     <p class="error">Bitte geben Sie einen Preis ein</p>
                     <label>Preis</label>
-                    <input type="text" name="preis" value="<?=$fahrrad->getPreis()?>" />
+                    <input type="text" name="preis" value="<?=$fahrrad->getPreis()?>" /><span class="unit">EUR</span>
                 </div>
                 <div class="formField">
                     <label>Radtyp</label>
@@ -134,15 +144,17 @@ use de\zweiradspion\HeaderHelper,
                 <div class="formField<?=$laufleistungErr?>">
                     <p class="error">Bitte geben Sie eine Laufleistung ein</p>
                     <label>Laufleistung</label>
-                    <input type="text" name="laufleistung" value="<?=$fahrrad->getLaufleistung()?>" />
+                    <input type="text" name="laufleistung" value="<?=$fahrrad->getLaufleistung()?>" /><span class="unit">km</span>
                 </div>
-                <div class="formField">
+                <div class="formField<?=$radgroesseErr?>">
+                    <p class="error">Bitte geben Sie eine Radgroesse ein</p>
                     <label>Radgroesse</label>
-                    <?=$fahrrad->getRadgroesse()->getDropdown()?>
+                    <input type="text" name="radgroesse" value="<?=$fahrrad->getRadgroesse()?>" /><span class="unit">Zoll</span>
                 </div>
-                <div class="formField">
+                <div class="formField<?=$rahmenhoeheErr?>">
+                    <p class="error">Bitte geben Sie eine Rahmenhoehe ein</p>
                     <label>Rahmenhoehe</label>
-                    <?=$fahrrad->getRahmenhoehe()->getDropdown()?>
+                    <input type="text" name="rahmenhoehe" value="<?=$fahrrad->getRahmenhoehe()?>" /><span class="unit">cm</span>
                 </div>
                 <div class="formField">
                     <label>Farbe</label>
@@ -173,11 +185,11 @@ use de\zweiradspion\HeaderHelper,
                 </div>
             </form>
             <?php
-            if(isset($uid)){
+            if(isset($_GET['uid'])){
             ?>
-                <a class="txtLnk" href="addPicture.php?uid=<?=$uid?>">Bild hinzufügen</a>  
-                <a class="txtLnk delete" href="bike.php?uid=<?=$uid?>&process=delete">Löschen</a>  
-                <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>  
+                <a class="txtLnk" href="addPicture.php?uid=<?=$fahrrad->getUid()?>">Bild hinzufügen</a>  
+                <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Löschen</a>  
+                <a class="txtLnk" href="detail.php?uid=<?=$fahrrad->getUid()?>">Zurück</a>  
             <?php } ?>            
             <? }
         } ?>

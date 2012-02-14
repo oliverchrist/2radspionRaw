@@ -10,14 +10,14 @@ use de\zweiradspion\SelectEigenschaft;
 class Einsatzbereich extends SelectEigenschaft  {
     protected $name = 'einsatzbereich'; 
     protected $text = array(
-        'Einsatzbereich',
-        'All Mountain',
-        'Cross-Country',
-        'Dirtjump',
-        'Downhill',
-        'Enduro',
-        'Freeride',
-        'Trail',
-        'Straße',
-        'Halfpipe');
+        '-' => 'Einsatzbereich',
+        'All Mountain' => 'All Mountain',
+        'Cross-Country' => 'Cross-Country',
+        'Dirtjump' => 'Dirtjump',
+        'Downhill' => 'Downhill',
+        'Enduro' => 'Enduro',
+        'Freeride' => 'Freeride',
+        'Trail' => 'Trail',
+        'Straße' => 'Straße',
+        'Halfpipe' => 'Halfpipe');
 }

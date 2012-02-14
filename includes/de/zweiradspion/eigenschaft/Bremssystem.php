@@ -10,12 +10,11 @@ use de\zweiradspion\SelectEigenschaft;
 class Bremssystem extends SelectEigenschaft  {
     protected $name = 'bremssystem'; 
     protected $text = array(
-        'Bremssystem',
-        'Felgenbremse',
-        'Hydraudische Felgenbremse',
-        'Scheibenbremse',
-        'Hydraudische Felgenbremse',
-        'Rollenbremse',
-        'Rücktritt',
-        'Trommelbremse');
+        '-' => 'Bremssystem',
+        'Felgenbremse' => 'Felgenbremse',
+        'Hydraulische Felgenbremse' => 'Hydraudische Felgenbremse',
+        'Scheibenbremse' => 'Scheibenbremse',
+        'Rollenbremse' => 'Rollenbremse',
+        'Rücktritt' => 'Rücktritt',
+        'Trommelbremse' => 'Trommelbremse');
 }

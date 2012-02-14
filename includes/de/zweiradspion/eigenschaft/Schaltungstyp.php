@@ -10,9 +10,9 @@ use de\zweiradspion\SelectEigenschaft;
 class Schaltungstyp extends SelectEigenschaft  {
     protected $name = 'schaltungstyp'; 
     protected $text = array(
-        'Schaltungstyp',
-        'Kettenschaltung',
-        'Narbenschaltung',
-        'Kombiniert',
-        'Tretlagerschaltung');
+        '-' => 'Schaltungstyp',
+        'Kettenschaltung' => 'Kettenschaltung',
+        'Nabenschaltung' => 'Nabenschaltung',
+        'Kombiniert' => 'Kombiniert',
+        'Tretlagerschaltung' => 'Tretlagerschaltung');
 }

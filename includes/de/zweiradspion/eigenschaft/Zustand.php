@@ -10,12 +10,12 @@ use de\zweiradspion\SelectEigenschaft;
 class Zustand extends SelectEigenschaft  {
     protected $name = 'zustand'; 
     protected $text = array(
-        'Zustand',
-        'Neu',
-        'Vorführrad',
-        'Gebraucht bis 1 Jahr',
-        'Gebraucht bis 2 Jahre',
-        'Gebraucht bis 3 Jahre',
-        'Gebraucht bis 4 Jahre',
-        'Gebraucht über 5 Jahre');
+        '-' => 'Zustand',
+        'Neu' => 'Neu',
+        'Vorführrad' => 'Vorführrad',
+        'Gebraucht bis 1 Jahr' => 'Gebraucht bis 1 Jahr',
+        'Gebraucht bis 2 Jahre' => 'Gebraucht bis 2 Jahre',
+        'Gebraucht bis 3 Jahre' => 'Gebraucht bis 3 Jahre',
+        'Gebraucht bis 4 Jahre' => 'Gebraucht bis 4 Jahre',
+        'Gebraucht über 5 Jahre' => 'Gebraucht über 5 Jahre');
 }

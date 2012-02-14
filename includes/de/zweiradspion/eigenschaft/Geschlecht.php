@@ -10,10 +10,10 @@ use de\zweiradspion\SelectEigenschaft;
 class Geschlecht extends SelectEigenschaft  {
     protected $name = 'geschlecht'; 
     protected $text = array(
-        'Geschlecht',
-        'Unisex',
-        'Frauen',
-        'Männer',
-        'Kinder',
-        'Jugend');
+        '-' => 'Geschlecht',
+        'Unisex' => 'Unisex',
+        'Frauen' => 'Frauen',
+        'Männer' => 'Männer',
+        'Kinder' => 'Kinder',
+        'Jugend' => 'Jugend');
 }
