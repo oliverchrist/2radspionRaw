@@ -18,21 +18,21 @@ use de\zweiradspion\HeaderHelper,
                 <h1>Single View for Fahrrad</h1>
                 uid: <?=$fahrrad->getUid()?><br>
                 pid: <?=$fahrrad->getPid()?><br>
-                Marke: <?=$fahrrad->getMarke()?><br>
+                Marke: <?=$fahrrad->getMarke()->getValue()?><br>
                 modell: <?=$fahrrad->getModell()?><br>
                 preis: <?=$fahrrad->getPreis()?><br>
-                Radtyp: <?=$fahrrad->getRadtyp()?><br>
-                Geschlecht: <?=$fahrrad->getGeschlecht()?><br>
-                Zustand: <?=$fahrrad->getZustand()?><br>
-                Laufleistung: <?=$fahrrad->getLaufleistung()?><br>
-                Radgroesse: <?=$fahrrad->getRadgroesse()?><br>
-                Rahmenhoehe: <?=$fahrrad->getRahmenhoehe()?><br>
-                Farbe: <?=$fahrrad->getFarbe()?><br>
-                Bremssystem: <?=$fahrrad->getBremssystem()?><br>
-                Schaltungstyp: <?=$fahrrad->getSchaltungstyp()?><br>
-                Rahmenmaterial: <?=$fahrrad->getRahmenmaterial()?><br>
-                Beleuchtungsart: <?=$fahrrad->getBeleuchtungsart()?><br>
-                Einsatzbereich: <?=$fahrrad->getEinsatzbereich()?><br>                
+                Radtyp: <?=$fahrrad->getRadtyp()->getText()?><br>
+                Geschlecht: <?=$fahrrad->getGeschlecht()->getText()?><br>
+                Zustand: <?=$fahrrad->getZustand()->getText()?><br>
+                Laufleistung: <?=$fahrrad->getLaufleistung()->getText()?><br>
+                Radgroesse: <?=$fahrrad->getRadgroesse()->getText()?><br>
+                Rahmenhoehe: <?=$fahrrad->getRahmenhoehe()->getText()?><br>
+                Farbe: <?=$fahrrad->getFarbe()->getText()?><br>
+                Bremssystem: <?=$fahrrad->getBremssystem()->getText()?><br>
+                Schaltungstyp: <?=$fahrrad->getSchaltungstyp()->getText()?><br>
+                Rahmenmaterial: <?=$fahrrad->getRahmenmaterial()->getText()?><br>
+                Beleuchtungsart: <?=$fahrrad->getBeleuchtungsart()->getText()?><br>
+                Einsatzbereich: <?=$fahrrad->getEinsatzbereich()->getText()?><br>                
                 erstellt: <?=$fahrrad->getErstellt()?><br>
                 geaendert: <?=$fahrrad->getGeaendert()?><br>
                 <? 

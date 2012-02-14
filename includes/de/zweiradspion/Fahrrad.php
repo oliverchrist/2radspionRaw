@@ -84,14 +84,19 @@ class Fahrrad extends Persistenz {
     }
     
     public function loadFromPost($post){
+        echo $post['marke'] . ', ' . $post['markeSonstige'];
         if($post['marke'] == -1){
             $this->setMarke($post['markeSonstige']);
         }else{
             $this->setMarke($post['marke']);
         }
-        echo $this->getMarke();
+        $this->setPid($_SESSION['uid']);
+        if($post['radtyp'] == -1){
+            $this->setRadtyp($post['radtypSonstige']);
+        }else{
+            $this->setRadtyp($post['radtyp']);
+        }
         /*
-        $this->setPid($pid);
         $this->setRadtyp($radtyp);
         $this->setGeschlecht($geschlecht);
         $this->setZustand($zustand);

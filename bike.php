@@ -26,6 +26,7 @@ use de\zweiradspion\HeaderHelper,
             
             if($_POST){
                 $fahrrad->loadFromPost($_POST);
+                /*
                 if($_POST['marke'] == -1 && empty($_POST['markeSonstige'])){
                     $markeErr = ' error';
                     $keineFehler = false;
@@ -43,7 +44,7 @@ use de\zweiradspion\HeaderHelper,
                     # insert
                     if(empty($uid)){
                         try{
-                            #$fahrrad->insertInDatabase();
+                            $fahrrad->insertInDatabase();
                             echo 'Das Fahrrad wurde neu in die Datenbank bike geschrieben<br>';
                         }catch(Exception $e){
                             print $e->getMessage();
@@ -51,17 +52,15 @@ use de\zweiradspion\HeaderHelper,
                         $showForm = false;
                     # update
                     }else{
-                        $fahrrad = new Fahrrad($uid);
-                        $fahrrad->loadFromPost($_POST);
                         try{
-                            #$fahrrad->updateInDatabase();
+                            $fahrrad->updateInDatabase();
                             echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
                         }catch(Exception $e){
                             print $e->getMessage();
                         }
                         $showForm = false;
                     }
-                }
+                }*/
             }
             # DELETE
             elseif(isset($_GET['uid']) && isset($_GET['process']) && $_GET['process'] == 'delete'){
