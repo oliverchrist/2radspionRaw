@@ -5,7 +5,6 @@ use de\zweiradspion\Bild,
     de\zweiradspion\eigenschaft\Radtyp,
     de\zweiradspion\eigenschaft\Geschlecht,
     de\zweiradspion\eigenschaft\Zustand,
-    de\zweiradspion\eigenschaft\Laufleistung,
     de\zweiradspion\eigenschaft\Radgroesse,
     de\zweiradspion\eigenschaft\Rahmenhoehe,
     de\zweiradspion\eigenschaft\Marke,
@@ -40,6 +39,8 @@ class Fahrrad extends Persistenz {
     protected $einsatzbereich;
     protected $preis;
     protected $bilder;
+    
+    protected $post;
 
     public function __construct($uid = NULL){
         $this->bilder = array();
@@ -49,7 +50,6 @@ class Fahrrad extends Persistenz {
             $this->radtyp = new Radtyp();
             $this->geschlecht = new Geschlecht();
             $this->zustand = new Zustand();
-            $this->laufleistung = new Laufleistung();
             $this->radgroesse = new Radgroesse();
             $this->rahmenhoehe = new Rahmenhoehe();
             $this->marke = new Marke();
@@ -83,37 +83,34 @@ class Fahrrad extends Persistenz {
         }
     }
     
+    private function postToSetterFromSelect($name){
+        $nameSonstige = $name . 'Sonstige';
+        $setterFunktion = 'set' . ucfirst($name);
+        if($this->post[$name] == -1){
+            $this->$setterFunktion($this->post[$nameSonstige]);
+        }else{
+            $this->$setterFunktion($this->post[$name]);
+        }
+    }
+    
     public function loadFromPost($post){
-        echo $post['marke'] . ', ' . $post['markeSonstige'];
-        if($post['marke'] == -1){
-            $this->setMarke($post['markeSonstige']);
-        }else{
-            $this->setMarke($post['marke']);
-        }
-        $this->setPid($_SESSION['uid']);
-        if($post['radtyp'] == -1){
-            $this->setRadtyp($post['radtypSonstige']);
-        }else{
-            $this->setRadtyp($post['radtyp']);
-        }
-        /*
-        $this->setRadtyp($radtyp);
-        $this->setGeschlecht($geschlecht);
-        $this->setZustand($zustand);
-        $this->setLaufleistung($laufleistung);
-        $this->setRadgroesse($radgroesse);
-        $this->setRahmenhoehe($rahmenhoehe);
-        
-        $this->setModell($modell);
-        $this->setFarbe($farbe);
-        $this->setBremssystem($bremssystem);
-        $this->setSchaltungstyp($schaltungstyp);
-        $this->setRahmenmaterial($rahmenmaterial);
-        $this->setBeleuchtungsart($beleuchtungsart);
-        $this->setEinsatzbereich($einsatzbereich);
-        $this->setPreis($preis);
-         * 
-         */
+        $this->post = $post;
+        $this->postToSetterFromSelect('marke');
+        $this->postToSetterFromSelect('radtyp');
+        $this->postToSetterFromSelect('geschlecht');
+        $this->postToSetterFromSelect('zustand');
+        $this->laufleistung = $_POST['laufleistung'];
+        $this->postToSetterFromSelect('radgroesse');
+        $this->postToSetterFromSelect('rahmenhoehe');
+        $this->postToSetterFromSelect('marke');
+        $this->modell = $_POST['modell'];
+        $this->postToSetterFromSelect('farbe');
+        $this->postToSetterFromSelect('bremssystem');
+        $this->postToSetterFromSelect('schaltungstyp');
+        $this->postToSetterFromSelect('rahmenmaterial');
+        $this->postToSetterFromSelect('beleuchtungsart');
+        $this->postToSetterFromSelect('einsatzbereich');
+        $this->preis = $_POST['preis'];
     }
     
     public function updateInDatabase(){
@@ -124,7 +121,7 @@ class Fahrrad extends Persistenz {
             . 'radtyp="' . mysql_real_escape_string(trim($this->radtyp->getValue())) . '", '
             . 'geschlecht="' . mysql_real_escape_string(trim($this->geschlecht->getValue())) . '", '
             . 'zustand="' . mysql_real_escape_string(trim($this->zustand->getValue())) . '", '
-            . 'laufleistung="' . mysql_real_escape_string(trim($this->laufleistung->getValue())) . '", '
+            . 'laufleistung="' . mysql_real_escape_string(trim($this->laufleistung)) . '", '
             . 'radgroesse="' . mysql_real_escape_string(trim($this->radgroesse->getValue())) . '", '
             . 'rahmenhoehe="' . mysql_real_escape_string(trim($this->rahmenhoehe->getValue())) . '", '
             . 'marke="' . mysql_real_escape_string(trim($this->marke->getValue())) . '", '
@@ -152,7 +149,7 @@ class Fahrrad extends Persistenz {
             . mysql_real_escape_string(trim($this->radtyp->getValue())) . ', '
             . mysql_real_escape_string(trim($this->geschlecht->getValue())) . ', '
             . mysql_real_escape_string(trim($this->zustand->getValue())) . ', '
-            . mysql_real_escape_string(trim($this->laufleistung->getValue())) . ', '
+            . mysql_real_escape_string(trim($this->laufleistung)) . ', '
             . mysql_real_escape_string(trim($this->radgroesse->getValue())) . ', '
             . mysql_real_escape_string(trim($this->rahmenhoehe->getValue())) . ', '
             . mysql_real_escape_string(trim($this->marke->getValue())) . ', "'
@@ -197,7 +194,7 @@ class Fahrrad extends Persistenz {
     public function setRadtyp($radtyp){ $this->radtyp = new Radtyp($radtyp); }
     public function setGeschlecht($geschlecht){ $this->geschlecht = new Geschlecht($geschlecht); }
     public function setZustand($zustand){ $this->zustand = new Zustand($zustand); }
-    public function setLaufleistung($laufleistung){ $this->laufleistung = new Laufleistung($laufleistung); }
+    public function setLaufleistung($laufleistung){ $this->laufleistung = $laufleistung; }
     public function setRadgroesse($radgroesse){ $this->radgroesse = new Radgroesse($radgroesse); }
     public function setRahmenhoehe($rahmenhoehe){ $this->rahmenhoehe = new Rahmenhoehe($rahmenhoehe); }
     public function setMarke($marke){ $this->marke = new Marke($marke); }

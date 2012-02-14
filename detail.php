@@ -24,7 +24,7 @@ use de\zweiradspion\HeaderHelper,
                 Radtyp: <?=$fahrrad->getRadtyp()->getText()?><br>
                 Geschlecht: <?=$fahrrad->getGeschlecht()->getText()?><br>
                 Zustand: <?=$fahrrad->getZustand()->getText()?><br>
-                Laufleistung: <?=$fahrrad->getLaufleistung()->getText()?><br>
+                Laufleistung: <?=$fahrrad->getLaufleistung()?><br>
                 Radgroesse: <?=$fahrrad->getRadgroesse()->getText()?><br>
                 Rahmenhoehe: <?=$fahrrad->getRahmenhoehe()->getText()?><br>
                 Farbe: <?=$fahrrad->getFarbe()->getText()?><br>

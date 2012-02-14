@@ -20,6 +20,7 @@ use de\zweiradspion\HeaderHelper,
             $markeErr = '';
             $modellErr = '';
             $preisErr = '';
+            $laufleistungErr = '';
             $showForm = true;
             $keineFehler = true;
             $fahrrad = new Fahrrad();
@@ -103,7 +104,6 @@ use de\zweiradspion\HeaderHelper,
             if($showForm){
             ?>
             <form method="post" action="bike.php">
-                <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
                 <div class="formField<?=$markeErr?>">
                     <p class="error">Bitte geben Sie einen Herrsteller ein</p>
                     <label>Marke</label>
@@ -111,15 +111,62 @@ use de\zweiradspion\HeaderHelper,
                 </div>
                 <div class="formField<?=$modellErr?>">
                     <p class="error">Bitte geben Sie ein Modell ein</p>
-                    <label>Modell</label><input type="text" name="modell" value="<?=$fahrrad->getModell()?>" />
+                    <label>Modell</label>
+                    <input type="text" name="modell" value="<?=$fahrrad->getModell()?>" />
                 </div>
                 <div class="formField<?=$preisErr?>">
                     <p class="error">Bitte geben Sie einen Preis ein</p>
-                    <label>Preis</label><input type="text" name="preis" value="<?=$fahrrad->getPreis()?>" />
+                    <label>Preis</label>
+                    <input type="text" name="preis" value="<?=$fahrrad->getPreis()?>" />
                 </div>
                 <div class="formField">
                     <label>Radtyp</label>
                     <?=$fahrrad->getRadtyp()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Geschlecht</label>
+                    <?=$fahrrad->getGeschlecht()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Zustand</label>
+                    <?=$fahrrad->getZustand()->getDropdown()?>
+                </div>
+                <div class="formField<?=$laufleistungErr?>">
+                    <p class="error">Bitte geben Sie eine Laufleistung ein</p>
+                    <label>Laufleistung</label>
+                    <input type="text" name="laufleistung" value="<?=$fahrrad->getLaufleistung()?>" />
+                </div>
+                <div class="formField">
+                    <label>Radgroesse</label>
+                    <?=$fahrrad->getRadgroesse()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Rahmenhoehe</label>
+                    <?=$fahrrad->getRahmenhoehe()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Farbe</label>
+                    <?=$fahrrad->getFarbe()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Bremssystem</label>
+                    <?=$fahrrad->getBremssystem()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Schaltungstyp</label>
+                    <?=$fahrrad->getSchaltungstyp()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Rahmenmaterial</label>
+                    <?=$fahrrad->getRahmenmaterial()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Beleuchtungsart</label>
+                    <?=$fahrrad->getBeleuchtungsart()->getDropdown()?>
+                </div>
+                <div class="formField">
+                    <label>Einsatzbereich</label>
+                    <?=$fahrrad->getEinsatzbereich()->getDropdown()?>
                 </div>
                 <div class="formField">
                     <input class="submit" type="submit" value="Senden" />
