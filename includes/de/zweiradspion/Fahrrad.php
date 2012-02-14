@@ -83,6 +83,34 @@ class Fahrrad extends Persistenz {
         }
     }
     
+    public function loadFromPost($post){
+        if($post['marke'] == -1){
+            $this->setMarke($post['markeSonstige']);
+        }else{
+            $this->setMarke($post['marke']);
+        }
+        echo $this->getMarke();
+        /*
+        $this->setPid($pid);
+        $this->setRadtyp($radtyp);
+        $this->setGeschlecht($geschlecht);
+        $this->setZustand($zustand);
+        $this->setLaufleistung($laufleistung);
+        $this->setRadgroesse($radgroesse);
+        $this->setRahmenhoehe($rahmenhoehe);
+        
+        $this->setModell($modell);
+        $this->setFarbe($farbe);
+        $this->setBremssystem($bremssystem);
+        $this->setSchaltungstyp($schaltungstyp);
+        $this->setRahmenmaterial($rahmenmaterial);
+        $this->setBeleuchtungsart($beleuchtungsart);
+        $this->setEinsatzbereich($einsatzbereich);
+        $this->setPreis($preis);
+         * 
+         */
+    }
+    
     public function updateInDatabase(){
         $dbObject = new DatabaseHelper();
         $sql = 'UPDATE bike SET '
@@ -176,6 +204,6 @@ class Fahrrad extends Persistenz {
     public function setBeleuchtungsart($beleuchtungsart){ $this->beleuchtungsart = new Beleuchtungsart($beleuchtungsart); }
     public function setEinsatzbereich($einsatzbereich){ $this->einsatzbereich = new Einsatzbereich($einsatzbereich); }
     public function setPreis($preis){ $this->preis = $preis; }
-    public function setBilder(Bild $bilder){ $this->preis = $bilder; }
+    public function setBilder(Bild $bilder){ $this->bilder = $bilder; }
 }
 ?>

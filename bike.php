@@ -22,9 +22,11 @@ use de\zweiradspion\HeaderHelper,
             $preisErr = '';
             $showForm = true;
             $keineFehler = true;
+            $fahrrad = new Fahrrad();
             
             if($_POST){
-                if($_POST['marke'] > 0){
+                $fahrrad->loadFromPost($_POST);
+                if($_POST['marke'] == -1 && empty($_POST['markeSonstige'])){
                     $markeErr = ' error';
                     $keineFehler = false;
                 }
@@ -40,13 +42,8 @@ use de\zweiradspion\HeaderHelper,
                 if($keineFehler){
                     # insert
                     if(empty($uid)){
-                        $fahrrad = new Fahrrad();
-                        $fahrrad->setMarke($_POST['marke']);
-                        $fahrrad->setModell($_POST['modell']);
-                        $fahrrad->setPreis($_POST['preis']);
-                        $fahrrad->setRadtyp($_POST['radtyp']);
                         try{
-                            $fahrrad->insertInDatabase();
+                            #$fahrrad->insertInDatabase();
                             echo 'Das Fahrrad wurde neu in die Datenbank bike geschrieben<br>';
                         }catch(Exception $e){
                             print $e->getMessage();
@@ -55,20 +52,15 @@ use de\zweiradspion\HeaderHelper,
                     # update
                     }else{
                         $fahrrad = new Fahrrad($uid);
-                        $fahrrad->setMarke($_POST['marke']);
-                        $fahrrad->setModell($_POST['modell']);
-                        $fahrrad->setPreis($_POST['preis']);
-                        $fahrrad->setRadtyp($_POST['radtyp']);
+                        $fahrrad->loadFromPost($_POST);
                         try{
-                            $fahrrad->updateInDatabase();
+                            #$fahrrad->updateInDatabase();
                             echo 'Das Fahrrad wurde in die Datenbank bike geschrieben<br>';
                         }catch(Exception $e){
                             print $e->getMessage();
                         }
                         $showForm = false;
                     }
-                }else{
-                    $fahrrad = new Fahrrad();
                 }
             }
             # DELETE
@@ -107,8 +99,6 @@ use de\zweiradspion\HeaderHelper,
                 $marke = $fahrrad->getMarke();
                 $modell = $fahrrad->getModell();
                 $preis = $fahrrad->getPreis();
-            }else{
-                $fahrrad = new Fahrrad(); 
             }
     
             if($showForm){
