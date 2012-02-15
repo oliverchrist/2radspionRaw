@@ -15,9 +15,6 @@ use de\zweiradspion\HeaderHelper,
             $fahrrad = new Fahrrad($_GET['uid']);
             ?>
             <div class="fahrradSingle" >
-                <h1>Single View for Fahrrad</h1>
-                uid: <?=$fahrrad->getUid()?><br>
-                pid: <?=$fahrrad->getPid()?><br>
                 Marke: <?=$fahrrad->getMarke()->getValue()?><br>
                 modell: <?=$fahrrad->getModell()?><br>
                 preis: <?=$fahrrad->getPreis()?><br>

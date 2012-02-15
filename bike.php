@@ -60,7 +60,7 @@ use de\zweiradspion\HeaderHelper,
                     if(empty($_POST['uid'])){
                         try{
                             $fahrrad->insertInDatabase();
-                            echo 'Das Fahrrad wurde erfolgreich gespeichert<br>';
+                            echo 'Das Zweirad wurde erfolgreich gespeichert<br>';
                         }catch(Exception $e){
                             print $e->getMessage();
                         }

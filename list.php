@@ -8,7 +8,20 @@ use de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
     <?
-    $title = (isset($_GET['filter']))?'Meine Angebote':'Alle Angebote';
+    $title = 'Alle Angebote';
+    if(isset($_GET['filter'])){
+        switch ($_GET['filter']) {
+            case 'myOffers':
+                $title = 'Meine Angebote';
+                break;
+            case 'notepad':
+                $title = 'Merkzettel';
+                break;
+            default:
+                $title = $_GET['filter'];
+                break;
+        }
+    }
     echo HeaderHelper::getHeader($title);
     ?>
 	<div id="content">
