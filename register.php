@@ -13,8 +13,6 @@ use de\zweiradspion\FormHelper;
 	<div id="content">
         <?=NavigationHelper::getSubnavigation()?>
 	    <?php
-	    $username = '';
-        $usernameErr = '';
         $password = '';
         $passwordErr = '';
         $password2 = '';
@@ -27,7 +25,6 @@ use de\zweiradspion\FormHelper;
         $cityErr = '';
         $showForm = true;
 	    if($_POST){
-    	    $username = $_POST['username'];
             $password = $_POST['password'];
             $password2 = $_POST['password2'];
             $email = $_POST['email'];
@@ -36,9 +33,6 @@ use de\zweiradspion\FormHelper;
             $latlng = $_POST['latlng'];
             $lat = $_POST['lat'];
             $lng = $_POST['lng'];
-            if(empty($username)){
-                $usernameErr = ' error';
-            }
             if(empty($password)){
                 $passwordErr = ' error';
             }
@@ -55,8 +49,7 @@ use de\zweiradspion\FormHelper;
                 $cityErr = ' error';
             }
             if(
-                !empty($username)
-                && !empty($password)
+                !empty($password)
                 && !empty($password2)
                 && FormHelper::isEmail($email)
                 && !empty($postcode)
@@ -65,12 +58,6 @@ use de\zweiradspion\FormHelper;
                 # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
                 $uniqueUser = true;
                 $dbObject = new DatabaseHelper();
-                if($dbObject->valueInTable($username,'username','user') || $dbObject->valueInTable($username,'username','userunconfirmed')){
-                    echo '<span class="error">Diesen Benutzer gibt es bereits, bitte geben Sie einen anderen Benutzernamen ein.</span><br>';
-                    $uniqueUser = false;
-                }else{
-                    echo 'Benutzer ist nicht in Tabelle user oder userunconfirmed<br>';
-                }
                 # Prüfen ob email bereits existiert in Tabelle user und userunconfirmed
                 if($dbObject->valueInTable($email,'email','user') || $dbObject->valueInTable($email,'email','userunconfirmed')){
                     echo '<span class="error">Diese Email-Adresse gibt es bereits.</span><br>';
@@ -88,9 +75,8 @@ use de\zweiradspion\FormHelper;
                     $hashFinal = hash_final($hash);
                     
                     # TODO CURDATE() ergänzen
-                    $sql = "INSERT INTO userunconfirmed (hash, username, password, email, postcode, city, latLng, lat, lng) VALUES ('"
+                    $sql = "INSERT INTO userunconfirmed (hash, password, email, postcode, city, latLng, lat, lng) VALUES ('"
                         . mysql_real_escape_string(trim($hashFinal)) . "', '"
-                        . mysql_real_escape_string(trim($username)) . "', '"
                         . md5($password) . "', '"
                         . mysql_real_escape_string(trim($email)) . "', "
                         . mysql_real_escape_string(trim($postcode)) . ", '"
@@ -110,7 +96,7 @@ use de\zweiradspion\FormHelper;
                     $header = 'From: webmaster@2radspion.de' . "\r\n" .
                         'Reply-To: webmaster@2radspion.de' . "\r\n" .
                         'X-Mailer: PHP/' . phpversion();
-                    $message = 'Guten Tag ' . $username . ',' . "\n" . 'klicken Sie bitte auf diesen Link: http://' . de\zweiradspion\DOMAIN . '/registerConfirm.php?x=' . $hashFinal;
+                    $message = 'Guten Tag,' . "\n" . 'klicken Sie bitte auf diesen Link: http://' . de\zweiradspion\DOMAIN . '/registerConfirm.php?x=' . $hashFinal;
                     $mailSend = mail($email, '2radspion Confirm', $message, $header);
                     if(!$mailSend){
                         die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
@@ -127,9 +113,9 @@ use de\zweiradspion\FormHelper;
             <input type="hidden" name="latlng" />
             <input type="hidden" name="lat" />
             <input type="hidden" name="lng" />
-	        <div class="formField<?=$usernameErr?>">
-                <p class="error">Bitte geben Sie einen Benutzernamen ein</p>
-                <label>Benutzername</label><input type="text" name="username" value="<?=$username?>" />
+            <div class="formField<?=$emailErr?>">
+                <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>
+                <label>Email</label><input type="text" name="email" value="<?=$email?>" />
             </div>
             <div class="formField<?=$passwordErr?>">
                 <p class="error">Bitte geben Sie ein Passwort ein</p>
@@ -138,10 +124,6 @@ use de\zweiradspion\FormHelper;
             <div class="formField<?=$password2Err?>">
                 <p class="error">Die Passwörter stimmen nicht überein</p>
                 <label>Passwort wiederholen</label><input type="password" name="password2" value="<?=$password2?>" />
-            </div>
-            <div class="formField<?=$emailErr?>">
-                <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>
-                <label>Email</label><input type="text" name="email" value="<?=$email?>" />
             </div>
             <div class="formField<?=$postcodeErr?>">
                 <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>

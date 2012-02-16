@@ -1,10 +1,10 @@
 <?php
 include 'includes/init.php';
 include 'includes/head.php';
-use de\zweiradspion\DatabaseHelper;
-use de\zweiradspion\DebugHelper;
-use de\zweiradspion\HeaderHelper;
-use de\zweiradspion\NavigationHelper;
+use de\zweiradspion\DatabaseHelper,
+    de\zweiradspion\DebugHelper,
+    de\zweiradspion\HeaderHelper,
+    de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
     <?
@@ -60,6 +60,7 @@ use de\zweiradspion\NavigationHelper;
         $condition = array();
         $join = array();
         $order = array();
+        $column = array();
         if($_POST){
             if($_POST['marke'] != -1) $condition[] = 'marke = "' . $_POST['marke'] . '"';
             if($_POST['modell'] != -1) $condition[] = 'modell = "' . $_POST['modell'] . '"';
@@ -68,16 +69,19 @@ use de\zweiradspion\NavigationHelper;
             $condition[] = 'bike.pid = ' . $_SESSION['uid'];
         }
         if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['uid'])){
-            $join [] = 'left join notepad on bike.uid = notepad.id';
+            $join [] = 'right join notepad on bike.uid = notepad.id';
             $condition[] = 'notepad.pid=' . $_SESSION['uid'];
+            $column[] = ', notepad.id, notepad.remark';
         }
         $sqlAdditionalCondition = '';
         $sqlAdditionalJoin = '';
+        $sqlAdditionalColumn = '';
         $sqlOrder = (isset($_POST['orderDistance']) && isset($_SESSION['lat']) && isset($_SESSION['lng'])) ? 'distance ASC, ' : '';
         if(!empty($condition)) $sqlAdditionalCondition = 'where ' . implode(' and ', $condition);
         if(!empty($join)) $sqlAdditionalJoin = ' ' . implode(' ', $join);
+        if(!empty($column)) $sqlAdditionalColumn = implode('', $column);
         $sql = "select bike.uid,bike.pid,marke,modell,preis,bike.erstellt,bike.geaendert"
-            . ",name,extension,reihenfolge";
+            . ",name,extension,reihenfolge" . $sqlAdditionalColumn;
             if(isset($_SESSION['lat']) && isset($_SESSION['lng'])){
             $sql .= ",user.lat, user.lng, (111.3 * ({$_SESSION['lat']} - user.lat)) as dy, (71.5 * ({$_SESSION['lng']} - user.lng)) as dx"
                 . ", sqrt( POW((71.5 * ({$_SESSION['lng']} - user.lng)),2) + POW((111.3 * ({$_SESSION['lat']} - user.lat)),2) ) as distance";
@@ -89,37 +93,42 @@ use de\zweiradspion\NavigationHelper;
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>
                 <div class="bikeListElement">
-                    <?php if(!empty($row['name'])){
-                        $imageObj = new ScaleImage($row['name'], $row['extension'], 'images');
-                        $imagePath = $imageObj->getImagePath(200, 'auto');
-                        ?>
-                        <a class="thumb" href="detail.php?uid=<?=$row['uid']?>">
-                            <img alt="<?=$row['modell']?>" src="<?=$imagePath?>" width="200" />
-                        </a>
-                    <?php } ?>
-                    <div class="cnt">
-                        <?/*
-                        <?=DebugHelper::info('uid: ' . $row['uid'])?>
-                        <?=DebugHelper::info('pid: ' . $row['pid'])?>
-                        <?=DebugHelper::info('lat: ' . $row['lat'])?>
-                        <?=DebugHelper::info('lng: ' . $row['lng'])?>
-                        <?=DebugHelper::info('dx: ' . $row['dx'])?>
-                        <?=DebugHelper::info('dy: ' . $row['dy'])?>
-                        <?=DebugHelper::info('distance: ' . $row['distance'])?>
-                         */?>
-                        <? if(isset($row['distance'])){ ?>
-                        Entfernung: <?printf("%.2f", $row['distance']);?> km<br>
-                        <? } ?>
-                        marke: <?=$row['marke']?><br>
-                        modell: <?=$row['modell']?><br>
-                        preis: <?=$row['preis']?><br>
-                        erstellt: <?=$row['erstellt']?><br>
-                        geaendert: <?=$row['geaendert']?><br>
-                    </div>
-                    <div class="links">
-                        <a class="txtLnk" href="detail.php?uid=<?=$row['uid']?>">Ansehen</a>
-                    </div>
-                    <div class="clear"></div>
+                    <?php if($row['uid'] == NULL && isset($row['id'])){
+                        echo 'Das Zweirad mit der ID: ' . $row['id'] . ' wurde gelöscht<br>';
+                        echo 'Bemerkung: ' . $row['remark'];
+                    }else{ ?>
+                        <?php if(!empty($row['name'])){
+                            $imageObj = new ScaleImage($row['name'], $row['extension'], 'images');
+                            $imagePath = $imageObj->getImagePath(200, 'auto');
+                            ?>
+                            <a class="thumb" href="detail.php?uid=<?=$row['uid']?>">
+                                <img alt="<?=$row['modell']?>" src="<?=$imagePath?>" width="200" />
+                            </a>
+                        <?php } ?>
+                        <div class="cnt">
+                            <? /*=DebugHelper::info('id: ' . $row['id'])?>
+                            <?=DebugHelper::info('uid: ' . $row['uid'])?>
+                            <?=DebugHelper::info('uid: ' . $row['uid'])?>
+                            <?=DebugHelper::info('pid: ' . $row['pid'])?>
+                            <?=DebugHelper::info('lat: ' . $row['lat'])?>
+                            <?=DebugHelper::info('lng: ' . $row['lng'])?>
+                            <?=DebugHelper::info('dx: ' . $row['dx'])?>
+                            <?=DebugHelper::info('dy: ' . $row['dy'])?>
+                            <?=DebugHelper::info('distance: ' . $row['distance']) */?>
+                            <? if(isset($row['distance'])){ ?>
+                            Entfernung: <?printf("%.2f", $row['distance']);?> km<br>
+                            <? } ?>
+                            marke: <?=$row['marke']?><br>
+                            modell: <?=$row['modell']?><br>
+                            preis: <?=$row['preis']?><br>
+                            erstellt: <?=$row['erstellt']?><br>
+                            geaendert: <?=$row['geaendert']?><br>
+                        </div>
+                        <div class="links">
+                            <a class="txtLnk" href="detail.php?uid=<?=$row['uid']?>">Ansehen</a>
+                        </div>
+                        <div class="clear"></div>
+                    <? } ?>
                 </div>            
             <?php }
          }else{

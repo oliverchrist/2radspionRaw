@@ -32,7 +32,6 @@ use de\zweiradspion\NavigationHelper;
             
             $uid = $row['uid'];
             $hash = $row['hash'];
-            $username = $row['username'];
             $password = $row['password'];
             $email = $row['email'];
             $postcode = $row['postcode'];
@@ -42,9 +41,8 @@ use de\zweiradspion\NavigationHelper;
             $lng = $row['lng'];
             
             # User in Tabelle user übertragen
-            $result = mysql_query("INSERT INTO user (hash, username, password, email, postcode, city, latLng, lat, lng) VALUES ('"
+            $result = mysql_query("INSERT INTO user (hash, password, email, postcode, city, latLng, lat, lng) VALUES ('"
                     . $hash . "', '"
-                    . $username . "', '"
                     . $password . "', '"
                     . $email . "', "
                     . $postcode . ", '"

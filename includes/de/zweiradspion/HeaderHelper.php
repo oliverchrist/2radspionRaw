@@ -15,7 +15,6 @@ class HeaderHelper {
             if($_SESSION && DEBUG){
                 $header .= '<div class="sessionData">uid: ' 
                     . $_SESSION['uid'] 
-                    . ', username: ' . $_SESSION['username'] 
                     . ', email: ' . $_SESSION['email'] 
                     . ', lat: ' . $_SESSION['lat']
                     . ', lng: ' . $_SESSION['lng']
