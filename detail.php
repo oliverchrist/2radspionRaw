@@ -48,7 +48,7 @@ use de\zweiradspion\HeaderHelper,
                 <? if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
                 <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
                 <? } ?>
-                <? if(isset($_SESSION['uid'])){ ?>
+                <? if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid']){ ?>
                 <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
                 <? } ?>
                 <a class="txtLnk" href="#">Kontakt</a><br />
