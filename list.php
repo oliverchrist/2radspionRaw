@@ -28,28 +28,24 @@ use de\zweiradspion\DatabaseHelper,
 	    <?=NavigationHelper::getSubnavigation()?>
 	    <?php
         echo '<form class="search" method="post">';
+        echo '<pre>';
+        print_r($_POST);
+        echo '</pre>';
         $dbObject = new DatabaseHelper();
-        $sql = "select distinct marke from bike";
-        $result = mysql_query($sql);
-        if($result){
-            echo '<select name="marke"><option value="-1">Marke</option>';
-            while ($row = mysql_fetch_assoc($result)) {
-                $selected = ($row['marke'] != -1 && $row['marke'] == $_POST['marke'])?' selected':'';
-                echo '<option' . $selected . '>' . $row['marke'] . '</option>';
-            }
-            echo '</select>';
-        }
+        $dbObject->generateFilterDropdown('marke', 'bike');
+        $dbObject->generateFilterDropdown('modell', 'bike');
+        $dbObject->generateFilterDropdown('radtyp', 'bike');
+        $dbObject->generateFilterDropdown('geschlecht', 'bike');
+        $dbObject->generateFilterDropdown('zustand', 'bike');
+        $dbObject->generateFilterDropdown('farbe', 'bike');
+        $dbObject->generateFilterDropdown('bremssystem', 'bike');
+        $dbObject->generateFilterDropdown('schaltungstyp', 'bike');
+        $dbObject->generateFilterDropdown('rahmenmaterial', 'bike');
+        $dbObject->generateFilterDropdown('beleuchtungsart', 'bike');
+        $dbObject->generateFilterDropdown('einsatzbereich', 'bike');
 
-        $sql = "select distinct modell from bike";
-        $result = mysql_query($sql);
-        if($result){
-            echo '<select name="modell"><option value="-1">Modell</option>';
-            while ($row = mysql_fetch_assoc($result)) {
-                $selected = ($row['modell'] != -1 && $row['modell'] == $_POST['modell'])?' selected':'';
-                echo '<option' . $selected . '>' . $row['modell'] . '</option>';
-            }
-            echo '</select>';
-        }
+
+
         $orderDistanceChecked = (isset($_POST['orderDistance'])) ? ' checked="checked"' : '';
         if(isset($_SESSION['lat']) && isset($_SESSION['lng'])){
             echo '<input name="orderDistance" type="checkbox"' . $orderDistanceChecked . '><label>Nahe Angebote zuerst</label>';

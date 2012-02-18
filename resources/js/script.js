@@ -1,6 +1,6 @@
 $(document).ready(function(){
-    $('.search select[name=marke], .search select[name=modell]').change(function(){
-        $(this).parent().submit();
+    $('.search select').change(function(){
+        $(this).parents('form.search').submit();
     });
     
     $('a.lightbox').lightBox({

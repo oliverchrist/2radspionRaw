@@ -1,10 +1,10 @@
 <?php
 include 'includes/init.php';
 include 'includes/head.php';
-use de\zweiradspion\DatabaseHelper;
-use de\zweiradspion\DebugHelper;
-use de\zweiradspion\HeaderHelper;
-use de\zweiradspion\NavigationHelper;
+use de\zweiradspion\DatabaseHelper,
+    de\zweiradspion\DebugHelper,
+    de\zweiradspion\HeaderHelper,
+    de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Passwort ändern')?>
@@ -21,7 +21,7 @@ use de\zweiradspion\NavigationHelper;
             if(!$hash) die ('Es wurde kein Hash übergeben<br>');
             echo '<p>Hash: ' . $hash . '</p>';
             
-            include 'includes/dbConnect.php';
+            $dbObject = new DatabaseHelper();
             $result = mysql_query("SELECT * FROM user WHERE password = '" . mysql_real_escape_string($hash) . "'");
                 
             $row = mysql_fetch_assoc($result);

@@ -37,5 +37,20 @@ class DatabaseHelper {
         }
         return false;
     }
+    
+    public function generateFilterDropdown($field, $table){
+        $sql = "select distinct $field from $table order by $field asc";
+        #echo $_POST[$field];
+        #print_r($_POST);
+        $result = mysql_query($sql);
+        if($result){
+            echo '<select name="' . $field . '"><option value="-1">' . ucfirst($field) . '</option>';
+            while ($row = mysql_fetch_assoc($result)) {
+                $selected = ($row[$field] != -1 && isset($_POST[$field]) && $row[$field] == $_POST[$field])?' selected':'';
+                echo '<option' . $selected . '>' . $row[$field] . '</option>';
+            }
+            echo '</select>';
+        }
+    }
 }
 ?>
