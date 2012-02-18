@@ -28,9 +28,6 @@ use de\zweiradspion\DatabaseHelper,
 	    <?=NavigationHelper::getSubnavigation()?>
 	    <?php
         echo '<form class="search" method="post">';
-        echo '<pre>';
-        print_r($_POST);
-        echo '</pre>';
         $dbObject = new DatabaseHelper();
         $dbObject->generateFilterDropdown('marke', 'bike');
         $dbObject->generateFilterDropdown('modell', 'bike');
@@ -43,14 +40,29 @@ use de\zweiradspion\DatabaseHelper,
         $dbObject->generateFilterDropdown('rahmenmaterial', 'bike');
         $dbObject->generateFilterDropdown('beleuchtungsart', 'bike');
         $dbObject->generateFilterDropdown('einsatzbereich', 'bike');
+        $laufleistung = (isset($_POST['laufleistung'])) ? $_POST['laufleistung'] : '';
+        $radgroesse = (isset($_POST['radgroesse'])) ? $_POST['radgroesse'] : '';
+        $rahmenhoehe = (isset($_POST['rahmenhoehe'])) ? $_POST['rahmenhoehe'] : '';
+        $preis = (isset($_POST['preis'])) ? $_POST['preis'] : '';
+        
+        echo "<div class=\"clear\"></div>";
+        echo "<div class=\"inputField\"><label>Laufleistung max.</label><input name=\"laufleistung\" value=\"$laufleistung\"><span>km</span></div>";
+        echo "<div class=\"inputField\"><label>Radgröße</label><input name=\"radgroesse\" value=\"$radgroesse\"><span>Zoll</span></div>";
+        echo "<div class=\"inputField\"><label>Rahmenhöhe</label><input name=\"rahmenhoehe\" value=\"$rahmenhoehe\"><span>cm</span></div>";
+        echo "<div class=\"inputField\"><label>Preis max.</label><input name=\"preis\" value=\"$preis\"><span>EUR</span></div>";
 
-
-
+        echo "<div class=\"clear\"></div>";
+        echo "<div class=\"checkboxField\">";
         $orderDistanceChecked = (isset($_POST['orderDistance'])) ? ' checked="checked"' : '';
         if(isset($_SESSION['lat']) && isset($_SESSION['lng'])){
             echo '<input name="orderDistance" type="checkbox"' . $orderDistanceChecked . '><label>Nahe Angebote zuerst</label>';
         }
+        echo '</div>';
+        
+        echo '<div class="control">';
+        echo '<input type="reset" class="reset" value="Reset">';
         echo '<input type="submit" class="submit" value="Filtern">';
+        echo '</div>';
         echo '</form>';
 
         $condition = array();
@@ -58,8 +70,22 @@ use de\zweiradspion\DatabaseHelper,
         $order = array();
         $column = array();
         if($_POST){
-            if($_POST['marke'] != -1) $condition[] = 'marke = "' . $_POST['marke'] . '"';
-            if($_POST['modell'] != -1) $condition[] = 'modell = "' . $_POST['modell'] . '"';
+            $condition = $dbObject->generateCondition($condition, 'marke');
+            $condition = $dbObject->generateCondition($condition, 'modell');
+            $condition = $dbObject->generateCondition($condition, 'radtyp');
+            $condition = $dbObject->generateCondition($condition, 'geschlecht');
+            $condition = $dbObject->generateCondition($condition, 'zustand');
+            $condition = $dbObject->generateCondition($condition, 'farbe');
+            $condition = $dbObject->generateCondition($condition, 'bremssystem');
+            $condition = $dbObject->generateCondition($condition, 'schaltungstyp');
+            $condition = $dbObject->generateCondition($condition, 'rahmenmaterial');
+            $condition = $dbObject->generateCondition($condition, 'beleuchtungsart');
+            $condition = $dbObject->generateCondition($condition, 'einsatzbereich');
+            
+            $condition = $dbObject->generateCondition($condition, 'laufleistung', '<=');
+            $condition = $dbObject->generateCondition($condition, 'radgroesse');
+            $condition = $dbObject->generateCondition($condition, 'rahmenhoehe');
+            $condition = $dbObject->generateCondition($condition, 'preis', '<=');
         }
         if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
             $condition[] = 'bike.pid = ' . $_SESSION['uid'];

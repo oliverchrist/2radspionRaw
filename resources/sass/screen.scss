@@ -123,16 +123,7 @@ a.lightbox { text-decoration:none; }
           -3px -3px 3px #ddd,
           0 0 3px #aaa;
 }
-input[type=submit]:hover,
-input[type=reset]:hover,
-.button:hover,
-.buttonHi:hover{
-  top:3px;
-  left:3px;
-  -moz-box-shadow:2px 2px 2px rgba(0,0,0,0.5); /* Firefox */
-  -webkit-box-shadow:2px 2px 2px rgba(0,0,0,0.5); /* Safari, Chrome */
-  box-shadow:2px 2px 2px rgba(0,0,0,0.5); /* W3C Standard, Opera, Firefox4, IE9 */
-}
+
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
 #content    { width:720px; margin:12px 0 60px 180px; position:relative;
@@ -173,13 +164,25 @@ fieldset legend { margin-top: 12px; }
         
         
     }
-    select,input[type=text],input[type=submit],input[type=password],input[type=button] { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
+    select,input[type=text],input[type=submit],input[type=reset],input[type=password],input[type=button] { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
     select { width:220px; margin:0 20px 0 -3px; background:white; }
     
-    input.submit { margin-left:200px; width:220px; background:$red; color:white; }
+    input.submit,input.reset { margin-left:200px; width:220px; background:$red; color:white; cursor:pointer;
+        &:hover { text-decoration:underline; }
+    }
     .unit { padding-left:10px; }
 }
 
-#std form.search { padding:20px 0; width:800px;
-    .submit { margin-left:20px; width:auto; }
+#std form.search { padding:20px 0; width:720px; position:relative;
+    select,.inputField { margin:0 20px 20px 0; float:left; }
+    
+    .inputField { width:160px;
+        label { display:block; }
+        input { width:100px; }
+        span { margin-left:5px; }
+    }
+    .checkboxField { }
+    .control { position:absolute; bottom:20px; right:20px;
+        .submit, .reset { width:auto; margin:0 0 0 20px; }
+    }
 }

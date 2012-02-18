@@ -52,5 +52,12 @@ class DatabaseHelper {
             echo '</select>';
         }
     }
+    
+    public function generateCondition($condition, $field, $relationalOperator = '='){
+        if(isset($_POST[$field]) && $_POST[$field] != -1 && !empty($_POST[$field])){
+            $condition[] = "$field $relationalOperator '{$_POST[$field]}'";
+        }
+        return $condition;
+    }
 }
 ?>

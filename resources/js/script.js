@@ -2,6 +2,10 @@ $(document).ready(function(){
     $('.search select').change(function(){
         $(this).parents('form.search').submit();
     });
+    $('.search .reset').click(function(){
+        $(this).parents('form.search').find('.inputField input').removeAttr('value');
+        $(this).parents('form.search').find('select option').removeAttr('selected');
+    });
     
     $('a.lightbox').lightBox({
         imageLoading: 'resources/images/lightbox-ico-loading.gif',
