@@ -37,6 +37,7 @@ class Fahrrad extends Persistenz {
     protected $einsatzbereich;
     protected $preis;
     protected $bilder;
+    protected $aktiv;
     
     protected $post;
 
@@ -109,6 +110,7 @@ class Fahrrad extends Persistenz {
         $this->postToSetterFromSelect('beleuchtungsart');
         $this->postToSetterFromSelect('einsatzbereich');
         $this->preis = $post['preis'];
+        $this->aktiv = (isset($post['aktiv'])) ? 1 : 0;
     }
     
     public function updateInDatabase(){
@@ -129,7 +131,8 @@ class Fahrrad extends Persistenz {
             . 'schaltungstyp="' . mysql_real_escape_string(trim($this->schaltungstyp->getValue())) . '", '
             . 'rahmenmaterial="' . mysql_real_escape_string(trim($this->rahmenmaterial->getValue())) . '", '
             . 'beleuchtungsart="' . mysql_real_escape_string(trim($this->beleuchtungsart->getValue())) . '", '
-            . 'einsatzbereich="' . mysql_real_escape_string(trim($this->einsatzbereich->getValue())) . '", '   
+            . 'einsatzbereich="' . mysql_real_escape_string(trim($this->einsatzbereich->getValue())) . '", '
+            . 'aktiv=' . mysql_real_escape_string(trim($this->aktiv)) . ', '
             . 'geaendert=CURRENT_TIMESTAMP '         
             . 'WHERE uid=' . mysql_real_escape_string(trim($this->uid)) . ' and pid=' . mysql_real_escape_string(trim($this->pid));
         #echo $sql;
@@ -145,7 +148,7 @@ class Fahrrad extends Persistenz {
     
     public function insertInDatabase(){
         $dbObject = new DatabaseHelper();
-        $sql = 'INSERT INTO bike (pid, preis, radtyp, geschlecht, zustand, laufleistung, radgroesse, rahmenhoehe, marke, modell, farbe, bremssystem, schaltungstyp, rahmenmaterial, beleuchtungsart, einsatzbereich, erstellt, geaendert) VALUES ('
+        $sql = 'INSERT INTO bike (pid, preis, radtyp, geschlecht, zustand, laufleistung, radgroesse, rahmenhoehe, marke, modell, farbe, bremssystem, schaltungstyp, rahmenmaterial, beleuchtungsart, einsatzbereich, erstellt, aktiv, geaendert) VALUES ('
             . $_SESSION['uid'] . ', '
             . mysql_real_escape_string(trim($this->preis)) . ', '
             . '"' . mysql_real_escape_string(trim($this->radtyp->getValue())) . '", '
@@ -162,7 +165,8 @@ class Fahrrad extends Persistenz {
             . '"' . mysql_real_escape_string(trim($this->rahmenmaterial->getValue())) . '", '
             . '"' . mysql_real_escape_string(trim($this->beleuchtungsart->getValue())) . '", '
             . '"' . mysql_real_escape_string(trim($this->einsatzbereich->getValue())) . '", '   
-            . ' CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)';
+            . mysql_real_escape_string(trim($this->aktiv)) . ', '   
+                        . ' CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)';
         $result = mysql_query($sql);
         if(!$result){
             $exceptionText = 'Fahrrad konnte nicht in die Datenbank bike geschrieben werden<br>';
@@ -189,6 +193,7 @@ class Fahrrad extends Persistenz {
     public function getBeleuchtungsart(){ return $this->beleuchtungsart; }
     public function getEinsatzbereich(){ return $this->einsatzbereich; }
     public function getPreis(){ return $this->preis; }
+    public function getAktiv(){ return $this->aktiv; }
     public function getBilder(){ return $this->bilder; }
 
 
@@ -208,6 +213,7 @@ class Fahrrad extends Persistenz {
     public function setBeleuchtungsart($beleuchtungsart){ $this->beleuchtungsart = new Beleuchtungsart($beleuchtungsart); }
     public function setEinsatzbereich($einsatzbereich){ $this->einsatzbereich = new Einsatzbereich($einsatzbereich); }
     public function setPreis($preis){ $this->preis = $preis; }
+    public function setAktiv($aktiv){ $this->aktiv = $aktiv; }
     public function setBilder(Bild $bilder){ $this->bilder = $bilder; }
 }
 ?>

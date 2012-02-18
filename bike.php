@@ -181,6 +181,10 @@ use de\zweiradspion\HeaderHelper,
                     <?=$fahrrad->getEinsatzbereich()->getDropdown()?>
                 </div>
                 <div class="formField">
+                    <label>Aktiv</label>
+                    <input type="checkbox" name="aktiv" value="<?=$fahrrad->getAktiv()?>"<?=($fahrrad->getAktiv()) ? 'checked="checked"' : ''?> />
+                </div>
+                <div class="formField">
                     <input class="submit" type="submit" value="Senden" />
                 </div>
             </form>

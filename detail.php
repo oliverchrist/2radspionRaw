@@ -29,7 +29,8 @@ use de\zweiradspion\HeaderHelper,
                 Schaltungstyp: <?=$fahrrad->getSchaltungstyp()->getText()?><br>
                 Rahmenmaterial: <?=$fahrrad->getRahmenmaterial()->getText()?><br>
                 Beleuchtungsart: <?=$fahrrad->getBeleuchtungsart()->getText()?><br>
-                Einsatzbereich: <?=$fahrrad->getEinsatzbereich()->getText()?><br>                
+                Einsatzbereich: <?=$fahrrad->getEinsatzbereich()->getText()?><br>
+                aktiv: <?=($fahrrad->getAktiv()) ? 'aktiv' : 'inaktiv' ?><br>
                 erstellt: <?=$fahrrad->getErstellt()?><br>
                 geaendert: <?=$fahrrad->getGeaendert()?><br>
                 <? 

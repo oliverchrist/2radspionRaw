@@ -87,6 +87,9 @@ use de\zweiradspion\DatabaseHelper,
             $condition = $dbObject->generateCondition($condition, 'rahmenhoehe');
             $condition = $dbObject->generateCondition($condition, 'preis', '<=');
         }
+        if(isset($_GET['filter']) && $_GET['filter'] == 'allOffers'){
+            $condition[] = 'aktiv = 1';
+        }
         if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
             $condition[] = 'bike.pid = ' . $_SESSION['uid'];
         }
@@ -102,7 +105,7 @@ use de\zweiradspion\DatabaseHelper,
         if(!empty($condition)) $sqlAdditionalCondition = 'where ' . implode(' and ', $condition);
         if(!empty($join)) $sqlAdditionalJoin = ' ' . implode(' ', $join);
         if(!empty($column)) $sqlAdditionalColumn = implode('', $column);
-        $sql = "select bike.uid,bike.pid,marke,modell,preis,bike.erstellt,bike.geaendert"
+        $sql = "select bike.uid,bike.pid,marke,modell,preis,bike.erstellt,bike.geaendert,aktiv"
             . ",name,extension,reihenfolge" . $sqlAdditionalColumn;
             if(isset($_SESSION['lat']) && isset($_SESSION['lng'])){
             $sql .= ",user.lat, user.lng, (111.3 * ({$_SESSION['lat']} - user.lat)) as dy, (71.5 * ({$_SESSION['lng']} - user.lng)) as dx"
@@ -114,7 +117,7 @@ use de\zweiradspion\DatabaseHelper,
         $result = mysql_query($sql);
         if($result){
             while ($row = mysql_fetch_assoc($result)) { ?>
-                <div class="bikeListElement">
+                <div class="bikeListElement<?=($row['aktiv']) ? '' : ' inactive'?>">
                     <?php if($row['uid'] == NULL && isset($row['id'])){
                         echo 'Das Zweirad mit der ID: ' . $row['id'] . ' wurde gelöscht<br>';
                         echo 'Bemerkung: ' . $row['remark'];
