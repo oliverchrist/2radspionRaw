@@ -5,7 +5,8 @@ use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
 use de\zweiradspion\NavigationHelper;
-use de\zweiradspion\FormHelper;
+use de\zweiradspion\FormHelper,
+    de\zweiradspion\Mail;
 ?>
 <body id="std">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -60,10 +61,8 @@ use de\zweiradspion\FormHelper;
                 $dbObject = new DatabaseHelper();
                 # Prüfen ob email bereits existiert in Tabelle user und userunconfirmed
                 if($dbObject->valueInTable($email,'email','user') || $dbObject->valueInTable($email,'email','userunconfirmed')){
-                    echo '<span class="error">Diese Email-Adresse gibt es bereits.</span><br>';
+                    echo '<p class="error">Diese Email-Adresse gibt es bereits.</p><br>';
                     $uniqueUser = false;
-                }else{
-                    echo 'Email ist nicht in Tabelle user oder userunconfirmed<br>';
                 }
                 
                 # Wenn User unique ist
@@ -75,34 +74,37 @@ use de\zweiradspion\FormHelper;
                     $hashFinal = hash_final($hash);
                     
                     # TODO CURDATE() ergänzen
-                    $sql = "INSERT INTO userunconfirmed (hash, password, email, postcode, city, latLng, lat, lng) VALUES ('"
-                        . mysql_real_escape_string(trim($hashFinal)) . "', '"
-                        . md5($password) . "', '"
-                        . mysql_real_escape_string(trim($email)) . "', "
-                        . mysql_real_escape_string(trim($postcode)) . ", '"
-                        . mysql_real_escape_string(trim($city)) . "', '"
-                        . mysql_real_escape_string(trim($latlng)) . "', "
-                        . mysql_real_escape_string(trim($lat)) . ", "
-                        . mysql_real_escape_string(trim($lng)) . ")";
+                    $sql = 'INSERT INTO userunconfirmed (hash, password, email, postcode, city, latLng, lat, lng) VALUES ('
+                        . '"' . mysql_real_escape_string(trim($hashFinal)) . '", '
+                        . '"' . md5($password) . '", '
+                        . '"' . mysql_real_escape_string(trim($email)) . '", '
+                        . mysql_real_escape_string(trim($postcode)) . ', '
+                        . '"' . mysql_real_escape_string(trim($city)) . '", '
+                        . '"' . mysql_real_escape_string(trim($latlng)) . '", '
+                        . mysql_real_escape_string(trim($lat)) . ', '
+                        . mysql_real_escape_string(trim($lng)) . ')';
                     #echo $sql;
                     $result = mysql_query($sql);
                     if(!$result){
                         die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');
                     }else{
-                        echo 'User wurde in Datenbank useruncorfirmed geschrieben<br>';
                         $showForm = false;
                     }
     
-                    $header = 'From: webmaster@2radspion.de' . "\r\n" .
-                        'Reply-To: webmaster@2radspion.de' . "\r\n" .
-                        'X-Mailer: PHP/' . phpversion();
-                    $message = 'Guten Tag,' . "\n" . 'klicken Sie bitte auf diesen Link: http://' . de\zweiradspion\DOMAIN . '/registerConfirm.php?x=' . $hashFinal;
-                    $mailSend = mail($email, '2radspion Confirm', $message, $header);
-                    if(!$mailSend){
-                        die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
+                    $message = "Guten Tag,\n
+vielen Dank für Ihre Anmeldung bei zweiradspion.de.\n
+Um die Anmeldung abzuschließen klicken Sie folgenden Link, oder kopieren diesen in die Adresszeile Ihres Browser:\n
+http://" . de\zweiradspion\DOMAIN . "/registerConfirm.php?x=" . $hashFinal . "\n
+\n
+Sollten Sie sich nicht bei zweiradspion angemeldet haben ignorieren Sie diese Email einfach.\n
+\n
+Mit freundlichen Grüßen\n
+\n
+Das Team von zweiradspion.de";
+                    if(Mail::send($email, '2radspion Confirm', $message)) {
+                        echo '<p>Wir haben Ihnen eine Email zur Überprufung gesendet, bitte sehen Sie in Ihrem Posteingang nach und schließen Sie die Anmeldung ab.</p>';
                     }else{
-                        echo 'Mail wurde an den User zur Überprüfung geschickt<br>';
-                        echo '<p>Eine Email wurde an Sie versand, bitte bestätigen Sie diese</p>';
+                        die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
                     }
                 }
             }

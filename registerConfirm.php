@@ -15,7 +15,7 @@ use de\zweiradspion\NavigationHelper;
             # Hash aus Url holen
             $hash = $_GET['x'];
             if(!$hash) die ('Es wurde kein Hash übergeben<br>');
-            echo '<p>Hash: ' . $hash . '</p>';
+            #echo '<p>Hash: ' . $hash . '</p>';
             
             $dbObject = new DatabaseHelper();
             
@@ -53,7 +53,7 @@ use de\zweiradspion\NavigationHelper;
             if(!$result){
                 die('<span class="error">Could not write to table user</span><br>');
             }else{
-                echo 'User wurde in bestätigte Tabelle geschrieben.<br>';
+                #echo 'User wurde in bestätigte Tabelle geschrieben.<br>';
             }
             
             # User in Tabelle userunconfirmed löschen
@@ -61,8 +61,9 @@ use de\zweiradspion\NavigationHelper;
             if(!$result){
                 die('<span class="error">User mit Hash' . $hash . ' konnte nicht gelöscht werden</span><br>');
             }else{
-                echo 'User mit Hash ' . $hash . ' wurde in Tabelle userunconfirmed gelöscht.<br>';
+                #echo 'User mit Hash ' . $hash . ' wurde in Tabelle userunconfirmed gelöscht.<br>';
             }
+            echo '<p>Vielen Dank, die Anmeldung ist abgeschlossen. Sie können sich jetzt mit Ihrer E-Mail-Adresse und dem gewählten Passwort einloggen.</p>';
         }
 	    ?>
 	    <p><a class="txtLnk" href="login.php">Login</a></p>

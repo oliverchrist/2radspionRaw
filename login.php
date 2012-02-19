@@ -45,8 +45,8 @@ include 'includes/head.php';
             <? } ?>
             <form method="post">
                 <div class="formField<?=$emailErr?>">
-                    <p class="error">Bitte geben Sie einen Benutzernamen ein</p>
-                    <label>Benutzername</label><input type="text" name="email" value="<?=$email?>" />
+                    <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
+                    <label>E-Mail-Adresse</label><input type="text" name="email" value="<?=$email?>" />
                 </div>
                 <div class="formField<?=$passwordErr?>">
                     <p class="error">Bitte geben Sie das richtige Passwort ein</p>
