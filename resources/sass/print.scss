@@ -1,3 +1,24 @@
-/* Welcome to Compass. Use this file to define print styles.
- * Import this file using the following HTML or equivalent:
- * <link href="/stylesheets/print.css" media="print" rel="stylesheet" type="text/css" /> */
+body { background:white; }
+
+#std {
+    #header {
+        border: none;
+        height: 50px;
+        margin: 0 48px 0 0;
+        #mainnavi { display:none; }
+        #imgLogo {
+            right: auto; bottom:auto;
+        }
+    }
+    #content {
+        margin: 12px 0 60px 0;
+        width: auto;
+        .subnavi { display:none; }
+        .fahrradSingle {
+            background:white;
+            border:1px solid black;
+            .links { display:none; }
+        }
+    }
+    .borderBottom, .borderLeft { display:none; }
+}

@@ -33,6 +33,7 @@ use de\zweiradspion\HeaderHelper,
                 aktiv: <?=($fahrrad->getAktiv()) ? 'aktiv' : 'inaktiv' ?><br>
                 erstellt: <?=$fahrrad->getErstellt()?><br>
                 geaendert: <?=$fahrrad->getGeaendert()?><br>
+                Beschreibung: <?=$fahrrad->getBeschreibung()?><br>
                 <? 
                 $imageWidth = 510;
                 foreach($fahrrad->getBilder() as $bild) {
@@ -46,16 +47,18 @@ use de\zweiradspion\HeaderHelper,
                 }
                 ?>
                 <br>
-                <? if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
-                <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
-                <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Löschen</a><br>
-                <? } ?>
-                <? if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid']){ ?>
-                <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
-                <? } ?>
-                <a class="txtLnk" href="#">Kontakt</a><br />
-                <a class="txtLnk" href="location.php?pid=<?=$fahrrad->getPid()?>&uid=<?=$fahrrad->getUid()?>">Karte</a><br />
-                <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
+                <div class="links">
+                    <? if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
+                    <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
+                    <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Löschen</a><br>
+                    <? } ?>
+                    <? if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid']){ ?>
+                    <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
+                    <? } ?>
+                    <a class="txtLnk" href="#">Kontakt</a><br />
+                    <a class="txtLnk" href="location.php?pid=<?=$fahrrad->getPid()?>&uid=<?=$fahrrad->getUid()?>">Karte</a><br />
+                    <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
+                </div>
             </div>
         <? } ?>
     </div>          

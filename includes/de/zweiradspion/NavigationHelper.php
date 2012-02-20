@@ -15,7 +15,7 @@ class NavigationHelper {
         if(isset($_SESSION['uid'])){
             $subnavi .= '<a href="list.php?filter=myOffers">Meine Angebote</a>';
             $subnavi .= '<a href="list.php?filter=notepad">Merkzettel</a>';
-            $subnavi .= '<a href="bike.php?action=new">Neues Zweirad</a>';
+            $subnavi .= '<a href="bike.php?action=new">Neues Angebot</a>';
             $subnavi .= '<a href="user.php">Benutzerdaten</a>';
         }
         $subnavi .= '</div>';

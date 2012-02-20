@@ -82,23 +82,19 @@ use de\zweiradspion\HeaderHelper,
                 $sql = 'DELETE FROM bike WHERE uid = ' . $_GET['uid'] . ' and pid = ' . $_SESSION['uid'];
                 $result = mysql_query($sql);
                 if($result){
-                    echo 'Angebot mit der uid ' . $_GET['uid'] . ' erfolgreich gelöscht.';
+                    echo '<p>Das Angebot wurde erfolgreich gelöscht.</p>';
                     # Bilder finden und sicher sein, daß dem User das Bike gehörte (session), deshalb im if Zweig
                     $sql = 'SELECT * FROM images WHERE pid = ' . $_GET['uid'];
                     $result = mysql_query($sql);
                     while($row = mysql_fetch_assoc($result)){
                         $filename = 'images/' . $row['name'] . '.' . $row['extension'];
-                        if(unlink($filename)){
-                            echo '<p>' . $filename . ' wurde gelöscht.</p>';
-                        }else{
+                        if(!unlink($filename)){
                             echo '<p>' . $filename . ' konnte nicht gelöscht werden.</p>';
                         }
                     }
                     $sql = 'DELETE FROM images WHERE pid = ' . $_GET['uid'];
                     $result = mysql_query($sql);
-                    if($result){
-                        echo "<p>Bilder mit der pid {$_GET['uid']} erfolgreich gelöscht</p>";
-                    }else{
+                    if(!$result){
                         echo "<p>Bilder mit der pid {$_GET['uid']} konnten nicht gelöscht werden</p>";
                     }
                 }else{
@@ -179,6 +175,11 @@ use de\zweiradspion\HeaderHelper,
                 <div class="formField">
                     <label>Einsatzbereich</label>
                     <?=$fahrrad->getEinsatzbereich()->getDropdown()?>
+                </div>
+                <div class="formField textarea">
+                    <label>Beschreibung</label>
+                    <textarea name="beschreibung"><?=$fahrrad->getBeschreibung()?></textarea>
+                    <div class="clear"></div>
                 </div>
                 <div class="formField">
                     <label>Aktiv</label>
