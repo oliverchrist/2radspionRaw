@@ -5,10 +5,10 @@ use de\zweiradspion\HeaderHelper;
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('PHP Info')?>
-	<div id="content">
-     <?php
-     phpinfo();
-     ?>
+    <div id="content">
+    <?php
+    phpinfo();
+    ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>
