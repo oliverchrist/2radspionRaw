@@ -31,6 +31,29 @@ $(document).ready(function(){
         }
     });
     
+    $('.ajaxDelete').click(function(e){
+        e.preventDefault();
+        var link = $(this).attr('href');
+        var element = $(this).parents('.bikeListElement');
+        element.css('height',element.height() + 'px');
+        var answere = confirm("Wirklich löschen?");
+        if(answere){
+            $.ajax({
+              url: link,
+              context: element,
+              success: function(result){
+                if(result == 'delete'){
+                    $(this).addClass("deleted");
+                }else{
+                    console.log('Fehler in bikeAjax.php');
+                }
+              }
+            });
+        }
+    });
+    
+    
+    
     $('.selectEigenschaft').change(function(){
         if($(this).val() == -1){
             $(this).next('input').show();
@@ -38,6 +61,8 @@ $(document).ready(function(){
             $(this).next('input').hide();
         }
     });
+    
+    
 });
 
 function codeAddress(address) {

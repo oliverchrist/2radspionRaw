@@ -136,6 +136,11 @@ a.lightbox { text-decoration:none; }
 
 
 .bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 12px; border-radius: 12px; background: #eeb200; position: relative;
+    &.deleted { height:0 !important; width:0; padding:0; margin-bottom:0; border:none; overflow:hidden;
+        @include transition-property('height,width,padding,margin-bottom,border');
+        @include transition-duration('1s,1s,1s,1s,1s');
+        @include transition-delay('0s,1s,2s,2s,2s');
+    }
     &.inactive { opacity:0.5; }
     .thumb { float: left; margin-right: 10px; width: 200px;
         img { border-radius:12px; width:200px; }

@@ -150,7 +150,10 @@ use de\zweiradspion\DatabaseHelper,
                             geaendert: <?=$row['geaendert']?><br>
                         </div>
                         <div class="links">
-                            <a class="txtLnk" href="detail.php?uid=<?=$row['uid']?>">Ansehen</a>
+                            <a class="txtLnk" href="detail.php?uid=<?=$row['uid']?>">Ansehen</a><br>
+                            <? if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){ ?>
+                                <a class="txtLnk ajaxDelete" href="bikeAjax.php?uid=<?=$row['uid']?>&process=delete">Löschen</a><br>
+                            <? } ?>
                         </div>
                         <div class="clear"></div>
                     <? } ?>
