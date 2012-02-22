@@ -126,7 +126,7 @@ a.lightbox { text-decoration:none; }
 
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
-#content    { width:720px; margin:12px 0 60px 180px; position:relative;
+#content    { width:720px; margin:12px 0 60px 180px; position:relative; float:left;
     .subnavi { position:absolute; left:-160px; top:0; z-index:1;
         a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
             &:hover { text-decoration:underline; }
@@ -195,3 +195,8 @@ fieldset legend { margin-top: 12px; }
         .submit, .reset { width:auto; margin:0 0 0 20px; }
     }
 }
+.teaser { float:left; padding:30px; width:300px;
+    .info { border-radius: 15px; border:1px solid white; padding:20px; display:none; }
+}
+
+.contact .address { margin-bottom:20px; }

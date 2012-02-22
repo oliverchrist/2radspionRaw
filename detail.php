@@ -48,15 +48,19 @@ use de\zweiradspion\HeaderHelper,
                 ?>
                 <br>
                 <div class="links">
-                    <? if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
+                    <? # angemeldet und eigenes Zweirad
+                    if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
                     <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
                     <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Löschen</a><br>
-                    <? } ?>
-                    <? if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid']){ ?>
+                    <? }
+                    # angemeldet und fremdes Zweirad
+                    if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid']){ ?>
                     <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
-                    <? } ?>
-                    <a class="txtLnk" href="#">Kontakt</a><br />
-                    <a class="txtLnk" href="location.php?pid=<?=$fahrrad->getPid()?>&uid=<?=$fahrrad->getUid()?>">Karte</a><br />
+                    <? }
+                    # alle Bikes
+                    ?>
+                    <a class="txtLnk" href="contact.php?uid=<?=$fahrrad->getUid()?>">Kontakt</a><br />
+                    <a class="txtLnk" href="location.php?uid=<?=$fahrrad->getUid()?>&pid=<?=$fahrrad->getPid()?>">Karte</a><br />
                     <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
                 </div>
             </div>

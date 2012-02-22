@@ -21,7 +21,7 @@ use de\zweiradspion\NavigationHelper;
                 }else{
                     echo 'Zweirad konnte nicht auf Merkzettel gespeichert werden<br>';
                 }
-                echo '<a class="txtLnk" href="detail.php?uid="'.$_GET['uid'].'">Zurück</a>';
+                echo "<a class=\"txtLnk\" href=\"detail.php?uid={$_GET['uid']}\">Zurück</a>";
             }
         ?>
     </div>

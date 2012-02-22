@@ -164,7 +164,10 @@ echo HeaderHelper::getHeader($title);
      }
     
 ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
+</div>
+<div class="teaser">
+    <div class="info">fooo</div>
+</div>
+<?php include 'includes/footer.php'; ?>
 </body>
 </html>

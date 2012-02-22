@@ -151,7 +151,7 @@ class Fahrrad extends Persistenz {
 
     public function insertInDatabase() {
         new DatabaseHelper();
-        $sql    = 'INSERT INTO bike (pid, preis, radtyp, geschlecht, zustand, laufleistung, radgroesse, rahmenhoehe, marke, modell, farbe, bremssystem, schaltungstyp, rahmenmaterial, beleuchtungsart, einsatzbereich, erstellt, aktiv, beschreibung, geaendert) VALUES ('
+        $sql    = 'INSERT INTO bike (pid, preis, radtyp, geschlecht, zustand, laufleistung, radgroesse, rahmenhoehe, marke, modell, farbe, bremssystem, schaltungstyp, rahmenmaterial, beleuchtungsart, einsatzbereich, aktiv, beschreibung, erstellt, geaendert) VALUES ('
             . $_SESSION['uid'] . ', '
             . mysql_real_escape_string(trim($this->preis)) . ', '
             . '"' . mysql_real_escape_string(trim($this->radtyp->getValue())) . '", '
