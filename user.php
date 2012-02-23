@@ -9,24 +9,24 @@ use de\zweiradspion\NavigationHelper;
 <body id="std">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <?=HeaderHelper::getHeader('Userdaten')?>
-	<div id="content">
+    <div id="content">
         <?=NavigationHelper::getSubnavigation()?>
 	    <?php
-	    # ist Benutzer eingeloggt?
-	    if(isset($_SESSION['uid'])){
-            $username = '';
-            $usernameErr = '';
-            $password = '';
-            $passwordErr = '';
-            $password2 = '';
+        # ist Benutzer eingeloggt?
+        if(isset($_SESSION['uid'])){
+            $username     = '';
+            $usernameErr  = '';
+            $password     = '';
+            $passwordErr  = '';
+            $password2    = '';
             $password2Err = '';
-            $email = '';
-            $emailErr = '';
-            $postcode = '';
-            $postcodeErr = '';
-            $city = '';
-            $cityErr = '';
-            $showForm = true;
+            $email        = '';
+            $emailErr     = '';
+            $postcode     = '';
+            $postcodeErr  = '';
+            $city         = '';
+            $cityErr      = '';
+            $showForm     = TRUE;
             
             if($_POST){
                 /*
@@ -36,10 +36,10 @@ use de\zweiradspion\NavigationHelper;
                 $email = $_POST['email'];
                 */
                 $postcode = $_POST['postcode'];
-                $city = $_POST['city'];
-                $latlng = $_POST['latlng'];
-                $lat = $_POST['lat'];
-                $lng = $_POST['lng'];
+                $city     = $_POST['city'];
+                $latlng   = $_POST['latlng'];
+                $lat      = $_POST['lat'];
+                $lng      = $_POST['lng'];
                 if(empty($username)){
                     $usernameErr = ' error';
                 }
@@ -63,14 +63,14 @@ use de\zweiradspion\NavigationHelper;
                     && !empty($city)
                 ){
                     $dbObject = new DatabaseHelper();
-                    $sql = 'UPDATE user SET '
+                    $sql      = 'UPDATE user SET '
                             . 'postcode="' . mysql_real_escape_string(trim($postcode)) . '", '
                             . 'city="' . mysql_real_escape_string(trim($city)) . '", '
                             . 'latLng="' . mysql_real_escape_string(trim($latlng)) . '", '
                             . 'lat="' . mysql_real_escape_string(trim($lat)) . '", '
                             . 'lng="' . mysql_real_escape_string(trim($lng)) . '" '
                             . 'WHERE uid=' . $_SESSION['uid'];
-                    $result = mysql_query($sql);
+                    $result   = mysql_query($sql);
                     if(!$result){
                         die ('<span class="error">User konnte nicht aktualisiert werden</span><br>');
                     }else{
@@ -80,19 +80,19 @@ use de\zweiradspion\NavigationHelper;
                 }
             }else{
                 $dbObject = new DatabaseHelper();
-                $sql = "select * from user where uid=" . $_SESSION['uid'];
-                $result = mysql_query($sql);
-                $row = mysql_fetch_assoc($result);
+                $sql      = "select * from user where uid=" . $_SESSION['uid'];
+                $result   = mysql_query($sql);
+                $row      = mysql_fetch_assoc($result);
                 if(!$row) die ('<span class="error">Konnte Benutzer nicht finden</span><br>');
                 
-                $uid = $row['uid'];
-                $hash = $row['hash'];
+                $uid      = $row['uid'];
+                $hash     = $row['hash'];
                 $username = $row['username'];
                 $password = $row['password'];
-                $email = $row['email'];
+                $email    = $row['email'];
                 $postcode = $row['postcode'];
-                $city = $row['city'];
-                $latlng = $row['latLng'];
+                $city     = $row['city'];
+                $latlng   = $row['latLng'];
             }
     
             if($showForm){

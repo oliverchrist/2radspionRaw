@@ -11,29 +11,29 @@ use de\zweiradspion\FormHelper,
 <body id="std">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
     <?=HeaderHelper::getHeader('Registrierung')?>
-	<div id="content">
+    <div id="content">
         <?=NavigationHelper::getSubnavigation()?>
-	    <?php
-        $password = '';
-        $passwordErr = '';
-        $password2 = '';
+        <?php
+        $password     = '';
+        $passwordErr  = '';
+        $password2    = '';
         $password2Err = '';
-        $email = '';
-        $emailErr = '';
-        $postcode = '';
-        $postcodeErr = '';
-        $city = '';
-        $cityErr = '';
-        $showForm = true;
-	    if($_POST){
-            $password = $_POST['password'];
+        $email        = '';
+        $emailErr     = '';
+        $postcode     = '';
+        $postcodeErr  = '';
+        $city         = '';
+        $cityErr      = '';
+        $showForm     = true;
+        if($_POST){
+            $password  = $_POST['password'];
             $password2 = $_POST['password2'];
-            $email = $_POST['email'];
-            $postcode = $_POST['postcode'];
-            $city = $_POST['city'];
-            $latlng = $_POST['latlng'];
-            $lat = $_POST['lat'];
-            $lng = $_POST['lng'];
+            $email     = $_POST['email'];
+            $postcode  = $_POST['postcode'];
+            $city      = $_POST['city'];
+            $latlng    = $_POST['latlng'];
+            $lat       = $_POST['lat'];
+            $lng       = $_POST['lng'];
             if(empty($password)){
                 $passwordErr = ' error';
             }
@@ -57,12 +57,12 @@ use de\zweiradspion\FormHelper,
                 && !empty($city)
             ){
                 # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
-                $uniqueUser = true;
+                $uniqueUser = TRUE;
                 $dbObject = new DatabaseHelper();
                 # Prüfen ob email bereits existiert in Tabelle user und userunconfirmed
                 if($dbObject->valueInTable($email,'email','user') || $dbObject->valueInTable($email,'email','userunconfirmed')){
                     echo '<p class="error">Diese Email-Adresse gibt es bereits.</p><br>';
-                    $uniqueUser = false;
+                    $uniqueUser = FALSE;
                 }
                 
                 # Wenn User unique ist
