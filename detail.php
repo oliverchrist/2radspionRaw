@@ -61,6 +61,7 @@ use de\zweiradspion\HeaderHelper,
                     ?>
                     <a class="txtLnk" href="contact.php?uid=<?=$fahrrad->getUid()?>">Kontakt</a><br />
                     <a class="txtLnk" href="location.php?uid=<?=$fahrrad->getUid()?>&pid=<?=$fahrrad->getPid()?>">Karte</a><br />
+                    <a class="txtLnk print" href="#">Drucken</a><br />
                     <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
                 </div>
             </div>

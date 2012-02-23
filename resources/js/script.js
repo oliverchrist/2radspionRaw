@@ -6,14 +6,10 @@ $(document).ready(function(){
         $(this).parents('form.search').find('.inputField input').removeAttr('value');
         $(this).parents('form.search').find('select option').removeAttr('selected');
     });
-    $('.search select[name=radtyp] option').mouseenter(function(){
-        var html = radtyp[$(this).val()];
-        if(html){
-            $('.teaser .info').html(html).show();
-        }
-    }).mouseleave(function(){
-        $('.teaser .info').hide();
-    });
+    var html = radtyp[$('.search select[name=radtyp]').val()];
+    if(html){
+        $('.teaser .info').html(html).show();
+    }
     
     $('a.lightbox').lightBox({
         imageLoading: 'resources/images/lightbox-ico-loading.gif',
@@ -60,14 +56,17 @@ $(document).ready(function(){
         }
     });
     
-    
-    
     $('.selectEigenschaft').change(function(){
         if($(this).val() == -1){
             $(this).next('input').show();
         }else{
             $(this).next('input').hide();
         }
+    });
+    
+    $('.print').click(function(e){
+        e.preventDefault();
+        window.print();
     });
     
     

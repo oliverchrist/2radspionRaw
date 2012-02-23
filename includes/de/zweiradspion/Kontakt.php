@@ -35,7 +35,7 @@ class Kontakt extends Persistenz {
         $result = mysql_query($sql);
         $row    = mysql_fetch_assoc($result);
         foreach($row as $key => $val){
-            $setterFunction = 'set' . $key;
+            $setterFunction = 'set' . ucfirst($key);
             $this->$setterFunction($val);
         }
     }
