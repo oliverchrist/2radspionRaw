@@ -7,10 +7,10 @@ use de\zweiradspion\HeaderHelper,
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Detailansicht')?>
-	<div id="content">
+    <div id="content">
         <?=NavigationHelper::getSubnavigation()?>
-	<?php
-	
+    <?php
+
         if(isset($_GET['uid'])){
             $fahrrad = new Fahrrad($_GET['uid']);
             ?>
@@ -34,7 +34,7 @@ use de\zweiradspion\HeaderHelper,
                 erstellt: <?=$fahrrad->getErstellt()?><br>
                 geaendert: <?=$fahrrad->getGeaendert()?><br>
                 Beschreibung: <?=$fahrrad->getBeschreibung()?><br>
-                <? 
+                <?
                 $imageWidth = 510;
                 foreach($fahrrad->getBilder() as $bild) {
                     $scaleObj = new ScaleImage($bild->getName(), $bild->getExtension(), 'images');
@@ -60,13 +60,14 @@ use de\zweiradspion\HeaderHelper,
                     # alle Bikes
                     ?>
                     <a class="txtLnk" href="contact.php?uid=<?=$fahrrad->getUid()?>">Kontakt</a><br />
+                    <a class="txtLnk" href="tellAFriend.php?uid=<?=$fahrrad->getUid()?>">Weiterleiten</a><br />
                     <a class="txtLnk" href="location.php?uid=<?=$fahrrad->getUid()?>&pid=<?=$fahrrad->getPid()?>">Karte</a><br />
                     <a class="txtLnk print" href="#">Drucken</a><br />
                     <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
                 </div>
             </div>
         <? } ?>
-    </div>          
+    </div>
     <?php include 'includes/footer.php'; ?>
 </body>
 </html>

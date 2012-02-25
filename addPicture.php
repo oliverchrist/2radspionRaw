@@ -8,9 +8,9 @@ use de\zweiradspion\NavigationHelper;
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Bild hinzufügen')?>
-	<div id="content">
+    <div id="content">
         <?=NavigationHelper::getSubnavigation()?>
-	    <?
+        <?
         function getExtension($str) {
             $i = strrpos($str,".");
             if (!$i) { return ""; }
@@ -18,20 +18,20 @@ use de\zweiradspion\NavigationHelper;
             $ext = substr($str,$i+1,$l);
             return strtolower($ext);
         }
-        	    
-	    $dbObject = new DatabaseHelper();
-        $uid = mysql_real_escape_string($_GET['uid']);
-        $result = mysql_query("select * from bike where uid=" . $uid . " && pid=" . $_SESSION['uid']);
+
+        $dbObject = new DatabaseHelper();
+        $uid      = mysql_real_escape_string($_GET['uid']);
+        $result   = mysql_query("select * from bike where uid=" . $uid . " && pid=" . $_SESSION['uid']);
         # sollte unique sein
-	    if(mysql_num_rows($result) == 1){
-	        $image = '';
+        if(mysql_num_rows($result) == 1){
+            $image = '';
             if($_POST){
-                $uid = $_POST['uid'];
-                $filename = stripslashes($_FILES['image']['name']);
+                $uid       = $_POST['uid'];
+                $filename  = stripslashes($_FILES['image']['name']);
                 $extension = getExtension($filename);
-                $imageName= time();
-                $copied = copy($_FILES['image']['tmp_name'], 'images/' . $imageName . '.' . $extension);
-                if (!$copied) 
+                $imageName = time();
+                $copied    = copy($_FILES['image']['tmp_name'], 'images/' . $imageName . '.' . $extension);
+                if (!$copied)
                 {
                     echo '<h1>Copy unsuccessfull!</h1>';
                 }else{
@@ -45,7 +45,7 @@ use de\zweiradspion\NavigationHelper;
                     }
                 }
             }
-    	    ?>
+            ?>
             <form method="post" enctype="multipart/form-data">
                 <input type="hidden" name="uid" value="<?=$_GET['uid']?>" />
                 <div class="formField">
@@ -59,9 +59,9 @@ use de\zweiradspion\NavigationHelper;
             <?php
             if(isset($uid)){
             ?>
-                <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>  
-            <?php } ?>            
-        <? } ?>             
+                <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>
+            <?php } ?>
+        <? } ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

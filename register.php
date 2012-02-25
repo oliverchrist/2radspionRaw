@@ -24,7 +24,7 @@ use de\zweiradspion\FormHelper,
         $postcodeErr  = '';
         $city         = '';
         $cityErr      = '';
-        $showForm     = true;
+        $showForm     = TRUE;
         if($_POST){
             $password  = $_POST['password'];
             $password2 = $_POST['password2'];
@@ -64,7 +64,7 @@ use de\zweiradspion\FormHelper,
                     echo '<p class="error">Diese Email-Adresse gibt es bereits.</p><br>';
                     $uniqueUser = FALSE;
                 }
-                
+
                 # Wenn User unique ist
                 if($uniqueUser){
                     # Eindeutigen Hash erstellen
@@ -72,7 +72,7 @@ use de\zweiradspion\FormHelper,
                     hash_update($hash, rand());
                     hash_update($hash, $email);
                     $hashFinal = hash_final($hash);
-                    
+
                     # TODO CURDATE() ergänzen
                     $sql = 'INSERT INTO userunconfirmed (hash, password, email, postcode, city, latLng, lat, lng) VALUES ('
                         . '"' . mysql_real_escape_string(trim($hashFinal)) . '", '
@@ -90,7 +90,7 @@ use de\zweiradspion\FormHelper,
                     }else{
                         $showForm = false;
                     }
-    
+
                     $message = "Guten Tag,\n
 vielen Dank für Ihre Anmeldung bei zweiradspion.de.\n
 Um die Anmeldung abzuschließen klicken Sie folgenden Link, oder kopieren diesen in die Adresszeile Ihres Browser:\n
@@ -110,8 +110,8 @@ Das Team von zweiradspion.de";
             }
         }
         if($showForm){
-	    ?>
-	    <form method="post" id="register">
+        ?>
+        <form method="post" id="register">
             <input type="hidden" name="latlng" />
             <input type="hidden" name="lat" />
             <input type="hidden" name="lng" />
@@ -138,8 +138,8 @@ Das Team von zweiradspion.de";
             <div class="formField">
                 <input class="submit" type="button" value="Senden" />
             </div>
-	    </form>
-	    <? } ?>
+        </form>
+        <? } ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>
