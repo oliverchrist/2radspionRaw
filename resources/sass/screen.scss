@@ -43,27 +43,27 @@ a.lightbox { text-decoration:none; }
       -moz-transition: all 1s ease-in-out;
       -o-transition: all 1s ease-in-out;
       -ms-transition: all 1s ease-in-out;
-      transition: all 1s ease-in-out; 
+      transition: all 1s ease-in-out;
     }
     .logoBgr2:hover {
       filter:alpha(opacity=80); /* IE */
       opacity:0.8; /* allgemein */
     }
-    
+
     .headerBgr  { position: fixed; bottom: 0; width: 100%; background-color: #69674f; height: 60px; }
-    
+
     .borderBottom { position: fixed; bottom: 0; width: 100%; }
     .borderBottom .border { border-bottom: 1px solid #fff; border-right: 1px solid #fff; margin: 0 24px 24px 0; height: 12px;
       -moz-border-radius-bottomright: 12px;
-      border-bottom-right-radius: 12px; 
+      border-bottom-right-radius: 12px;
     }
     .borderRight  { position: fixed; right: 0; height: 100%; }
     .borderRight .border  { border-left: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 24px; }
-    
+
     .menu   { position: fixed; bottom: 0; right: 0; width: 100%; text-align: right; padding: 12px 48px 36px 0; }
     .menu a { color: #2a2725; text-decoration: none; font-size: 12px; font-size: 12px; margin-left: 12px; }
     .menu a:hover { text-decoration: underline; }
-    
+
     .claim  { position: fixed; bottom: 0; width: 100%; }
     .claim .text  { color: #fff; padding: 0 48px 12px 0; text-align: right; }
     .claim .border  {
@@ -77,7 +77,7 @@ a.lightbox { text-decoration:none; }
 #std .borderBottom  { position: fixed; bottom: 0; left: 0; width: 100%; }
 #std .borderBottom .border  { border-bottom: 1px solid #fff; border-left: 1px solid #fff; margin: 0 0 24px 156px; height: 12px;
   -moz-border-radius-bottomleft: 12px;
-  border-bottom-left-radius: 12px; 
+  border-bottom-left-radius: 12px;
 }
 #std .borderLeft  { position: fixed; left: 0; top: 0; height: 100%; }
 #std .borderLeft .border  { border-right: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 156px; }
@@ -171,11 +171,15 @@ fieldset legend { margin-top: 12px; }
             label { float:left; margin-top:5px; }
             textarea { width:300px; height:100px; border: medium none; border-radius: 15px 15px 15px 15px; padding:10px; font-family:Arial; font-size: 16px; }
         }
-        
+        &.captcha {
+            img,.txtLnk { margin:0 0 5px 205px; }
+            label { margin-top:10px; }
+        }
+
     }
     select,input[type=text],input[type=submit],input[type=reset],input[type=password],input[type=button] { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
     select { width:220px; margin:0 20px 0 -3px; background:white; }
-    
+
     input.submit,input.reset { margin-left:200px; width:220px; background:$red; color:white; cursor:pointer;
         &:hover { text-decoration:underline; }
     }
@@ -184,7 +188,7 @@ fieldset legend { margin-top: 12px; }
 
 #std form.search { padding:20px 0; width:720px; position:relative;
     select,.inputField { margin:0 20px 20px 0; float:left; }
-    
+
     .inputField { width:160px;
         label { display:block; }
         input { width:100px; }

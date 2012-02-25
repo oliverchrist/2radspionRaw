@@ -8,10 +8,10 @@ use de\zweiradspion\HeaderHelper,
     de\zweiradspion\Mail;
 ?>
 <body id="std">
-    <?=HeaderHelper::getHeader('Detailansicht')?>
-	<div id="content">
+    <?=HeaderHelper::getHeader('Kontakt')?>
+    <div id="content">
     <?=NavigationHelper::getSubnavigation()?>
-	<?php
+    <?php
         if(isset($_GET['uid'])){
             $fahrrad      = new Fahrrad($_GET['uid']);
             $kontakt      = new Kontakt($fahrrad->getPid());
@@ -102,12 +102,12 @@ Das Team von zweiradspion.de";
                     <div class="formField">
                         <input class="submit" type="submit" value="Senden" />
                     </div>
-                </form>                
+                </form>
             </div>
             <? } ?>
 
         <? } ?>
-    </div>          
+    </div>
     <?php include 'includes/footer.php'; ?>
 </body>
 </html>
