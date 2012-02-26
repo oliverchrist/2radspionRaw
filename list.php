@@ -4,7 +4,8 @@ include 'includes/head.php';
 use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\DebugHelper,
     de\zweiradspion\HeaderHelper,
-    de\zweiradspion\NavigationHelper;
+    de\zweiradspion\NavigationHelper,
+    de\zweiradspion\FormHelper;
 ?>
 <body id="std">
 <?
@@ -40,16 +41,36 @@ $dbObject->generateFilterDropdown('schaltungstyp', 'bike');
 $dbObject->generateFilterDropdown('rahmenmaterial', 'bike');
 $dbObject->generateFilterDropdown('beleuchtungsart', 'bike');
 $dbObject->generateFilterDropdown('einsatzbereich', 'bike');
-$laufleistung = (isset($_POST['laufleistung'])) ? $_POST['laufleistung'] : '';
-$radgroesse   = (isset($_POST['radgroesse'])) ? $_POST['radgroesse'] : '';
-$rahmenhoehe  = (isset($_POST['rahmenhoehe'])) ? $_POST['rahmenhoehe'] : '';
-$preis        = (isset($_POST['preis'])) ? $_POST['preis'] : '';
+$dbObject->generateFilterDropdown('radgroesse', 'bike');
+$laufleistungVon = FormHelper::getFromPost('laufleistungVon');
+$laufleistungBis = FormHelper::getFromPost('laufleistungBis');
+$rahmenhoeheVon  = FormHelper::getFromPost('rahmenhoeheVon');
+$rahmenhoeheBis  = FormHelper::getFromPost('rahmenhoeheBis');
+$preisVon        = FormHelper::getFromPost('preisVon');
+$preisBis        = FormHelper::getFromPost('preisBis');
 
 echo "<div class=\"clear\"></div>";
-echo "<div class=\"inputField\"><label>Laufleistung max.</label><input name=\"laufleistung\" value=\"$laufleistung\"><span>km</span></div>";
-echo "<div class=\"inputField\"><label>Radgröße</label><input name=\"radgroesse\" value=\"$radgroesse\"><span>Zoll</span></div>";
-echo "<div class=\"inputField\"><label>Rahmenhöhe</label><input name=\"rahmenhoehe\" value=\"$rahmenhoehe\"><span>cm</span></div>";
-echo "<div class=\"inputField\"><label>Preis max.</label><input name=\"preis\" value=\"$preis\"><span>EUR</span></div>";
+echo "<div class=\"inputField\">
+        <label>Laufleistung max.</label>
+        <input type=\"text\" name=\"laufleistungVon\" value=\"$laufleistungVon\" placeholder=\"von\" maxlength=\"7\">
+        <span>-</span>
+        <input type=\"text\" name=\"laufleistungBis\" value=\"$laufleistungBis\" placeholder=\"bis\" maxlength=\"7\">
+        <span>km</span>
+      </div>";
+echo "<div class=\"inputField\">
+        <label>Rahmenhöhe</label>
+        <input type=\"text\" name=\"rahmenhoeheVon\" value=\"$rahmenhoeheVon\" placeholder=\"von\" maxlength=\"2\">
+        <span>-</span>
+        <input type=\"text\" name=\"rahmenhoeheBis\" value=\"$rahmenhoeheBis\" placeholder=\"bis\" maxlength=\"2\">
+        <span>cm</span>
+      </div>";
+echo "<div class=\"inputField\">
+        <label>Preis</label>
+        <input type=\"text\" name=\"preisVon\" value=\"$preisVon\" placeholder=\"von\" maxlength=\"7\">
+        <span>-</span>
+        <input type=\"text\" name=\"preisBis\" value=\"$preisBis\" placeholder=\"bis\" maxlength=\"7\">
+        <span>EUR</span>
+      </div>";
 
 echo "<div class=\"clear\"></div>";
 echo "<div class=\"checkboxField\">";
@@ -81,11 +102,14 @@ if($_POST){
     $condition = $dbObject->generateCondition($condition, 'rahmenmaterial');
     $condition = $dbObject->generateCondition($condition, 'beleuchtungsart');
     $condition = $dbObject->generateCondition($condition, 'einsatzbereich');
-
-    $condition = $dbObject->generateCondition($condition, 'laufleistung', '<=');
     $condition = $dbObject->generateCondition($condition, 'radgroesse');
-    $condition = $dbObject->generateCondition($condition, 'rahmenhoehe');
-    $condition = $dbObject->generateCondition($condition, 'preis', '<=');
+
+    $condition = $dbObject->generateCondition($condition, 'laufleistung', '>=', 'laufleistungVon');
+    $condition = $dbObject->generateCondition($condition, 'laufleistung', '<=', 'laufleistungBis');
+    $condition = $dbObject->generateCondition($condition, 'rahmenhoehe', '>=', 'rahmenhoeheVon');
+    $condition = $dbObject->generateCondition($condition, 'rahmenhoehe', '<=', 'rahmenhoeheBis');
+    $condition = $dbObject->generateCondition($condition, 'preis', '>=', 'preisVon');
+    $condition = $dbObject->generateCondition($condition, 'preis', '<=', 'preisBis');
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'allOffers'){
     $condition[] = 'aktiv = 1';

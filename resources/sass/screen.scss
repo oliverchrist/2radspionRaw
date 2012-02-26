@@ -142,7 +142,7 @@ a.lightbox { text-decoration:none; }
         @include transition-delay('0s,1s,2s,2s,2s');
     }
     &.inactive { opacity:0.5; }
-    .thumb { float: left; margin-right: 10px; width: 200px;
+    .thumb { float: left; margin:0 10px 5px 0; width: 200px;
         img { border-radius:12px; width:200px; }
     }
     .cnt { float: left; margin-right: 10px; }
@@ -177,26 +177,31 @@ fieldset legend { margin-top: 12px; }
         }
 
     }
-    select,input[type=text],input[type=submit],input[type=reset],input[type=password],input[type=button] { width:200px; @include border-radius(15px); border-width:0; padding:5px 10px; }
+    select,input[type=text],
+    input[type=submit],
+    input[type=reset],
+    input[type=password],
+    input[type=button] {
+        width:200px; @include border-radius(15px); border-width:0; padding:5px 10px;
+    }
     select { width:220px; margin:0 20px 0 -3px; background:white; }
 
     input.submit,input.reset { margin-left:200px; width:220px; background:$red; color:white; cursor:pointer;
         &:hover { text-decoration:underline; }
     }
     .unit { padding-left:10px; }
-}
 
-#std form.search { padding:20px 0; width:720px; position:relative;
-    select,.inputField { margin:0 20px 20px 0; float:left; }
+    &.search { padding:20px 0; width:720px; position:relative;
+        select,.inputField { margin:0 20px 20px 0; float:left; }
 
-    .inputField { width:160px;
-        label { display:block; }
-        input { width:100px; }
-        span { margin-left:5px; }
-    }
-    .checkboxField { height:20px; }
-    .control { position:absolute; bottom:20px; right:20px;
-        .submit, .reset { width:auto; margin:0 0 0 20px; }
+        .inputField { width:220px;
+            label { display:block; padding-bottom:5px; }
+            input { width:60px; }
+        }
+        .checkboxField { height:20px; }
+        .control { position:absolute; bottom:20px; right:20px;
+            .submit, .reset { width:auto; margin:0 0 0 20px; }
+        }
     }
 }
 .teaser { float:left; padding:30px; width:300px;
