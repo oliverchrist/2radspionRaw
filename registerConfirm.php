@@ -14,7 +14,7 @@ use de\zweiradspion\NavigationHelper;
 if(isset($_GET['x'])){
     # Hash aus Url holen
     $hash = $_GET['x'];
-    if(!$hash) die ('Es wurde kein Hash übergeben<br>');
+    if(!$hash) { die ('Es wurde kein Hash übergeben<br>'); }
     #echo '<p>Hash: ' . $hash . '</p>';
 
     $dbObject = new DatabaseHelper();
@@ -25,10 +25,10 @@ if(isset($_GET['x'])){
     }
 
     # User aus userunconfirmed Tabelle holen
-    $sql = 'SELECT * FROM userunconfirmed WHERE hash = "' . mysql_real_escape_string($hash) . '"';
+    $sql    = 'SELECT * FROM userunconfirmed WHERE hash = "' . mysql_real_escape_string($hash) . '"';
     $result = mysql_query($sql);
-    $row = mysql_fetch_assoc($result);
-    if(!$row) die ('<span class="error">Konnte Hash nicht in Tabelle userunconfirmed finden</span><br>');
+    $row    = mysql_fetch_assoc($result);
+    if(!$row) { die ('<span class="error">Konnte Hash nicht in Tabelle userunconfirmed finden</span><br>'); }
 
     $uid      = $row['uid'];
     $hash     = $row['hash'];

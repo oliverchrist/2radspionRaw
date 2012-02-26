@@ -14,7 +14,7 @@ use de\zweiradspion\NavigationHelper;
 function getExtension($str) {
     $i = strrpos($str,".");
     if (!$i) { return ""; }
-    $l = strlen($str) - $i;
+    $l   = strlen($str) - $i;
     $ext = substr($str,$i+1,$l);
     return strtolower($ext);
 }
@@ -36,7 +36,7 @@ if(mysql_num_rows($result) == 1) {
             echo '<h1>Copy unsuccessfull!</h1>';
         }else{
             echo 'Bild wurde hochgeladen.';
-            $sql = "INSERT INTO images (pid, name, extension) VALUES ('" . $uid . "','" . $imageName . "','" . $extension . "')";
+            $sql    = "INSERT INTO images (pid, name, extension) VALUES ('" . $uid . "','" . $imageName . "','" . $extension . "')";
             $result = mysql_query($sql);
             if($result){
                 echo 'Bild wurde der Datenbank hinzugefügt<br>';
@@ -57,11 +57,12 @@ if(mysql_num_rows($result) == 1) {
         </div>
     </form>
     <?php
-    if(isset($uid)){
-    ?>
+    if(isset($uid)){ ?>
         <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>
-    <?php } ?>
-<? } ?>
+        <?php
+    } ?>
+<?
+} ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

@@ -136,7 +136,6 @@ Das Team von zweiradspion.de";
         </div>
         <?
     } ?>
-
 <?
 } ?>
     </div>

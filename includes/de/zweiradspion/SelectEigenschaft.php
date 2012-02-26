@@ -16,12 +16,12 @@ class SelectEigenschaft  {
     }
 
     public function getDropdown($className = '') {
-        $html = '<select name="' . $this->name . '" class="selectEigenschaft ' . $className . '">';
+        $html     = '<select name="' . $this->name . '" class="selectEigenschaft ' . $className . '">';
         $sonstige = TRUE;
         foreach($this->text as $key => $option) {
             $html .= '<option value="' . $key . '"';
             if($key === $this->value){
-                $html .= ' selected="selected"';
+                $html    .= ' selected="selected"';
                 $sonstige = FALSE;
             }
             $html .= '>' . $option . '</option>';
@@ -47,7 +47,9 @@ class SelectEigenschaft  {
     }
 
     public function getText() {
-        if(isset($this->text[$this->value])) return $this->text[$this->value];
+        if(isset($this->text[$this->value])) {
+            return $this->text[$this->value];
+        }
         return 'ungültig';
     }
 }
