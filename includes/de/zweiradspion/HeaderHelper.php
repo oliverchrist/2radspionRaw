@@ -7,7 +7,7 @@ namespace de\zweiradspion;
  * @author christ
  */
 class HeaderHelper {
-    static public function getHeader($headline){
+    static public function getHeader($headline) {
         $header = '
         <div id="header">
             <img src="resources/images/logo_folgeseiten.png" id="imgLogo" />';

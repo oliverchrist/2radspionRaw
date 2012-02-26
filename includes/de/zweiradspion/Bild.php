@@ -9,13 +9,13 @@ namespace de\zweiradspion;
 class Bild {
     protected $name;
     protected $extension;
-    
+
     public function __construct($name, $extension) {
-        $this->name = $name;
+        $this->name      = $name;
         $this->extension = $extension;
     }
-    
-    public function getFullName(){
+
+    public function getFullName() {
         return $this->name . '.' . $this->extension;
     }
 
@@ -23,15 +23,15 @@ class Bild {
     public function getName() {
         return $this->name;
     }
-    
+
     public function getExtension() {
         return $this->extension;
     }
-    
+
     public function setName($name) {
         $this->name = $name;
     }
-    
+
     public function setExtension($extension) {
         $this->extension = $extension;
     }

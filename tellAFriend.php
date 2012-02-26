@@ -33,31 +33,31 @@ if(isset($_GET['uid'])){
             $emailErr  = ' error';
             $formValid = FALSE;
         }else{
-            $email     = $_POST['email'];
+            $email = $_POST['email'];
         }
         if(empty($_POST['email2'])) {
-            $email2Err  = ' error';
+            $email2Err = ' error';
             $formValid = FALSE;
         }else{
-            $email2     = $_POST['email2'];
+            $email2 = $_POST['email2'];
         }
         if(empty($_POST['name'])) {
             $nameErr   = ' error';
             $formValid = FALSE;
         }else{
-            $name      = $_POST['name'];
+            $name = $_POST['name'];
         }
         if(empty($_POST['nachricht'])) {
             $nachrichtErr = ' error';
             $formValid    = FALSE;
         }else{
-            $nachricht    = $_POST['nachricht'];
+            $nachricht = $_POST['nachricht'];
         }
         if(!isset($_SESSION['email'])) {
             $securimage = new \Securimage();
-            if ($securimage->check($_POST['captcha_code']) == false) {
+            if ($securimage->check($_POST['captcha_code']) == FALSE) {
                 $captchaErr = ' error';
-                $formValid    = FALSE;
+                $formValid  = FALSE;
             }
         }
         if(isset($_POST['cc'])) {
@@ -88,54 +88,57 @@ Das Team von zweiradspion.de";
         }
     }
     ?>
-    <? if($showform){ ?>
-    <div class="contact">
-        <form method="post" action="tellAFriend.php?uid=<?=$_GET['uid']?>">
-            <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
-            <div class="formField textarea<?=$nachrichtErr?>">
-                <p class="error">Bitte geben Sie Ihre Nachricht ein</p>
-                <label>Ihre Nachricht an den Anbieter:</label>
-                <textarea name="nachricht"><?=$nachricht?></textarea>
-                <div class="clear"></div>
-            </div>
-            <div class="formField<?=$nameErr?>">
-                <p class="error">Bitte geben Sie Ihren Namen ein</p>
-                <label>Ihr Name</label>
-                <input type="text" name="name" value="<?=$name?>" />
-            </div>
-            <div class="formField<?=$emailErr?>">
-                <p class="error">Bitte geben Sie die E-Mail-Adresse ein, an welche Sie das Angebot weiterleiten wollen</p>
-                <label>E-Mail-Adresse des Empfängers</label>
-                <input type="text" name="email" value="<?=$email?>" />
-            </div>
-            <?php if(!isset($_SESSION['email'])) { ?>
-            <div class="formField<?=$email2Err?>">
-                <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
-                <label>Ihre E-Mail-Adresse</label>
-                <input type="text" name="email2" value="<?=$email2?>" />
-            </div>
-            <div class="formField<?=$captchaErr?> captcha">
-                <p class="error">Bitte geben Sie den richtigen Captcha Code ein</p>
-                <img id="captcha" src="includes/org/phpcaptcha/securimage/securimage_show.php" alt="CAPTCHA Image" /><br>
-                <a href="#" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false" class="txtLnk">neues Bild</a><br>
-                <label>Captcha Code</label>
-                <input type="text" name="captcha_code" size="10" maxlength="6" />
-            </div>
-            <?php }else{ ?>
-                <input type="hidden" name="email2" value="<?=$_SESSION['email']?>" />
-            <?php } ?>
-            <div class="formField">
-                <label>Bitte schicken Sie eine Kopie dieser Nachricht an meine E-Mail-Adresse</label>
-                <input type="checkbox" name="cc"<?=$cc?> />
-            </div>
-            <div class="formField">
-                <input class="submit" type="submit" value="Senden" />
-            </div>
-        </form>
-    </div>
-    <? } ?>
+    <?
+    if($showform){ ?>
+        <div class="contact">
+            <form method="post" action="tellAFriend.php?uid=<?=$_GET['uid']?>">
+                <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
+                <div class="formField textarea<?=$nachrichtErr?>">
+                    <p class="error">Bitte geben Sie Ihre Nachricht ein</p>
+                    <label>Ihre Nachricht an den Anbieter:</label>
+                    <textarea name="nachricht"><?=$nachricht?></textarea>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField<?=$nameErr?>">
+                    <p class="error">Bitte geben Sie Ihren Namen ein</p>
+                    <label>Ihr Name</label>
+                    <input type="text" name="name" value="<?=$name?>" />
+                </div>
+                <div class="formField<?=$emailErr?>">
+                    <p class="error">Bitte geben Sie die E-Mail-Adresse ein, an welche Sie das Angebot weiterleiten wollen</p>
+                    <label>E-Mail-Adresse des Empfängers</label>
+                    <input type="text" name="email" value="<?=$email?>" />
+                </div>
+                <?php if(!isset($_SESSION['email'])) { ?>
+                <div class="formField<?=$email2Err?>">
+                    <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
+                    <label>Ihre E-Mail-Adresse</label>
+                    <input type="text" name="email2" value="<?=$email2?>" />
+                </div>
+                <div class="formField<?=$captchaErr?> captcha">
+                    <p class="error">Bitte geben Sie den richtigen Captcha Code ein</p>
+                    <img id="captcha" src="includes/org/phpcaptcha/securimage/securimage_show.php" alt="CAPTCHA Image" /><br>
+                    <a href="#" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false" class="txtLnk">neues Bild</a><br>
+                    <label>Captcha Code</label>
+                    <input type="text" name="captcha_code" size="10" maxlength="6" />
+                </div>
+                <?php }else{ ?>
+                    <input type="hidden" name="email2" value="<?=$_SESSION['email']?>" />
+                <?php } ?>
+                <div class="formField">
+                    <label>Bitte schicken Sie eine Kopie dieser Nachricht an meine E-Mail-Adresse</label>
+                    <input type="checkbox" name="cc"<?=$cc?> />
+                </div>
+                <div class="formField">
+                    <input class="submit" type="submit" value="Senden" />
+                </div>
+            </form>
+        </div>
+        <?
+    } ?>
 
-<? } ?>
+<?
+} ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

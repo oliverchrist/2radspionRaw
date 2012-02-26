@@ -10,24 +10,26 @@ class SelectEigenschaft  {
     protected $value;
     protected $name;
     protected $text;
-    
-    public function __construct($value = '-'){
+
+    public function __construct($value = '-') {
         $this->value = $value;
     }
-    
-    public function getDropdown($className = ''){
+
+    public function getDropdown($className = '') {
         $html = '<select name="' . $this->name . '" class="selectEigenschaft ' . $className . '">';
-        $sonstige = true;
-        foreach($this->text as $key => $option){
+        $sonstige = TRUE;
+        foreach($this->text as $key => $option) {
             $html .= '<option value="' . $key . '"';
             if($key === $this->value){
                 $html .= ' selected="selected"';
-                $sonstige = false;
+                $sonstige = FALSE;
             }
             $html .= '>' . $option . '</option>';
         }
         $html .= '<option value="-1"';
-        if($sonstige) $html .= ' selected="selected"';
+        if($sonstige) {
+            $html .= ' selected="selected"';
+        }
         $html .= '>sonstige</option>';
         $html .= '</select>';
         $html .= '<input type="text" name="' . $this->name . 'Sonstige"';
@@ -39,12 +41,12 @@ class SelectEigenschaft  {
         $html .= '>';
         return $html;
     }
-    
-    public function getValue(){
+
+    public function getValue() {
         return $this->value;
     }
-    
-    public function getText(){
+
+    public function getText() {
         if(isset($this->text[$this->value])) return $this->text[$this->value];
         return 'ungültig';
     }

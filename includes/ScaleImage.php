@@ -20,28 +20,26 @@ class ScaleImage {
     private $height;
 
 
-    public function __construct($name, $extension, $directory){
-        $this->name = $name;
+    public function __construct($name, $extension, $directory) {
+        $this->name      = $name;
         $this->extension = $extension;
         $this->directory = $this->checkPath($directory);
-        $this->path = $this->directory . $this->name . '.' . $this->extension;
-        
-        
+        $this->path      = $this->directory . $this->name . '.' . $this->extension;
     }
-    
+
     private function checkPath($path) {
         if(substr($path, -1) != '/'){
             $path = $path . '/';
         }
         return $path;
     }
-    
+
     public function getOriginalImagePath() {
         return $this->path;
     }
 
 
-    public function getImagePath($width, $height){
+    public function getImagePath($width, $height) {
         $path = 'images_cache/' . $this->name . '_' . $width . '.jpg';
         #echo $path . ', ' . file_exists($path);
         if(!file_exists($path)){

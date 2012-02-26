@@ -42,16 +42,16 @@ class Kontakt extends Persistenz {
 
     public function loadFromPost($post) {
         $this->post = $post;
-        
-        $this->uid = $post['uid'];
-        $this->hash = $post['hash'];
+
+        $this->uid      = $post['uid'];
+        $this->hash     = $post['hash'];
         $this->password = $post['password'];
-        $this->email = $post['email'];
+        $this->email    = $post['email'];
         $this->postcode = $post['postcode'];
-        $this->city = $post['city'];
-        $this->latLng = $post['latLng'];
-        $this->lat = $post['lat'];
-        $this->lng = $post['lng'];
+        $this->city     = $post['city'];
+        $this->latLng   = $post['latLng'];
+        $this->lat      = $post['lat'];
+        $this->lng      = $post['lng'];
     }
 
     public function updateInDatabase() {
@@ -79,8 +79,7 @@ class Kontakt extends Persistenz {
 
     public function insertInDatabase() {
         new DatabaseHelper();
-        
-        
+
         $sql    = 'INSERT INTO bike (hash,password,email,postcode,city,latLng,lat,lng,erstellt,geaendert) VALUES ('
             . $_SESSION['uid'] . ', '
             . '"' . mysql_real_escape_string(trim($this->hash)) . '", '
@@ -102,7 +101,6 @@ class Kontakt extends Persistenz {
         }
     }
 
-
     public function getUid() { return $this->uid; }
     public function getHash() { return $this->hash; }
     public function getPassword() { return $this->password; }
@@ -112,7 +110,7 @@ class Kontakt extends Persistenz {
     public function getLatLng() { return $this->latLng; }
     public function getLat() { return $this->lat; }
     public function getLng() { return $this->lng; }
-        
+
     public function setUid($uid) { $this->uid                = $uid; }
     public function setHash($hash) { $this->hash             = $hash; }
     public function setPassword($password) { $this->password = $password; }
@@ -122,6 +120,5 @@ class Kontakt extends Persistenz {
     public function setLatLng($latLng) { $this->latLng       = $latLng; }
     public function setLat($lat) { $this->lat                = $lat; }
     public function setLng($lng) { $this->lng                = $lng; }
-        
 }
 ?>

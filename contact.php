@@ -30,19 +30,19 @@ if(isset($_GET['uid'])){
             $emailErr  = ' error';
             $formValid = FALSE;
         }else{
-            $email     = $_POST['email'];
+            $email = $_POST['email'];
         }
         if(empty($_POST['name'])) {
             $nameErr   = ' error';
             $formValid = FALSE;
         }else{
-            $name      = $_POST['name'];
+            $name = $_POST['name'];
         }
         if(empty($_POST['nachricht'])) {
             $nachrichtErr = ' error';
             $formValid    = FALSE;
         }else{
-            $nachricht    = $_POST['nachricht'];
+            $nachricht = $_POST['nachricht'];
         }
         if(isset($_POST['cc'])) {
             $cc = ' checked="checked"';
@@ -69,44 +69,45 @@ Das Team von zweiradspion.de";
             $showform = FALSE;
         }
     }
-    ?>
-    <? if($showform){ ?>
-    <div class="contact">
-        <div class="address">
-            Anbieter:<br>
-            <?=$kontakt->getPostcode()?> <?=$kontakt->getCity()?>
+    if($showform){ ?>
+        <div class="contact">
+            <div class="address">
+                Anbieter:<br>
+                <?=$kontakt->getPostcode()?> <?=$kontakt->getCity()?>
+            </div>
+            <form method="post" action="contact.php?uid=<?=$_GET['uid']?>">
+                <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
+                <input type="hidden" name="pid" value="<?=$kontakt->getUid()?>" />
+                <div class="formField textarea<?=$nachrichtErr?>">
+                    <p class="error">Bitte geben Sie Ihre Nachricht ein</p>
+                    <label>Ihre Nachricht an den Anbieter:</label>
+                    <textarea name="nachricht"><?=$nachricht?></textarea>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField<?=$nameErr?>">
+                    <p class="error">Bitte geben Sie Ihren Namen ein</p>
+                    <label>Ihr Name</label>
+                    <input type="text" name="name" value="<?=$name?>" />
+                </div>
+                <div class="formField<?=$emailErr?>">
+                    <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
+                    <label>Ihre E-Mail-Adresse</label>
+                    <input type="text" name="email" value="<?=$email?>" />
+                </div>
+                <div class="formField">
+                    <label>Bitte schicken Sie eine Kopie dieser Nachricht an meine E-Mail-Adresse</label>
+                    <input type="checkbox" name="cc"<?=$cc?> />
+                </div>
+                <div class="formField">
+                    <input class="submit" type="submit" value="Senden" />
+                </div>
+            </form>
         </div>
-        <form method="post" action="contact.php?uid=<?=$_GET['uid']?>">
-            <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
-            <input type="hidden" name="pid" value="<?=$kontakt->getUid()?>" />
-            <div class="formField textarea<?=$nachrichtErr?>">
-                <p class="error">Bitte geben Sie Ihre Nachricht ein</p>
-                <label>Ihre Nachricht an den Anbieter:</label>
-                <textarea name="nachricht"><?=$nachricht?></textarea>
-                <div class="clear"></div>
-            </div>
-            <div class="formField<?=$nameErr?>">
-                <p class="error">Bitte geben Sie Ihren Namen ein</p>
-                <label>Ihr Name</label>
-                <input type="text" name="name" value="<?=$name?>" />
-            </div>
-            <div class="formField<?=$emailErr?>">
-                <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
-                <label>Ihre E-Mail-Adresse</label>
-                <input type="text" name="email" value="<?=$email?>" />
-            </div>
-            <div class="formField">
-                <label>Bitte schicken Sie eine Kopie dieser Nachricht an meine E-Mail-Adresse</label>
-                <input type="checkbox" name="cc"<?=$cc?> />
-            </div>
-            <div class="formField">
-                <input class="submit" type="submit" value="Senden" />
-            </div>
-        </form>
-    </div>
-    <? } ?>
+    <?
+    } ?>
 
-<? } ?>
+<?
+} ?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

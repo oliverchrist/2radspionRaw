@@ -1,5 +1,6 @@
 <?php
 include 'includes/init.php';
+
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
@@ -38,8 +39,7 @@ include 'includes/head.php';
         <?=NavigationHelper::getSubnavigation()?>
         <? if(isset($_SESSION['uid'])){
             $showForm = FALSE;
-        } ?>
-        <?php
+        }
         if($showForm){ ?>
             <?php
             if($showError){ ?>
