@@ -25,6 +25,7 @@ if(isset($_GET['filter'])){
 }
 echo HeaderHelper::getHeader($title);
 ?>
+<div class="main">
 <div id="content">
 <?=NavigationHelper::getSubnavigation()?>
 <?php
@@ -191,6 +192,7 @@ if($result){
 </div>
 <div class="teaser">
     <div class="info">fooo</div>
+</div>
 </div>
 <?php include 'includes/footer.php'; ?>
 </body>

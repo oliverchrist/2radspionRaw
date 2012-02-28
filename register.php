@@ -1,12 +1,13 @@
 <?php
 include 'includes/init.php';
 include 'includes/head.php';
-use de\zweiradspion\DatabaseHelper;
-use de\zweiradspion\DebugHelper;
-use de\zweiradspion\HeaderHelper;
-use de\zweiradspion\NavigationHelper;
-use de\zweiradspion\FormHelper,
-    de\zweiradspion\Mail;
+use de\zweiradspion\DatabaseHelper,
+    de\zweiradspion\DebugHelper,
+    de\zweiradspion\HeaderHelper,
+    de\zweiradspion\NavigationHelper,
+    de\zweiradspion\FormHelper,
+    de\zweiradspion\Mail,
+    de\zweiradspion\User;
 ?>
 <body id="std">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -14,48 +15,42 @@ use de\zweiradspion\FormHelper,
     <div id="content">
 <?=NavigationHelper::getSubnavigation()?>
 <?php
-$password     = '';
 $passwordErr  = '';
-$password2    = '';
 $password2Err = '';
-$email        = '';
 $emailErr     = '';
-$postcode     = '';
 $postcodeErr  = '';
-$city         = '';
 $cityErr      = '';
 $showForm     = TRUE;
+$keineFehler  = TRUE;
+$user         = new User();
 if($_POST){
-    $password  = $_POST['password'];
-    $password2 = $_POST['password2'];
-    $email     = $_POST['email'];
-    $postcode  = $_POST['postcode'];
-    $city      = $_POST['city'];
-    $latlng    = $_POST['latlng'];
-    $lat       = $_POST['lat'];
-    $lng       = $_POST['lng'];
+    $user->loadFromPost($_POST);
+    $password  = $user->getPassword();
+    $password2 = $user->getPassword2();
     if(empty($password)){
         $passwordErr = ' error';
+        $keineFehler = FALSE;
     }
-    if(empty($password2) || $password != $password2){
+    if(empty($password) || $password != $password2){
         $password2Err = ' error';
+        $keineFehler = FALSE;
     }
+    $email = $user->getEmail();
     if(empty($email) || !FormHelper::isEmail($email)){
         $emailErr = ' error';
+        $keineFehler = FALSE;
     }
+    $postcode = $user->getPostcode();
     if(empty($postcode) || !preg_match('/\d{5}/', $postcode)){
         $postcodeErr = ' error';
+        $keineFehler = FALSE;
     }
+    $city = $user->getCity();
     if(empty($city)){
         $cityErr = ' error';
+        $keineFehler = FALSE;
     }
-    if(
-        !empty($password)
-        && !empty($password2)
-        && FormHelper::isEmail($email)
-        && !empty($postcode)
-        && !empty($city)
-    ){
+    if($keineFehler){
         # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
         $uniqueUser = TRUE;
         $dbObject   = new DatabaseHelper();
@@ -72,24 +67,18 @@ if($_POST){
             hash_update($hash, rand());
             hash_update($hash, $email);
             $hashFinal = hash_final($hash);
+            $user->setHash($hashFinal);
 
-            # TODO CURDATE() ergänzen
-            $sql = 'INSERT INTO userunconfirmed (hash, password, email, postcode, city, latLng, lat, lng) VALUES ('
-                . '"' . mysql_real_escape_string(trim($hashFinal)) . '", '
-                . '"' . md5($password) . '", '
-                . '"' . mysql_real_escape_string(trim($email)) . '", '
-                . mysql_real_escape_string(trim($postcode)) . ', '
-                . '"' . mysql_real_escape_string(trim($city)) . '", '
-                . '"' . mysql_real_escape_string(trim($latlng)) . '", '
-                . mysql_real_escape_string(trim($lat)) . ', '
-                . mysql_real_escape_string(trim($lng)) . ')';
-            #echo $sql;
-            $result = mysql_query($sql);
-            if(!$result){
-                die ('<span class="error">User konnte nicht in Datenbank userunconfirmed geschrieben werden</span><br>');
-            }else{
-                $showForm = FALSE;
+            # insert
+
+            try{
+                $user->setPassword2(null);
+                $user->insertInDatabase('userunconfirmed');
+            }catch(Exception $e){
+                print $e->getMessage();
             }
+
+            $showForm = FALSE;
 
             $message = "Guten Tag,\n
 vielen Dank für Ihre Anmeldung bei zweiradspion.de.\n
@@ -111,28 +100,27 @@ Das Team von zweiradspion.de";
 }
 if($showForm){ ?>
     <form method="post" id="register">
-        <input type="hidden" name="latlng" />
         <input type="hidden" name="lat" />
         <input type="hidden" name="lng" />
         <div class="formField<?=$emailErr?>">
             <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>
-            <label>Email</label><input type="text" name="email" value="<?=$email?>" />
+            <label>Email</label><input type="text" name="email" value="<?=$user->getEmail()?>" />
         </div>
         <div class="formField<?=$passwordErr?>">
             <p class="error">Bitte geben Sie ein Passwort ein</p>
-            <label>Passwort</label><input type="password" name="password" value="<?=$password?>" />
+            <label>Passwort</label><input type="password" name="password" value="<?=$user->getPassword()?>" />
         </div>
         <div class="formField<?=$password2Err?>">
             <p class="error">Die Passwörter stimmen nicht überein</p>
-            <label>Passwort wiederholen</label><input type="password" name="password2" value="<?=$password2?>" />
+            <label>Passwort wiederholen</label><input type="password" name="password2" value="<?=$user->getPassword2()?>" />
         </div>
         <div class="formField<?=$postcodeErr?>">
             <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
-            <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$postcode?>" />
+            <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$user->getPostcode()?>" />
         </div>
         <div class="formField<?=$cityErr?>">
             <p class="error">Bitte geben Sie einen gültigen Ort ein</p>
-            <label>Ort</label><input type="text" name="city" value="<?=$city?>" />
+            <label>Ort</label><input type="text" name="city" value="<?=$user->getCity()?>" />
         </div>
         <div class="formField">
             <input class="submit" type="button" value="Senden" />

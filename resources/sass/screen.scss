@@ -19,6 +19,7 @@ img { border: none; }
 h1 { font-size:30px; line-height:40px; color:white; }
 .hidden { display:none; }
 a.lightbox { text-decoration:none; }
+p { margin-bottom:14px}
 
 #home { background-color: #eeb200;
 
@@ -74,6 +75,8 @@ a.lightbox { text-decoration:none; }
     }
 }
 
+
+#std .main { width:1260px; }
 #std .borderBottom  { position: fixed; bottom: 0; left: 0; width: 100%; }
 #std .borderBottom .border  { border-bottom: 1px solid #fff; border-left: 1px solid #fff; margin: 0 0 24px 156px; height: 12px;
   -moz-border-radius-bottomleft: 12px;
@@ -162,7 +165,7 @@ fieldset legend { margin-top: 12px; }
 
 #std form {
     .formField { margin-bottom:10px;
-        p.error { display:none; padding-bottom:5px; }
+        p.error { display:none; margin-bottom:5px; }
         &.error { color:$red;
             p.error { display:block; }
         }
@@ -209,3 +212,11 @@ fieldset legend { margin-top: 12px; }
 }
 
 .contact .address { margin-bottom:20px; }
+
+.agb {
+   > li { font-weight:bold;
+       ol { padding:5px 0 10px 50px; list-style-type:decimal; list-style-position:outside;
+           li { font-weight:normal; }
+       }
+   }
+}

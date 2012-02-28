@@ -18,7 +18,7 @@ use de\zweiradspion\Bild,
  *
  * @author christ
  */
-class Fahrrad extends Persistenz {
+class Fahrrad extends Persistenz implements DatabaseObject {
 
     protected $pid;
     protected $radtyp;
@@ -91,7 +91,7 @@ class Fahrrad extends Persistenz {
         }
     }
 
-    public function loadFromPost($post, $pid) {
+    public function loadFromPost($post, $pid = NULL) {
         $this->post = $post;
         $this->uid  = $post['uid'];
         $this->pid  = $pid;
