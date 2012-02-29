@@ -15,16 +15,16 @@ class User extends Persistenz implements DatabaseObject {
         }
     }
 
-    public function loadFromDatabase($uid, $database = 'user') {
+    public function loadFromDatabase($value, $field = 'uid', $database = 'user') {
         new DatabaseHelper();
-        $this->uid = \mysql_real_escape_string($uid);
+        $value = \mysql_real_escape_string($value);
 
         # hole Fahrrad Daten aus DB
-        $sql    = "select * from {$database} where uid={$this->uid}";
+        $sql    = "select * from {$database} where $field='{$value}'";
         $result = mysql_query($sql);
         $row    = mysql_fetch_assoc($result);
         foreach($row as $key => $val){
-            $setterFunction = 'set' . $key;
+            $setterFunction = 'set' . ucfirst($key);
             $this->$setterFunction($val);
         }
     }

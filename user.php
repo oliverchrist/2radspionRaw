@@ -1,10 +1,11 @@
 <?php
 include 'includes/init.php';
 include 'includes/head.php';
-use de\zweiradspion\DatabaseHelper;
-use de\zweiradspion\DebugHelper;
-use de\zweiradspion\HeaderHelper;
-use de\zweiradspion\NavigationHelper;
+use de\zweiradspion\DatabaseHelper,
+    de\zweiradspion\DebugHelper,
+    de\zweiradspion\HeaderHelper,
+    de\zweiradspion\NavigationHelper,
+    de\zweiradspion\User;
 ?>
 <body id="std">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
@@ -14,20 +15,13 @@ use de\zweiradspion\NavigationHelper;
 <?php
 # ist Benutzer eingeloggt?
 if(isset($_SESSION['uid'])){
-    $username     = '';
-    $usernameErr  = '';
-    $password     = '';
     $passwordErr  = '';
-    $password2    = '';
     $password2Err = '';
-    $email        = '';
     $emailErr     = '';
-    $postcode     = '';
     $postcodeErr  = '';
-    $city         = '';
     $cityErr      = '';
     $showForm     = TRUE;
-
+    $user         = new User();
     if($_POST){
         /*
         $username = $_POST['username'];
@@ -37,7 +31,6 @@ if(isset($_SESSION['uid'])){
         */
         $postcode = $_POST['postcode'];
         $city     = $_POST['city'];
-        $latlng   = $_POST['latlng'];
         $lat      = $_POST['lat'];
         $lng      = $_POST['lng'];
         if(empty($username)){
@@ -66,7 +59,6 @@ if(isset($_SESSION['uid'])){
             $sql      = 'UPDATE user SET '
                     . 'postcode="' . mysql_real_escape_string(trim($postcode)) . '", '
                     . 'city="' . mysql_real_escape_string(trim($city)) . '", '
-                    . 'latLng="' . mysql_real_escape_string(trim($latlng)) . '", '
                     . 'lat="' . mysql_real_escape_string(trim($lat)) . '", '
                     . 'lng="' . mysql_real_escape_string(trim($lng)) . '" '
                     . 'WHERE uid=' . $_SESSION['uid'];
@@ -79,36 +71,20 @@ if(isset($_SESSION['uid'])){
             }
         }
     }else{
-        $dbObject = new DatabaseHelper();
-        $sql      = "select * from user where uid=" . $_SESSION['uid'];
-        $result   = mysql_query($sql);
-        $row      = mysql_fetch_assoc($result);
-        if(!$row) {
-            die ('<span class="error">Konnte Benutzer nicht finden</span><br>');
-        }
-
-        $uid      = $row['uid'];
-        $hash     = $row['hash'];
-        $username = $row['username'];
-        $password = $row['password'];
-        $email    = $row['email'];
-        $postcode = $row['postcode'];
-        $city     = $row['city'];
-        $latlng   = $row['latLng'];
+        $user->loadFromDatabase($_SESSION['uid']);
     }
 
     if($showForm){ ?>
         <form method="post" id="userdata">
-            <input type="hidden" name="latlng" />
             <input type="hidden" name="lat" />
             <input type="hidden" name="lng" />
             <div class="formField<?=$postcodeErr?>">
                 <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
-                <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$postcode?>" />
+                <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$user->getPostcode()?>" />
             </div>
             <div class="formField<?=$cityErr?>">
                 <p class="error">Bitte geben Sie einen gültigen Ort ein</p>
-                <label>Ort</label><input type="text" name="city" value="<?=$city?>" />
+                <label>Ort</label><input type="text" name="city" value="<?=$user->getCity()?>" />
             </div>
             <div class="formField">
                 <input class="submit" type="button" value="Senden" />

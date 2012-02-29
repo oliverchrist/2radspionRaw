@@ -16,12 +16,11 @@ if(isset($_GET['pid'])){
     $result   = mysql_query("select * from user where uid=" . mysql_real_escape_string($_GET['pid']));
     $row      = mysql_fetch_assoc($result);
     $uid      = $row['uid'];
-    $latlng   = $row['latLng'];
     $lat      = $row['lat'];
     $lng      = $row['lng'];
     $postcode = $row['postcode'];
     $city     = $row['city'];
-    if(!empty($latlng)){ ?>
+    if(!empty($lat) && !empty($lng)){ ?>
         <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <script type="text/javascript">
           var map;
@@ -35,7 +34,7 @@ if(isset($_GET['pid'])){
             map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
             marker = new google.maps.Marker({
                 map: map,
-                position: new google.maps.LatLng<?=$latlng?>
+                position: new google.maps.LatLng(<?=$lat?>, <?=$lng?>)
             });
           }
         </script>

@@ -15,14 +15,16 @@ use de\zweiradspion\DatabaseHelper,
     <div id="content">
 <?=NavigationHelper::getSubnavigation()?>
 <?php
-$passwordErr  = '';
-$password2Err = '';
-$emailErr     = '';
-$postcodeErr  = '';
-$cityErr      = '';
-$showForm     = TRUE;
-$keineFehler  = TRUE;
-$user         = new User();
+$passwordErr    = '';
+$password2Err   = '';
+$emailErr       = '';
+$postcodeErr    = '';
+$cityErr        = '';
+$agbErr         = '';
+$datenschutzErr = '';
+$showForm       = TRUE;
+$keineFehler    = TRUE;
+$user           = new User();
 if($_POST){
     $user->loadFromPost($_POST);
     $password  = $user->getPassword();
@@ -50,6 +52,16 @@ if($_POST){
         $cityErr = ' error';
         $keineFehler = FALSE;
     }
+    $agb = $user->getAgb();
+    if(empty($agb)){
+        $agbErr = ' error';
+        $keineFehler = FALSE;
+    }
+    $datenschutz = $user->getDatenschutz();
+    if(empty($datenschutz)){
+        $datenschutzErr = ' error';
+        $keineFehler = FALSE;
+    }
     if($keineFehler){
         # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
         $uniqueUser = TRUE;
@@ -73,6 +85,7 @@ if($_POST){
 
             try{
                 $user->setPassword2(null);
+                $user->setPassword(md5($user->getPassword()));
                 $user->insertInDatabase('userunconfirmed');
             }catch(Exception $e){
                 print $e->getMessage();
@@ -121,6 +134,16 @@ if($showForm){ ?>
         <div class="formField<?=$cityErr?>">
             <p class="error">Bitte geben Sie einen gültigen Ort ein</p>
             <label>Ort</label><input type="text" name="city" value="<?=$user->getCity()?>" />
+        </div>
+        <div class="formField<?=$agbErr?>">
+            <p class="error">Bitte stimmen Sie den allgemeinen Geschäftsbedingungen zu</p>
+            <label>AGB</label>
+            <input type="checkbox" name="agb" value="1"<?=($user->getAgb()) ? 'checked="checked"' : ''?> />
+        </div>
+        <div class="formField<?=$datenschutzErr?>">
+            <p class="error">Bitte stimmen Sie den Datenschutzbedingungen zu</p>
+            <label>Datenschutz</label>
+            <input type="checkbox" name="datenschutz" value="1"<?=($user->getDatenschutz()) ? 'checked="checked"' : ''?> />
         </div>
         <div class="formField">
             <input class="submit" type="button" value="Senden" />

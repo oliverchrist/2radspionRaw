@@ -10,7 +10,7 @@ class Persistenz {
     protected $uid;
     protected $erstellt;
     protected $geaendert;
-    protected $variable;
+    protected $variable = array();
 
     public function getUid() { return $this->uid; }
     public function getErstellt() { return $this->erstellt; }
@@ -42,8 +42,8 @@ class Persistenz {
         return NULL;
     }
 
-    public function __set($property, $value){
-        return $this->variable[$property] = $value;
+    public function __set($property, $value2 = ''){
+        return $this->variable[$property] = $value2;
     }
 }
 ?>
