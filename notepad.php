@@ -6,24 +6,24 @@ use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
 use de\zweiradspion\NavigationHelper;
 ?>
-<body id="std" onload="initialize();">
+<body id="std">
     <?=HeaderHelper::getHeader('Merkzettel')?>
-	<div id="content">
-	    <?=NavigationHelper::getSubnavigation()?>
-	    <?php
-	        # bike merken
-            if(isset($_GET['uid'])){
-                $dbObject = new DatabaseHelper();
-                $sql = "insert into notepad (pid,id) values ({$_SESSION['uid']},{$_GET['uid']})";
-                $result = mysql_query($sql);
-                if($result){
-                    echo 'Zweirad auf Merkzettel gespeichert<br>';
-                }else{
-                    echo 'Zweirad konnte nicht auf Merkzettel gespeichert werden<br>';
-                }
-                echo "<a class=\"txtLnk\" href=\"detail.php?uid={$_GET['uid']}\">Zurück</a>";
-            }
-        ?>
+    <div id="content">
+<?=NavigationHelper::getSubnavigation()?>
+<?php
+# bike merken
+if(isset($_GET['uid'])){
+    $dbObject = new DatabaseHelper();
+    $sql = "insert into notepad (pid,id) values ({$_SESSION['uid']},{$_GET['uid']})";
+    $result = mysql_query($sql);
+    if($result){
+        echo 'Zweirad auf Merkzettel gespeichert<br>';
+    }else{
+        echo 'Zweirad konnte nicht auf Merkzettel gespeichert werden<br>';
+    }
+    echo "<a class=\"txtLnk\" href=\"detail.php?uid={$_GET['uid']}\">Zurück</a>";
+}
+?>
     </div>
     <?php include 'includes/footer.php'; ?>
 </body>

@@ -1,46 +1,48 @@
 <?php
 include 'includes/init.php';
+
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
 use de\zweiradspion\NavigationHelper;
 
-$showForm = true;
-$showError = false;
-$emailErr = '';
+$showForm    = TRUE;
+$showError   = FALSE;
+$emailErr    = '';
 $passwordErr = '';
-$email = '';
-$password = '';
+$email       = '';
+$password    = '';
 if($_POST){
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $dbObject = new DatabaseHelper();
+    $email            = $_POST['email'];
+    $password         = $_POST['password'];
+    $dbObject         = new DatabaseHelper();
     $mysqlQuerySelect = mysql_query("select * from user where email='" . mysql_real_escape_string(trim($email)) ."' and password='" . md5(trim($password)) . "'");
-    if (mysql_num_rows($mysqlQuerySelect)==1){ 
-        $row = mysql_fetch_assoc($mysqlQuerySelect);
-        $showForm = false; 
-        $_SESSION['uid'] = $row['uid'];
+    if (mysql_num_rows($mysqlQuerySelect)==1){
+        $row               = mysql_fetch_assoc($mysqlQuerySelect);
+        $showForm          = FALSE;
+        $_SESSION['uid']   = $row['uid'];
         $_SESSION['email'] = $row['email'];
-        $_SESSION['lat'] = $row['lat'];
-        $_SESSION['lng'] = $row['lng'];
-        $showForm = false;
-        Header("Location: list.php"); 
-    } 
+        $_SESSION['lat']   = $row['lat'];
+        $_SESSION['lng']   = $row['lng'];
+        $showForm          = FALSE;
+        Header("Location: list.php");
+    }
     else{
-        $showError = true; 
-    } 
+        $showError = TRUE;
+    }
 }
 include 'includes/head.php';
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Login')?>
-	<div id="content">
+    <div id="content">
         <?=NavigationHelper::getSubnavigation()?>
         <? if(isset($_SESSION['uid'])){
-            $showForm = false;
-        } ?>
-	    <?php if($showForm){ ?>
-            <?php if($showError){ ?>
+            $showForm = FALSE;
+        }
+        if($showForm){ ?>
+            <?php
+            if($showError){ ?>
                 <span class=\"error\">Sie konnten nicht eingeloggt werden.<br>Email oder Passwort fehlerhaft.<br>
             <? } ?>
             <form method="post">
@@ -55,7 +57,7 @@ include 'includes/head.php';
                 <div class="formField">
                     <input class="submit" type="submit" />
                 </div>
-            </form>	    
+            </form>
             <p><a href="passwordRequest.php" class="txtLnk">Passwort vergessen?</a></p>
         <? } ?>
     </div>
