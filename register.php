@@ -15,6 +15,11 @@ use de\zweiradspion\DatabaseHelper,
     <div id="content">
 <?=NavigationHelper::getSubnavigation()?>
 <?php
+$anbieterErr    = '';
+$anredeErr      = '';
+$nameErr        = '';
+$vornameErr     = '';
+$firmaErr       = '';
 $passwordErr    = '';
 $password2Err   = '';
 $emailErr       = '';
@@ -27,6 +32,31 @@ $keineFehler    = TRUE;
 $user           = new User();
 if($_POST){
     $user->loadFromPost($_POST);
+    $anbieter = $user->getAnbieter();
+    if($anbieter == -1){
+        $anbieterErr = ' error';
+        $keineFehler = FALSE;
+    }
+    $anrede = $user->getAnrede();
+    if(empty($anrede)){
+        $anredeErr = ' error';
+        $keineFehler = FALSE;
+    }
+    $name = $user->getName();
+    if(empty($name)){
+        $nameErr = ' error';
+        $keineFehler = FALSE;
+    }
+    $vorname = $user->getVorname();
+    if(empty($vorname)){
+        $vornameErr = ' error';
+        $keineFehler = FALSE;
+    }
+    $firma = $user->getFirma();
+    if(empty($firma)){
+        $firmaErr = ' error';
+        $keineFehler = FALSE;
+    }
     $password  = $user->getPassword();
     $password2 = $user->getPassword2();
     if(empty($password)){
@@ -115,6 +145,35 @@ if($showForm){ ?>
     <form method="post" id="register">
         <input type="hidden" name="lat" />
         <input type="hidden" name="lng" />
+        <div class="formField<?=$anbieterErr?>">
+            <p class="error">Bitte geben Sie ein ob Sie Privatanbieter oder Händler sind</p>
+            <label>Privatanbieter/Händler</label>
+            <select name="anbieter">
+                <option value="-1">Bitte wählen</option>
+                <option value="privat"<?if($user->getAnbieter() == 'privat'){?> selected="selected"<?}?>>Privatanbieter</option>
+                <option value="haendler"<?if($user->getHaendler() == 'privat'){?> selected="selected"<?}?>>Händler</option>
+            </select>
+        </div>
+        <div class="formField radio<?=$anredeErr?>">
+            <p class="error">Bitte geben Sie Ihre Anrede an</p>
+            <label class="desc">Anrede</label>
+            <input type="radio" name="anrede" value="frau" <?if($user->getAnrede() == 'frau'){?> checked="checked"<?}?> />
+            <label>Frau</label>
+            <input type="radio" name="anrede" value="herr" <?if($user->getAnrede() == 'herr'){?> checked="checked"<?}?> />
+            <label>Herr</label>
+        </div>
+        <div class="formField<?=$nameErr?>">
+            <p class="error">Bitte geben Sie Ihren Namen ein</p>
+            <label>Name</label><input type="text" name="name" value="<?=$user->getName()?>" />
+        </div>
+        <div class="formField<?=$vornameErr?>">
+            <p class="error">Bitte geben Sie Ihren Vornamen ein</p>
+            <label>Vorname</label><input type="text" name="vorname" value="<?=$user->getVorname()?>" />
+        </div>
+        <div class="formField<?=$firmaErr?>">
+            <p class="error">Bitte geben Sie Ihren Firmennamen ein</p>
+            <label>Firma</label><input type="text" name="firma" value="<?=$user->getFirma()?>" />
+        </div>
         <div class="formField<?=$emailErr?>">
             <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>
             <label>Email</label><input type="text" name="email" value="<?=$user->getEmail()?>" />
@@ -135,15 +194,18 @@ if($showForm){ ?>
             <p class="error">Bitte geben Sie einen gültigen Ort ein</p>
             <label>Ort</label><input type="text" name="city" value="<?=$user->getCity()?>" />
         </div>
-        <div class="formField<?=$agbErr?>">
+        <div class="formField checkbox<?=$agbErr?>">
             <p class="error">Bitte stimmen Sie den allgemeinen Geschäftsbedingungen zu</p>
-            <label>AGB</label>
             <input type="checkbox" name="agb" value="1"<?=($user->getAgb()) ? 'checked="checked"' : ''?> />
+            <label>Ja, ich stimme den <a href="agb.php" target="_blank">Allgemeinen Geschäftsbedingungen</a> von zweiradspion.de zu.</label>
         </div>
-        <div class="formField<?=$datenschutzErr?>">
+        <div class="formField checkbox<?=$datenschutzErr?>">
             <p class="error">Bitte stimmen Sie den Datenschutzbedingungen zu</p>
-            <label>Datenschutz</label>
             <input type="checkbox" name="datenschutz" value="1"<?=($user->getDatenschutz()) ? 'checked="checked"' : ''?> />
+            <label>Ja, ich willige in die Nutzung meiner Daten gemäß der <a href="datenschutz.php" target="_blank">Datenschutz-Erklärung</a> von zweiradspion.de ein.
+                Diese Einwilligung betrifft u. a. die Verwendung Ihrer Daten für Marketingzwecke (z. B. Zusendung von eMails).
+                Nach Ihrer Anmeldung können Sie die Benachrichtigungseinstellungen jederzeit in ihrem Profil ändern.
+            </label>
         </div>
         <div class="formField">
             <input class="submit" type="button" value="Senden" />

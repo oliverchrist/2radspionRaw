@@ -7,7 +7,7 @@ use de\zweiradspion\DatabaseHelper;
  *
  * @author christ
  */
-class User extends Persistenz implements DatabaseObject {
+class Search extends Persistenz implements DatabaseObject {
 
     public function __construct($uid = NULL) {
         if(isset($uid)){
@@ -15,7 +15,7 @@ class User extends Persistenz implements DatabaseObject {
         }
     }
 
-    public function loadFromDatabase($value, $field = 'uid', $database = 'user') {
+    public function loadFromDatabase($value, $field = 'uid', $database = 'search') {
         new DatabaseHelper();
         $value = \mysql_real_escape_string($value);
 

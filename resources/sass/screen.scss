@@ -9,7 +9,7 @@
 $red: #e30613;
 
 
-body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
+body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; line-height:20px; }
 
 .clear  { clear: both; line-height: 0; font-size: 0; }
 .txtLnk { color: #fff; background: url(../images/link.png) right no-repeat; padding-right: 15px; text-decoration: none; font-weight: bold; }
@@ -18,6 +18,7 @@ body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; }
 img { border: none; }
 h1 { font-size:30px; line-height:40px; color:white; }
 .hidden { display:none; }
+a { color:#676653; }
 a.lightbox { text-decoration:none; }
 p { margin-bottom:14px}
 
@@ -178,7 +179,16 @@ fieldset legend { margin-top: 12px; }
             img,.txtLnk { margin:0 0 5px 205px; }
             label { margin-top:10px; }
         }
+        &.checkbox {
+            input { float:left; }
+            label { margin-left:5px; width:400px; }
+        }
+        &.radio {
+            label { width:auto;
+                &.desc { width:200px; }
+            }
 
+        }
     }
     select,input[type=text],
     input[type=submit],
@@ -204,6 +214,9 @@ fieldset legend { margin-top: 12px; }
         .checkboxField { height:20px; }
         .control { position:absolute; bottom:20px; right:20px;
             .submit, .reset { width:auto; margin:0 0 0 20px; }
+        }
+        .saveForm {
+             padding-top:20px;
         }
     }
 }

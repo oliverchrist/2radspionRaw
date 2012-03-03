@@ -15,60 +15,63 @@ use de\zweiradspion\DatabaseHelper,
 <?php
 # ist Benutzer eingeloggt?
 if(isset($_SESSION['uid'])){
+    $anbieterErr    = '';
+    $anredeErr      = '';
+    $nameErr        = '';
+    $vornameErr     = '';
+    $firmaErr       = '';
     $passwordErr  = '';
     $password2Err = '';
     $emailErr     = '';
     $postcodeErr  = '';
     $cityErr      = '';
     $showForm     = TRUE;
+    $keineFehler    = TRUE;
     $user         = new User();
     if($_POST){
-        /*
-        $username = $_POST['username'];
-        $password = $_POST['password'];
-        $password2 = $_POST['password2'];
-        $email = $_POST['email'];
-        */
-        $postcode = $_POST['postcode'];
-        $city     = $_POST['city'];
-        $lat      = $_POST['lat'];
-        $lng      = $_POST['lng'];
-        if(empty($username)){
-            $usernameErr = ' error';
+        $user->loadFromPost($_POST);
+        $anbieter = $user->getAnbieter();
+        if($anbieter == -1){
+            $anbieterErr = ' error';
+            $keineFehler = FALSE;
         }
-        if(empty($password)){
-            $passwordErr = ' error';
+        $anrede = $user->getAnrede();
+        if(empty($anrede)){
+            $anredeErr = ' error';
+            $keineFehler = FALSE;
         }
-        if(empty($password2) || $password != $password2){
-            $password2Err = ' error';
+        $name = $user->getName();
+        if(empty($name)){
+            $nameErr = ' error';
+            $keineFehler = FALSE;
         }
-        if(empty($email) || !FormHelper::isEmail($email)){
-            $emailErr = ' error';
+        $vorname = $user->getVorname();
+        if(empty($vorname)){
+            $vornameErr = ' error';
+            $keineFehler = FALSE;
         }
-        if(empty($postcode)){
+        $firma = $user->getFirma();
+        if(empty($firma)){
+            $firmaErr = ' error';
+            $keineFehler = FALSE;
+        }
+        $postcode = $user->getPostcode();
+        if(empty($postcode) || !preg_match('/\d{5}/', $postcode)){
             $postcodeErr = ' error';
+            $keineFehler = FALSE;
         }
+        $city = $user->getCity();
         if(empty($city)){
             $cityErr = ' error';
+            $keineFehler = FALSE;
         }
-        if(
-            !empty($postcode)
-            && !empty($city)
-        ){
-            $dbObject = new DatabaseHelper();
-            $sql      = 'UPDATE user SET '
-                    . 'postcode="' . mysql_real_escape_string(trim($postcode)) . '", '
-                    . 'city="' . mysql_real_escape_string(trim($city)) . '", '
-                    . 'lat="' . mysql_real_escape_string(trim($lat)) . '", '
-                    . 'lng="' . mysql_real_escape_string(trim($lng)) . '" '
-                    . 'WHERE uid=' . $_SESSION['uid'];
-            $result   = mysql_query($sql);
-            if(!$result){
-                die ('<span class="error">User konnte nicht aktualisiert werden</span><br>');
-            }else{
-                echo 'User wurde aktualisiert<br>';
-                $showForm = FALSE;
+        if($keineFehler){
+            try{
+                $user->updateInDatabase();
+            }catch(Exception $e){
+                print $e->getMessage();
             }
+            $showForm = FALSE;
         }
     }else{
         $user->loadFromDatabase($_SESSION['uid']);
@@ -78,6 +81,35 @@ if(isset($_SESSION['uid'])){
         <form method="post" id="userdata">
             <input type="hidden" name="lat" />
             <input type="hidden" name="lng" />
+            <div class="formField<?=$anbieterErr?>">
+                <p class="error">Bitte geben Sie ein ob Sie Privatanbieter oder Händler sind</p>
+                <label>Privatanbieter/Händler</label>
+                <select name="anbieter">
+                    <option value="-1">Bitte wählen</option>
+                    <option value="privat"<?if($user->getAnbieter() == 'privat'){?> selected="selected"<?}?>>Privatanbieter</option>
+                    <option value="haendler"<?if($user->getHaendler() == 'privat'){?> selected="selected"<?}?>>Händler</option>
+                </select>
+            </div>
+            <div class="formField radio<?=$anredeErr?>">
+                <p class="error">Bitte geben Sie Ihre Anrede an</p>
+                <label class="desc">Anrede</label>
+                <input type="radio" name="anrede" value="frau" <?if($user->getAnrede() == 'frau'){?> checked="checked"<?}?> />
+                <label>Frau</label>
+                <input type="radio" name="anrede" value="herr" <?if($user->getAnrede() == 'herr'){?> checked="checked"<?}?> />
+                <label>Herr</label>
+            </div>
+            <div class="formField<?=$nameErr?>">
+                <p class="error">Bitte geben Sie Ihren Namen ein</p>
+                <label>Name</label><input type="text" name="name" value="<?=$user->getName()?>" />
+            </div>
+            <div class="formField<?=$vornameErr?>">
+                <p class="error">Bitte geben Sie Ihren Vornamen ein</p>
+                <label>Vorname</label><input type="text" name="vorname" value="<?=$user->getVorname()?>" />
+            </div>
+            <div class="formField<?=$firmaErr?>">
+                <p class="error">Bitte geben Sie Ihren Firmennamen ein</p>
+                <label>Firma</label><input type="text" name="firma" value="<?=$user->getFirma()?>" />
+            </div>
             <div class="formField<?=$postcodeErr?>">
                 <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
                 <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$user->getPostcode()?>" />

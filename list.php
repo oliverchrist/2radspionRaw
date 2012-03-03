@@ -15,6 +15,9 @@ if(isset($_GET['filter'])){
         case 'myOffers':
             $title = 'Meine Angebote';
             break;
+        case 'allOffers':
+            $title = 'Alle Angebote';
+            break;
         case 'notepad':
             $title = 'Merkzettel';
             break;
@@ -80,7 +83,9 @@ if(isset($_SESSION['lat']) && isset($_SESSION['lng'])){
     echo '<input name="orderDistance" type="checkbox"' . $orderDistanceChecked . '><label>Nahe Angebote zuerst</label>';
 }
 echo '</div>';
-
+echo '<div class="saveForm">';
+echo '<input name="save" type="text" placeholder="speichern als">';
+echo '</div>';
 echo '<div class="control">';
 echo '<input type="reset" class="reset" value="Reset">';
 echo '<input type="submit" class="submit" value="Filtern">';
@@ -92,6 +97,7 @@ $join      = array();
 $order     = array();
 $column    = array();
 if($_POST){
+    print_r($_POST);
     $condition = $dbObject->generateCondition($condition, 'marke');
     $condition = $dbObject->generateCondition($condition, 'modell');
     $condition = $dbObject->generateCondition($condition, 'radtyp');
@@ -137,7 +143,7 @@ if(!empty($column)) {
     $sqlAdditionalColumn = implode('', $column);
 }
 $sql = "select bike.uid,bike.pid,marke,modell,preis,bike.erstellt,bike.geaendert,aktiv"
-    . ",name,extension,reihenfolge" . $sqlAdditionalColumn;
+    . ",images.name,extension,reihenfolge" . $sqlAdditionalColumn;
 if(isset($_SESSION['lat']) && isset($_SESSION['lng'])){
     $sql .= ",user.lat, user.lng, (111.3 * ({$_SESSION['lat']} - user.lat)) as dy, (71.5 * ({$_SESSION['lng']} - user.lng)) as dx"
         . ", sqrt( POW((71.5 * ({$_SESSION['lng']} - user.lng)),2) + POW((111.3 * ({$_SESSION['lat']} - user.lat)),2) ) as distance";
