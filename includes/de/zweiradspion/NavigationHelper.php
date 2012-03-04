@@ -14,7 +14,7 @@ class NavigationHelper {
         if(isset($_SESSION['uid'])){
             $subnavi .= '<a href="list.php?filter=nearOffers">Angebote in<br>meiner Nähe</a>';
         }
-        $subnavi .= '<a href="list.php?filter=newOffers">Neuste Angebote</a>';
+        $subnavi .= '<a href="list.php?filter=newOffers">Neue Angebote</a>';
         $subnavi .= '<div class="spacer"></div>';
         # eingeloggt
         if(isset($_SESSION['uid'])){

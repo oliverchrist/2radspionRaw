@@ -24,7 +24,6 @@ if(isset($_SESSION['uid'])){
     $password2Err = '';
     $emailErr     = '';
     $postcodeErr  = '';
-    $cityErr      = '';
     $showForm     = TRUE;
     $keineFehler  = TRUE;
     $user         = new User();
@@ -51,18 +50,13 @@ if(isset($_SESSION['uid'])){
             $keineFehler = FALSE;
         }
         $firma = $user->getFirma();
-        if(empty($firma)){
+        if($anbieter == 'haendler' && empty($firma)){
             $firmaErr = ' error';
             $keineFehler = FALSE;
         }
         $postcode = $user->getPostcode();
         if(empty($postcode) || !preg_match('/\d{5}/', $postcode)){
             $postcodeErr = ' error';
-            $keineFehler = FALSE;
-        }
-        $city = $user->getCity();
-        if(empty($city)){
-            $cityErr = ' error';
             $keineFehler = FALSE;
         }
         if($keineFehler){
@@ -113,10 +107,6 @@ if(isset($_SESSION['uid'])){
             <div class="formField<?=$postcodeErr?>">
                 <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
                 <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$user->getPostcode()?>" />
-            </div>
-            <div class="formField<?=$cityErr?>">
-                <p class="error">Bitte geben Sie einen gültigen Ort ein</p>
-                <label>Ort</label><input type="text" name="city" value="<?=$user->getCity()?>" />
             </div>
             <div class="formField">
                 <input class="submit" type="button" value="Senden" />

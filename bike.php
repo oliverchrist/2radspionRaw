@@ -191,7 +191,7 @@ if(isset($_SESSION['uid'])){
         <?php
         if(isset($_GET['uid'])){ ?>
             <a class="txtLnk" href="addPicture.php?uid=<?=$fahrrad->getUid()?>">Bild hinzufügen</a>  
-            <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Löschen</a>  
+            <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Angebot löschen</a>  
             <a class="txtLnk" href="detail.php?uid=<?=$fahrrad->getUid()?>">Zurück</a>  
         <?php } ?>            
     <? }

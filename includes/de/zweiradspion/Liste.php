@@ -25,7 +25,7 @@ class Liste {
     public function printAreaSearch() {
         echo '<form class="search" method="post">';
         echo '<select name="area">';
-        $areaDropdown = array('3' => 3, '10' => 10, '20' => 20, '50' => 50, '100' => 100, '200' => 200, '500' => 500);
+        $areaDropdown = array('3' => 3, '10' => 10, '20' => 20, '50' => 50, '100' => 100, '200' => 200, '500' => 500, -1 => 'egal');
         foreach($areaDropdown as $key => $value){
             echo '<option value="' . $key . '"';
             if(isset($_POST['area'])) {
@@ -35,13 +35,6 @@ class Liste {
             }
             echo '>' . $value . ' km</option>';
         }
-        echo '<option value="10">10 km</option>';
-        echo '<option value="10">20 km</option>';
-        echo '<option value="10">50 km</option>';
-        echo '<option value="10">100 km</option>';
-        echo '<option value="10">200 km</option>';
-        echo '<option value="10">500 km</option>';
-        echo '<option value="-1">egal</option>';
         echo '</select>';
         echo '<div class="clear"></div>';
         echo '<div class="control">';
@@ -55,7 +48,7 @@ class Liste {
     public function printTimeSearch() {
         echo '<form class="search" method="post">';
         echo '<select name="time">';
-        $areaDropdown = array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '12' => 12);
+        $areaDropdown = array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '12' => 12, -1 => 'egal');
         foreach($areaDropdown as $key => $value){
             echo '<option value="' . $key . '"';
             if(isset($_POST['time'])) {
@@ -65,13 +58,6 @@ class Liste {
             }
             echo '>' . $value . ' Monate</option>';
         }
-        echo '<option value="10">10 km</option>';
-        echo '<option value="10">20 km</option>';
-        echo '<option value="10">50 km</option>';
-        echo '<option value="10">100 km</option>';
-        echo '<option value="10">200 km</option>';
-        echo '<option value="10">500 km</option>';
-        echo '<option value="-1">egal</option>';
         echo '</select>';
         echo '<div class="clear"></div>';
         echo '<div class="control">';
@@ -134,9 +120,9 @@ class Liste {
             echo '<input name="orderDistance" type="checkbox"' . $orderDistanceChecked . '><label>Nahe Angebote zuerst</label>';
         }
         echo '</div>';
-        echo '<div class="saveForm">';
-        echo '<input name="save" type="text" placeholder="speichern als">';
-        echo '</div>';
+        #echo '<div class="saveForm">';
+        #echo '<input name="save" type="text" placeholder="speichern als">';
+        #echo '</div>';
         echo '<div class="control">';
         echo '<input type="reset" class="reset" value="Reset">';
         echo '<input type="submit" class="submit" value="Filtern">';
@@ -186,9 +172,14 @@ class Liste {
         if(isset($_POST['time']) && $_POST['time'] != -1) {
             $time = $_POST['time'];
         }
-        $now   = new \DateTime;
-        $now->modify( '-' . $time . ' month' );
-        $this->condition[] = 'bike.erstellt > "' . $now->format( 'Y-m-d' ) . '"';
+        if(isset($_POST['time']) && $_POST['time'] == -1) {
+            $time = NULL;
+        }
+        if($time) {
+            $now   = new \DateTime;
+            $now->modify( '-' . $time . ' month' );
+            $this->condition[] = 'bike.erstellt > "' . $now->format( 'Y-m-d' ) . '"';
+        }
 
     }
 
@@ -197,7 +188,12 @@ class Liste {
         if(isset($_POST['area']) && $_POST['area'] != -1) {
             $area = $_POST['area'];
         }
-        $this->condition[] = 'sqrt( POW((71.5 * (8.11974639999994 - user.lng)),2) + POW((111.3 * (50.1250784 - user.lat)),2) ) < ' .$area;
+        if(isset($_POST['area']) && $_POST['area'] == -1) {
+            $area = NULL;
+        }
+        if($area) {
+            $this->condition[] = 'sqrt( POW((71.5 * (8.11974639999994 - user.lng)),2) + POW((111.3 * (50.1250784 - user.lat)),2) ) < ' .$area;
+        }
     }
 
     public function printList() {
@@ -254,12 +250,15 @@ class Liste {
                     echo '<div class="links">';
                     echo "<a class=\"txtLnk\" href=\"detail.php?uid={$row['uid']}\">Ansehen</a><br>";
                     if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){
-                        echo "<a class=\"txtLnk ajaxDelete\" href=\"bikeAjax.php?uid={$row['uid']}&process=delete\">Löschen</a><br>";
+                        echo "<a class=\"txtLnk ajaxDelete\" href=\"bikeAjax.php?uid={$row['uid']}&process=delete\">Angebot löschen</a><br>";
                     }
                     echo '</div>';
                     echo '<div class="clear"></div>';
                 }
                 echo '</div>';
+            }
+            if(mysql_num_rows($result) == 0) {
+                echo '<p>Keine Einträge vorhanden!</p>';
             }
         }else{
             echo '<p class="error">Fehler in der Datenbankabfrage</p>';

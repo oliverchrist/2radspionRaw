@@ -17,7 +17,11 @@ if(isset($_GET['uid'])){
     $fahrrad      = new Fahrrad($_GET['uid']);
     $nachricht    = '';
     $nachrichtErr = '';
-    $name         = "{$_SESSION['vorname']} {$_SESSION['name']}";
+    if(isset($_SESSION['uid'])) {
+        $name         = "{$_SESSION['vorname']} {$_SESSION['name']}";
+    }else{
+        $name = '';
+    }
     $nameErr      = '';
     $email        = '';
     $emailErr     = '';
@@ -118,7 +122,7 @@ Das Team von zweiradspion.de";
                 <div class="formField<?=$captchaErr?> captcha">
                     <p class="error">Bitte geben Sie den richtigen Captcha Code ein</p>
                     <img id="captcha" src="includes/org/phpcaptcha/securimage/securimage_show.php" alt="CAPTCHA Image" /><br>
-                    <a href="#" onclick="document.getElementById('captcha').src = '/securimage/securimage_show.php?' + Math.random(); return false" class="txtLnk">neues Bild</a><br>
+                    <a href="#" onclick="document.getElementById('captcha').src = '/includes/org/phpcaptcha/securimage/securimage_show.php?' + Math.random(); return false" class="txtLnk">neues Bild</a><br>
                     <label>Captcha Code</label>
                     <input type="text" name="captcha_code" size="10" maxlength="6" />
                 </div>

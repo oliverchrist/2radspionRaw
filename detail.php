@@ -57,7 +57,7 @@ if(isset($_GET['uid'])){
     <? # angemeldet und eigenes Zweirad
     if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
         <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
-        <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Löschen</a><br>
+        <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Angebot löschen</a><br>
         <?
     }
     # angemeldet und fremdes Zweirad

@@ -26,7 +26,7 @@ if(isset($_GET['filter'])){
             $title = 'Neue Angebote';
             break;
         case 'nearOffers':
-            $title = 'Nahe Angebote';
+            $title = 'Angebote in meiner Nähe';
             break;
         default:
             $title = $_GET['filter'];
@@ -50,11 +50,10 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'allOffers'){
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
     $listObj->initMyOffers();
-    $listObj->printSearch();
+    #$listObj->printSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['uid'])){
     $listObj->initNotepad();
-    $listObj->printSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'newOffers'){
     $listObj->initNewOffers();
@@ -71,7 +70,7 @@ $listObj->printList();
 ?>
 </div>
 <div class="teaser">
-    <div class="info">fooo</div>
+    <div class="info"></div>
 </div>
 </div>
 <?php include 'includes/footer.php'; ?>
