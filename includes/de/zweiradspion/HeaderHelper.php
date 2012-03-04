@@ -17,7 +17,8 @@ class HeaderHelper {
 
             # eingeloggt
         if(isset($_SESSION['uid'])){
-            $header .= '<li class="hi"><a href="logout.php">Logout</a></li>';
+            $header .= '<li><a href="user.php">Benutzerdaten</a></li>';
+            $header .= '<li><a href="logout.php">Logout</a></li>';
             # nicht eingeloggt
         }else{
             $header .= '<li><a href="login.php">Login</a></li>';

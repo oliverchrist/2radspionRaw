@@ -9,24 +9,24 @@ use de\zweiradspion\DatabaseHelper,
 ?>
 <body id="std">
     <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <?=HeaderHelper::getHeader('Userdaten')?>
+    <?=HeaderHelper::getHeader('Benutzerdaten')?>
     <div id="content">
 <?=NavigationHelper::getSubnavigation()?>
 <?php
 # ist Benutzer eingeloggt?
 if(isset($_SESSION['uid'])){
-    $anbieterErr    = '';
-    $anredeErr      = '';
-    $nameErr        = '';
-    $vornameErr     = '';
-    $firmaErr       = '';
+    $anbieterErr  = '';
+    $anredeErr    = '';
+    $nameErr      = '';
+    $vornameErr   = '';
+    $firmaErr     = '';
     $passwordErr  = '';
     $password2Err = '';
     $emailErr     = '';
     $postcodeErr  = '';
     $cityErr      = '';
     $showForm     = TRUE;
-    $keineFehler    = TRUE;
+    $keineFehler  = TRUE;
     $user         = new User();
     if($_POST){
         $user->loadFromPost($_POST);

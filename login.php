@@ -18,13 +18,15 @@ if($_POST){
     $dbObject         = new DatabaseHelper();
     $mysqlQuerySelect = mysql_query("select * from user where email='" . mysql_real_escape_string(trim($email)) ."' and password='" . md5(trim($password)) . "'");
     if (mysql_num_rows($mysqlQuerySelect)==1){
-        $row               = mysql_fetch_assoc($mysqlQuerySelect);
-        $showForm          = FALSE;
-        $_SESSION['uid']   = $row['uid'];
-        $_SESSION['email'] = $row['email'];
-        $_SESSION['lat']   = $row['lat'];
-        $_SESSION['lng']   = $row['lng'];
-        $showForm          = FALSE;
+        $row                 = mysql_fetch_assoc($mysqlQuerySelect);
+        $showForm            = FALSE;
+        $_SESSION['uid']     = $row['uid'];
+        $_SESSION['name']    = $row['name'];
+        $_SESSION['vorname'] = $row['vorname'];
+        $_SESSION['email']   = $row['email'];
+        $_SESSION['lat']     = $row['lat'];
+        $_SESSION['lng']     = $row['lng'];
+        $showForm            = FALSE;
         Header("Location: list.php");
     }
     else{

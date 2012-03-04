@@ -29,7 +29,7 @@ $(document).ready(function(){
 
     $('.delete').click(function(e){
         var link = $(this).attr('href');
-        var answere = confirm("Wirklich löschen?");
+        var answere = confirm("Wollen Sie dieses Angebot wirklich löschen?");
         if(!answere){
             e.preventDefault();
         }
@@ -40,7 +40,7 @@ $(document).ready(function(){
         var link = $(this).attr('href');
         var element = $(this).parents('.bikeListElement');
         element.css('height',element.height() + 'px');
-        var answere = confirm("Wirklich löschen?");
+        var answere = confirm("Wollen Sie dieses Angebot wirklich löschen?");
         if(answere){
             $.ajax({
               url: link,

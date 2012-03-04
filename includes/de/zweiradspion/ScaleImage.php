@@ -1,5 +1,5 @@
 <?php
-
+namespace de\zweiradspion;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -38,6 +38,10 @@ class ScaleImage {
         return $this->path;
     }
 
+    public function getOriginalImageWidth() {
+        $size = getimagesize ($this->path);
+        return $size[0];
+    }
 
     public function getImagePath($width, $height) {
         $path = 'images_cache/' . $this->name . '_' . $width . '.jpg';

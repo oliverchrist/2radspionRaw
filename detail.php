@@ -3,7 +3,8 @@ include 'includes/init.php';
 include 'includes/head.php';
 use de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
-    de\zweiradspion\Fahrrad;
+    de\zweiradspion\Fahrrad,
+    de\zweiradspion\ScaleImage;
 ?>
 <body id="std">
     <?=HeaderHelper::getHeader('Detailansicht')?>
@@ -37,9 +38,15 @@ if(isset($_GET['uid'])){
     $imageWidth = 510;
     foreach($fahrrad->getBilder() as $bild) {
         $scaleObj = new ScaleImage($bild->getName(), $bild->getExtension(), 'images');
-        #echo $imageObj->getOriginalImagePath();
-        $imagePath = $scaleObj->getImagePath($imageWidth, 'auto');
-        echo '<a class="lightbox" title="' . $fahrrad->getModell() . '" href="images/' . $bild->getFullName() . '">
+        #var_dump($scaleObj->getOriginalImageSize());
+        $imagePath         = $scaleObj->getImagePath($imageWidth, 'auto');
+        $originalImageWidth = $scaleObj->getOriginalImageWidth();
+        if($originalImageWidth > 1000) {
+            $imagePathLightbox = $scaleObj->getImagePath(1000, 'auto');
+        }else{
+            $imagePathLightbox = $scaleObj->getOriginalImagePath();
+        }
+        echo '<a class="lightbox" title="' . $fahrrad->getModell() . '" href="' . $imagePathLightbox . '">
             <img alt="' . $fahrrad->getModell() . '" src="' . $imagePath . '" width="' . $imageWidth . '" />
         </a>';
         $imageWidth = 160;

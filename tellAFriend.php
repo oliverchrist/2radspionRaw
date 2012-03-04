@@ -17,7 +17,7 @@ if(isset($_GET['uid'])){
     $fahrrad      = new Fahrrad($_GET['uid']);
     $nachricht    = '';
     $nachrichtErr = '';
-    $name         = '';
+    $name         = "{$_SESSION['vorname']} {$_SESSION['name']}";
     $nameErr      = '';
     $email        = '';
     $emailErr     = '';
@@ -95,7 +95,7 @@ Das Team von zweiradspion.de";
                 <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
                 <div class="formField textarea<?=$nachrichtErr?>">
                     <p class="error">Bitte geben Sie Ihre Nachricht ein</p>
-                    <label>Ihre Nachricht an den Anbieter:</label>
+                    <label>Ihre Nachricht:</label>
                     <textarea name="nachricht"><?=$nachricht?></textarea>
                     <div class="clear"></div>
                 </div>
