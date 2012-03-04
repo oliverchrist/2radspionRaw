@@ -22,6 +22,66 @@ class Liste {
         $this->dbObject  = new DatabaseHelper();
     }
 
+    public function printAreaSearch() {
+        echo '<form class="search" method="post">';
+        echo '<select name="area">';
+        $areaDropdown = array('3' => 3, '10' => 10, '20' => 20, '50' => 50, '100' => 100, '200' => 200, '500' => 500);
+        foreach($areaDropdown as $key => $value){
+            echo '<option value="' . $key . '"';
+            if(isset($_POST['area'])) {
+                if($key == $_POST['area']) {
+                    echo ' selected="selected"';
+                }
+            }
+            echo '>' . $value . ' km</option>';
+        }
+        echo '<option value="10">10 km</option>';
+        echo '<option value="10">20 km</option>';
+        echo '<option value="10">50 km</option>';
+        echo '<option value="10">100 km</option>';
+        echo '<option value="10">200 km</option>';
+        echo '<option value="10">500 km</option>';
+        echo '<option value="-1">egal</option>';
+        echo '</select>';
+        echo '<div class="clear"></div>';
+        echo '<div class="control">';
+        echo '<input type="reset" class="reset" value="Reset">';
+        echo '<input type="submit" class="submit" value="Filtern">';
+        echo '</div>';
+        echo '</form>';
+
+    }
+
+    public function printTimeSearch() {
+        echo '<form class="search" method="post">';
+        echo '<select name="time">';
+        $areaDropdown = array('1' => 1, '2' => 2, '3' => 3, '4' => 4, '5' => 5, '6' => 6, '12' => 12);
+        foreach($areaDropdown as $key => $value){
+            echo '<option value="' . $key . '"';
+            if(isset($_POST['time'])) {
+                if($key == $_POST['time']) {
+                    echo ' selected="selected"';
+                }
+            }
+            echo '>' . $value . ' Monate</option>';
+        }
+        echo '<option value="10">10 km</option>';
+        echo '<option value="10">20 km</option>';
+        echo '<option value="10">50 km</option>';
+        echo '<option value="10">100 km</option>';
+        echo '<option value="10">200 km</option>';
+        echo '<option value="10">500 km</option>';
+        echo '<option value="-1">egal</option>';
+        echo '</select>';
+        echo '<div class="clear"></div>';
+        echo '<div class="control">';
+        echo '<input type="reset" class="reset" value="Reset">';
+        echo '<input type="submit" class="submit" value="Filtern">';
+        echo '</div>';
+        echo '</form>';
+
+    }
+
     public function printSearch() {
         echo '<form class="search" method="post">';
 
@@ -122,13 +182,22 @@ class Liste {
     }
 
     public function initNewOffers() {
+        $time = 1;
+        if(isset($_POST['time']) && $_POST['time'] != -1) {
+            $time = $_POST['time'];
+        }
         $now   = new \DateTime;
-        $now->modify( '-1 month' );
+        $now->modify( '-' . $time . ' month' );
         $this->condition[] = 'bike.erstellt > "' . $now->format( 'Y-m-d' ) . '"';
+
     }
 
     public function initNearOffers() {
-        $this->condition[] = 'sqrt( POW((71.5 * (8.11974639999994 - user.lng)),2) + POW((111.3 * (50.1250784 - user.lat)),2) ) < 50';
+        $area = 3;
+        if(isset($_POST['area']) && $_POST['area'] != -1) {
+            $area = $_POST['area'];
+        }
+        $this->condition[] = 'sqrt( POW((71.5 * (8.11974639999994 - user.lng)),2) + POW((111.3 * (50.1250784 - user.lat)),2) ) < ' .$area;
     }
 
     public function printList() {
@@ -172,7 +241,9 @@ class Liste {
                     }
                     echo '<div class="cnt">';
                     if(isset($row['distance'])){
-                        echo 'Entfernung: ' . printf("%.2f", $row['distance']) . 'km<br>';
+                        echo 'Entfernung: ';
+                        printf("%.2f", $row['distance']);
+                        echo 'km<br>';
                     }
                     echo "marke: {$row['marke']}<br>";
                     echo "modell: {$row['modell']}<br>";

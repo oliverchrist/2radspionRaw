@@ -22,6 +22,12 @@ if(isset($_GET['filter'])){
         case 'notepad':
             $title = 'Merkzettel';
             break;
+        case 'newOffers':
+            $title = 'Neue Angebote';
+            break;
+        case 'nearOffers':
+            $title = 'Nahe Angebote';
+            break;
         default:
             $title = $_GET['filter'];
             break;
@@ -52,10 +58,12 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['ui
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'newOffers'){
     $listObj->initNewOffers();
+    $listObj->printTimeSearch();
 }
 
 if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
     $listObj->initNearOffers();
+    $listObj->printAreaSearch();
 }
 
 $listObj->printList();
