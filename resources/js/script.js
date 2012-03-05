@@ -56,6 +56,27 @@ $(document).ready(function(){
         }
     });
 
+    $('.ajaxNotepadDelete').click(function(e){
+        e.preventDefault();
+        var link = $(this).attr('href');
+        var element = $(this).parent().parent();
+        element.css('height',element.height() + 'px');
+        var answere = confirm("Wollen Sie dieses Angebot vom Merkzettel wirklich löschen?");
+        if(answere){
+            $.ajax({
+              url: link,
+              context: element,
+              success: function(result){
+                if(result == 'delete'){
+                    $(this).addClass("notepadDeleted");
+                }else{
+                    console.log('Fehler in notepadAjax.php');
+                }
+              }
+            });
+        }
+    });
+
     $('.selectEigenschaft').change(function(){
         if($(this).val() == -1){
             $(this).next('input').show();

@@ -7,32 +7,38 @@ use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\NavigationHelper,
     de\zweiradspion\FormHelper,
     de\zweiradspion\Liste;
-?>
-<body id="std">
-<?
+
 $title = 'Alle Angebote';
+$pageClass = '';
 if(isset($_GET['filter'])){
     switch ($_GET['filter']) {
         case 'myOffers':
             $title = 'Meine Angebote';
+            $pageClass = 'myOffers';
             break;
         case 'allOffers':
             $title = 'Alle Angebote';
+            $pageClass = 'allOffers';
             break;
         case 'notepad':
             $title = 'Merkzettel';
+            $pageClass = 'notepad';
             break;
         case 'newOffers':
             $title = 'Neue Angebote';
+            $pageClass = 'newOffers';
             break;
         case 'nearOffers':
             $title = 'Angebote in meiner Nähe';
+            $pageClass = 'nearOffers';
             break;
         default:
             $title = $_GET['filter'];
+            $pageClass = '';
             break;
     }
 }
+echo "<body id=\"std\" class=\"$pageClass\">";
 echo HeaderHelper::getHeader($title);
 ?>
 <div class="main">

@@ -65,9 +65,17 @@ class Fahrrad extends Persistenz implements DatabaseObject {
         $this->uid = \mysql_real_escape_string($uid);
 
         # hole Fahrrad Daten aus DB
-        $sql    = "select * from bike where uid=" . $this->uid;
+        $join   = '';
+        $column = '';
+        if(isset($_SESSION['uid'])) {
+            $join   = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
+            $column = ',notepad.uid as nuid';
+        }
+        $sql    = "select *,bike.uid as uid, bike.pid as pid $column from bike $join where bike.uid=" . $this->uid;
+        #echo $sql;
         $result = mysql_query($sql);
         $row    = mysql_fetch_assoc($result);
+        #print_r($row);
         foreach($row as $key => $val){
             $setterFunction = 'set' . $key;
             $this->$setterFunction($val);
@@ -76,6 +84,7 @@ class Fahrrad extends Persistenz implements DatabaseObject {
         # hole Bilddaten aus DB
         $sql    = "select * from images where pid=" . $this->uid;
         $result = mysql_query($sql);
+        #echo $sql;
         while ($row = mysql_fetch_assoc($result)) {
             $this->bilder[] = new Bild($row['name'], $row['extension']);
         }

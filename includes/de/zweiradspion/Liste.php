@@ -154,6 +154,10 @@ class Liste {
     }
 
     public function initAllOffers() {
+        if(isset($_SESSION['uid'])) {
+            $this->join[]     = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
+            $this->column[] = 'notepad.uid as nuid';
+        }
         $this->condition[] = 'aktiv = 1';
     }
 
@@ -164,7 +168,7 @@ class Liste {
     public function initNotepad() {
         $this->join[]     = 'right join notepad on bike.uid = notepad.id';
         $this->condition[] = 'notepad.pid=' . $_SESSION['uid'];
-        $this->column[]    = ', notepad.id, notepad.remark';
+        $this->column[]    = 'notepad.uid as nuid, notepad.remark';
     }
 
     public function initNewOffers() {
@@ -180,7 +184,11 @@ class Liste {
             $now->modify( '-' . $time . ' month' );
             $this->condition[] = 'bike.erstellt > "' . $now->format( 'Y-m-d' ) . '"';
         }
-
+        if(isset($_SESSION['uid'])) {
+            $this->join[]     = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
+            $this->column[] = 'notepad.uid as nuid';
+        }
+        $this->condition[] = 'aktiv = 1';
     }
 
     public function initNearOffers() {
@@ -194,6 +202,11 @@ class Liste {
         if($area) {
             $this->condition[] = 'sqrt( POW((71.5 * (8.11974639999994 - user.lng)),2) + POW((111.3 * (50.1250784 - user.lat)),2) ) < ' .$area;
         }
+        if(isset($_SESSION['uid'])) {
+            $this->join[]     = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
+            $this->column[] = 'notepad.uid as nuid';
+        }
+        $this->condition[] = 'aktiv = 1';
     }
 
     public function printList() {
@@ -208,7 +221,7 @@ class Liste {
             $sqlAdditionalJoin = ' ' . implode(' ', $this->join);
         }
         if(!empty($this->column)) {
-            $sqlAdditionalColumn = implode('', $this->column);
+            $sqlAdditionalColumn = ', ' . implode(', ', $this->column);
         }
         $sql = "select bike.uid,bike.pid,marke,modell,preis,bike.erstellt,bike.geaendert,aktiv"
             . ",images.name,extension,reihenfolge" . $sqlAdditionalColumn;
@@ -224,9 +237,12 @@ class Liste {
         if($result){
             while ($row = mysql_fetch_assoc($result)) {
                 echo "<div class=\"bikeListElement" . (($row['aktiv']) ? '' : ' inactive') . "\">";
-                if($row['uid'] == NULL && isset($row['id'])){
-                    echo 'Das Zweirad mit der ID: ' . $row['id'] . ' wurde gelöscht<br>';
-                    echo 'Bemerkung: ' . $row['remark'];
+                if($row['uid'] == NULL && isset($row['nuid'])){
+                    echo 'Das Zweirad mit der ID: ' . $row['nuid'] . ' wurde gelöscht<br>';
+                    echo 'Bemerkung: ' . $row['remark'] . '<br>';
+                    if(isset($row['nuid'])) {
+                        echo "<a class=\"txtLnk ajaxNotepadDelete\" href=\"notepadAjax.php?uid={$row['nuid']}&process=delete\">Vom Merkzettel löschen</a><br>";
+                    }
                 }else{
                     if(!empty($row['name'])){
                         $imageObj  = new ScaleImage($row['name'], $row['extension'], 'images');
@@ -249,6 +265,9 @@ class Liste {
                     echo "</div>";
                     echo '<div class="links">';
                     echo "<a class=\"txtLnk\" href=\"detail.php?uid={$row['uid']}\">Ansehen</a><br>";
+                    if(isset($row['nuid'])) {
+                        echo "<a class=\"txtLnk ajaxNotepadDelete\" href=\"notepadAjax.php?uid={$row['nuid']}&process=delete\">Vom Merkzettel löschen</a><br>";
+                    }
                     if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){
                         echo "<a class=\"txtLnk ajaxDelete\" href=\"bikeAjax.php?uid={$row['uid']}&process=delete\">Angebot löschen</a><br>";
                     }
