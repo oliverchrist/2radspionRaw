@@ -14,8 +14,10 @@ echo HeaderHelper::getHeader($title);
 <div id="content">
 <?php
 echo NavigationHelper::getSubnavigation();
+?>
+<?php
 # ist Benutzer eingeloggt?
-if(isset($_SESSION['uid'])){
+if(isset($_SESSION['uid'])) {
     $markeErr        = '';
     $modellErr       = '';
     $preisErr        = '';

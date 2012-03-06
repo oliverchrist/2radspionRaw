@@ -131,7 +131,7 @@ class Liste {
     }
 
     public function generateSqlAllOffers() {
-        $dbObject = new DatabaseHelper();
+        $dbObject        = new DatabaseHelper();
         $this->condition = $dbObject->generateCondition($this->condition, 'marke');
         $this->condition = $dbObject->generateCondition($this->condition, 'modell');
         $this->condition = $dbObject->generateCondition($this->condition, 'radtyp');
@@ -162,7 +162,7 @@ class Liste {
     }
 
     public function initNotepad() {
-        $this->join[]     = 'right join notepad on bike.uid = notepad.id';
+        $this->join[]      = 'right join notepad on bike.uid = notepad.id';
         $this->condition[] = 'notepad.pid=' . $_SESSION['uid'];
         $this->column[]    = ', notepad.id, notepad.remark';
     }
@@ -176,7 +176,7 @@ class Liste {
             $time = NULL;
         }
         if($time) {
-            $now   = new \DateTime;
+            $now = new \DateTime;
             $now->modify( '-' . $time . ' month' );
             $this->condition[] = 'bike.erstellt > "' . $now->format( 'Y-m-d' ) . '"';
         }

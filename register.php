@@ -38,22 +38,22 @@ if($_POST){
     }
     $anrede = $user->getAnrede();
     if(empty($anrede)){
-        $anredeErr = ' error';
+        $anredeErr   = ' error';
         $keineFehler = FALSE;
     }
     $name = $user->getName();
     if(empty($name)){
-        $nameErr = ' error';
+        $nameErr     = ' error';
         $keineFehler = FALSE;
     }
     $vorname = $user->getVorname();
     if(empty($vorname)){
-        $vornameErr = ' error';
+        $vornameErr  = ' error';
         $keineFehler = FALSE;
     }
     $firma = $user->getFirma();
     if($anbieter == 'haendler' && empty($firma)){
-        $firmaErr = ' error';
+        $firmaErr    = ' error';
         $keineFehler = FALSE;
     }
     $password  = $user->getPassword();
@@ -64,11 +64,11 @@ if($_POST){
     }
     if(empty($password) || $password != $password2){
         $password2Err = ' error';
-        $keineFehler = FALSE;
+        $keineFehler  = FALSE;
     }
     $email = $user->getEmail();
     if(empty($email) || !FormHelper::isEmail($email)){
-        $emailErr = ' error';
+        $emailErr    = ' error';
         $keineFehler = FALSE;
     }
     $postcode = $user->getPostcode();
@@ -78,13 +78,13 @@ if($_POST){
     }
     $agb = $user->getAgb();
     if(empty($agb)){
-        $agbErr = ' error';
+        $agbErr      = ' error';
         $keineFehler = FALSE;
     }
     $datenschutz = $user->getDatenschutz();
     if(empty($datenschutz)){
         $datenschutzErr = ' error';
-        $keineFehler = FALSE;
+        $keineFehler    = FALSE;
     }
     if($keineFehler){
         # Prüfen ob Benutzer bereits existiert in Tabelle user und userunconfirmed
@@ -108,7 +108,7 @@ if($_POST){
             # insert
 
             try{
-                $user->setPassword2(null);
+                $user->setPassword2(NULL);
                 $user->setPassword(md5($user->getPassword()));
                 $user->insertInDatabase('userunconfirmed');
             }catch(Exception $e){

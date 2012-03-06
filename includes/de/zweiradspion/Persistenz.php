@@ -16,13 +16,13 @@ class Persistenz {
     public function getErstellt() { return $this->erstellt; }
     public function getGeaendert() { return $this->geaendert; }
 
-    public function setUid($uid) { $this->uid = $uid; }
-    public function setErstellt($erstellt) { $this->erstellt = $erstellt; }
+    public function setUid($uid) { $this->uid                   = $uid; }
+    public function setErstellt($erstellt) { $this->erstellt    = $erstellt; }
     public function setGeaendert($geaendert) { $this->geaendert = $geaendert; }
 
-    public function __call($method, $args){
+    public function __call($method, $args) {
         $functionType = substr($method, 0, 3);
-        $name     = lcfirst(substr($method, 3));
+        $name         = lcfirst(substr($method, 3));
         #echo $functionType . ': '. $name . ', ' . implode(', ', $args);
 
         if($functionType == 'get'){
@@ -33,7 +33,7 @@ class Persistenz {
         }
     }
 
-    public function __get($property){
+    public function __get($property) {
         #echo $property;
 
         if(isset($this->variable[$property])) {
@@ -42,7 +42,7 @@ class Persistenz {
         return NULL;
     }
 
-    public function __set($property, $value2 = ''){
+    public function __set($property, $value2 = '') {
         return $this->variable[$property] = $value2;
     }
 }

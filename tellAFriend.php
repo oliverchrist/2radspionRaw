@@ -13,25 +13,25 @@ use de\zweiradspion\HeaderHelper,
 <div id="content">
 <?=NavigationHelper::getSubnavigation()?>
 <?php
-if(isset($_GET['uid'])){
+if(isset($_GET['uid'])) {
     $fahrrad      = new Fahrrad($_GET['uid']);
     $nachricht    = '';
     $nachrichtErr = '';
     if(isset($_SESSION['uid'])) {
-        $name         = "{$_SESSION['vorname']} {$_SESSION['name']}";
+        $name = "{$_SESSION['vorname']} {$_SESSION['name']}";
     }else{
         $name = '';
     }
-    $nameErr      = '';
-    $email        = '';
-    $emailErr     = '';
-    $email2       = '';
-    $email2Err    = '';
-    $captchaErr   = '';
-    $cc           = '';
-    $showform     = TRUE;
-    $formValid    = TRUE;
-    if($_POST){
+    $nameErr    = '';
+    $email      = '';
+    $emailErr   = '';
+    $email2     = '';
+    $email2Err  = '';
+    $captchaErr = '';
+    $cc         = '';
+    $showform   = TRUE;
+    $formValid  = TRUE;
+    if($_POST) {
         # Validierung
         if(empty($_POST['email'])) {
             $emailErr  = ' error';
@@ -126,7 +126,8 @@ Das Team von zweiradspion.de";
                     <label>Captcha Code</label>
                     <input type="text" name="captcha_code" size="10" maxlength="6" />
                 </div>
-                <?php }else{ ?>
+                <?php
+                }else{ ?>
                     <input type="hidden" name="email2" value="<?=$_SESSION['email']?>" />
                 <?php } ?>
                 <div class="formField">
