@@ -146,12 +146,21 @@ p { margin-bottom:14px}
         @include transition-duration('1s,1s,1s,1s,1s');
         @include transition-delay('0s,1s,2s,2s,2s');
     }
+    &.notepadDeleted {
+        .ajaxNotepadDelete { display:none; }
+    }
     &.inactive { opacity:0.5; }
     .thumb { float: left; margin:0 10px 5px 0; width: 200px;
         img { border-radius:12px; width:200px; }
     }
     .cnt { float: left; margin-right: 10px; }
     .links { clear:both; }
+}
+body.notepad .bikeListElement.notepadDeleted {
+    height:0 !important; width:0; padding:0; margin-bottom:0; border:none; overflow:hidden;
+    @include transition-property('height,width,padding,margin-bottom,border');
+    @include transition-duration('1s,1s,1s,1s,1s');
+    @include transition-delay('0s,1s,2s,2s,2s');
 }
 
 .detailImage  {
@@ -163,6 +172,9 @@ fieldset legend { margin-top: 12px; }
 .fahrradSingle { width: 510px; border-radius: 12px; background: #eeb200; padding: 12px;
     h1 { margin: 0 0 10px; }
     img { border-radius:12px; margin: 7px 15px 7px 0; }
+    &.notepadDeleted {
+        .ajaxNotepadDelete { display:none; }
+    }
 }
 
 #std form {

@@ -61,9 +61,13 @@ if(isset($_GET['uid'])){
         <?
     }
     # angemeldet und fremdes Zweirad
-    if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid']){ ?>
+    $nuid = $fahrrad->getNuid();
+    if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid'] && empty($nuid)){ ?>
         <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
         <?
+    }
+    if(!empty($nuid)) {
+        echo "<a class=\"txtLnk ajaxNotepadDelete\" href=\"notepadAjax.php?uid={$fahrrad->getNuid()}&process=delete\">Vom Merkzettel löschen</a><br>";
     }
     # alle Bikes
     ?>
