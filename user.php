@@ -36,22 +36,22 @@ if(isset($_SESSION['uid'])){
         }
         $anrede = $user->getAnrede();
         if(empty($anrede)){
-            $anredeErr = ' error';
+            $anredeErr   = ' error';
             $keineFehler = FALSE;
         }
         $name = $user->getName();
         if(empty($name)){
-            $nameErr = ' error';
+            $nameErr     = ' error';
             $keineFehler = FALSE;
         }
         $vorname = $user->getVorname();
         if(empty($vorname)){
-            $vornameErr = ' error';
+            $vornameErr  = ' error';
             $keineFehler = FALSE;
         }
         $firma = $user->getFirma();
         if($anbieter == 'haendler' && empty($firma)){
-            $firmaErr = ' error';
+            $firmaErr    = ' error';
             $keineFehler = FALSE;
         }
         $postcode = $user->getPostcode();
@@ -115,7 +115,7 @@ if(isset($_SESSION['uid'])){
     <?
     } ?>
     <a class="txtLnk" href="location.php?pid=<?=$_SESSION['uid']?>">Ort auf Karte zeigen</a>
-<?
+    <?
 } ?>
     </div>
     <?php include 'includes/footer.php'; ?>

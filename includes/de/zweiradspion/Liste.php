@@ -209,7 +209,7 @@ class Liste {
         $this->condition[] = 'aktiv = 1';
     }
 
-    public function printList() {
+    public function printList($linkTarget = '_top') {
         $sqlAdditionalCondition = '';
         $sqlAdditionalJoin      = '';
         $sqlAdditionalColumn    = '';
@@ -247,7 +247,7 @@ class Liste {
                     if(!empty($row['name'])){
                         $imageObj  = new ScaleImage($row['name'], $row['extension'], 'images');
                         $imagePath = $imageObj->getImagePath(200, 'auto');
-                        echo "<a class=\"thumb\" href=\"detail.php?uid={$row['uid']}\">";
+                        echo "<a class=\"thumb\" href=\"detail.php?uid={$row['uid']}\" target=\"$linkTarget\">";
                             echo "<img alt=\"{$row['modell']}\" src=\"$imagePath\" width=\"200\" />";
                         echo "</a>";
                     }
@@ -264,7 +264,7 @@ class Liste {
                     echo "geaendert: {$row['geaendert']}<br>";
                     echo "</div>";
                     echo '<div class="links">';
-                    echo "<a class=\"txtLnk\" href=\"detail.php?uid={$row['uid']}\">Ansehen</a><br>";
+                    echo "<a class=\"txtLnk\" href=\"detail.php?uid={$row['uid']}\" target=\"$linkTarget\">Ansehen</a><br>";
                     if(isset($row['nuid'])) {
                         echo "<a class=\"txtLnk ajaxNotepadDelete\" href=\"notepadAjax.php?uid={$row['nuid']}&process=delete\">Vom Merkzettel löschen</a><br>";
                     }

@@ -38,12 +38,10 @@ if(isset($_GET['filter'])){
             break;
     }
 }
-echo "<body id=\"std\" class=\"$pageClass\">";
-echo HeaderHelper::getHeader($title);
+echo "<body id=\"std\" class=\"$pageClass facebook\">";
 ?>
 <div class="main">
 <div id="content">
-<?=NavigationHelper::getSubnavigation()?>
 <?php
 $listObj = new Liste();
 
@@ -71,7 +69,7 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
     $listObj->printAreaSearch();
 }
 
-$listObj->printList();
+$listObj->printList('_blank');
 
 ?>
 </div>

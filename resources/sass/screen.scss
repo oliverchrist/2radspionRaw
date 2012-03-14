@@ -246,3 +246,20 @@ fieldset legend { margin-top: 12px; }
        }
    }
 }
+
+body.facebook { background:white;
+    .borderBottom, .borderLeft {
+        display:none;
+    }
+    .main { width:auto !important;
+        #content {
+            float: none;
+            margin: 0;
+            position: relative;
+            width: auto;
+            .bikeListElement {
+                width:auto;
+            }
+        }
+    }
+}
