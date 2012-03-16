@@ -1,5 +1,6 @@
 <?php
 include 'includes/init.php';
+require_once 'includes/properties/properties.php';
 
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
@@ -26,6 +27,7 @@ if($_POST){
         $_SESSION['email']   = $row['email'];
         $_SESSION['lat']     = $row['lat'];
         $_SESSION['lng']     = $row['lng'];
+        $_SESSION['login']   = md5($row['email'] . SECRET_WORD);
         $showForm            = FALSE;
         Header("Location: list.php");
     }
