@@ -155,7 +155,7 @@ class Liste {
 
     public function initAllOffers() {
         if(isset($_SESSION['uid'])) {
-            $this->join[]     = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
+            $this->join[]   = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
             $this->column[] = 'notepad.uid as nuid';
         }
         $this->condition[] = 'aktiv = 1';
@@ -185,7 +185,7 @@ class Liste {
             $this->condition[] = 'bike.erstellt > "' . $now->format( 'Y-m-d' ) . '"';
         }
         if(isset($_SESSION['uid'])) {
-            $this->join[]     = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
+            $this->join[]   = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
             $this->column[] = 'notepad.uid as nuid';
         }
         $this->condition[] = 'aktiv = 1';
@@ -203,7 +203,7 @@ class Liste {
             $this->condition[] = 'sqrt( POW((71.5 * (8.11974639999994 - user.lng)),2) + POW((111.3 * (50.1250784 - user.lat)),2) ) < ' .$area;
         }
         if(isset($_SESSION['uid'])) {
-            $this->join[]     = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
+            $this->join[]   = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
             $this->column[] = 'notepad.uid as nuid';
         }
         $this->condition[] = 'aktiv = 1';
