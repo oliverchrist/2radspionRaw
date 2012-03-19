@@ -24,7 +24,7 @@ $(document).ready(function(){
         var postcode = $('input[name="postcode"]', form).val();
         var city = $('input[name="city"]', form).val();
         //alert(postcode + ' ' + city);
-        codeAddress(postcode + ' ' + city);
+        codeAddress(postcode);
     });
 
     $('.delete').click(function(e){
@@ -95,7 +95,7 @@ $(document).ready(function(){
 
 function codeAddress(address) {
     geocoder = new google.maps.Geocoder();
-    geocoder.geocode( { 'address': address}, function(results, status) {
+    geocoder.geocode( { 'address': address, 'region': 'de'}, function(results, status) {
           if (status == google.maps.GeocoderStatus.OK) {
               latlng = results[0].geometry.location;
               lat = results[0].geometry.location.lat();
