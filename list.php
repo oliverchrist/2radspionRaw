@@ -40,6 +40,7 @@ if(isset($_GET['filter'])){
 }
 echo "<body id=\"std\" class=\"$pageClass\">";
 echo HeaderHelper::getHeader($title);
+#echo $twig->render('home.html');
 ?>
 <div class="main">
 <div id="content">
