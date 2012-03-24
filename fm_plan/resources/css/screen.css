@@ -61,7 +61,8 @@ b, strong    { font-weight: bold; }
 .contentpage .content.news .breadcrumb  { float: left; }
 .contentpage .content.news .browse  { float: right; }
 .contentpage .content.news .browse a  { color:#454c52; text-decoration: none; }
-.contentpage .content.news .newsSearch  { margin:25px 0 0; clear: both; background: #454c52; color: white; padding: 6px 15px; border: 1px solid #454c52; text-align: right; }
+.contentpage .content.news .newsSearch  { margin:10px 0 0; background: #454c52; color: white; padding: 6px 15px; border: 1px solid #454c52; text-align: right; }
+.contentpage .content.news .newsSearch form  { margin: 0; }
 .contentpage .content.news .newsSearch label    { margin: 0 5px 0 15px; }
 .contentpage .content.news .newsSearch select   { background: white; width: 170px; font-size: 12px; }
 .contentpage .content.news .newsElement		{ clear: both; margin-bottom: 20px; }
