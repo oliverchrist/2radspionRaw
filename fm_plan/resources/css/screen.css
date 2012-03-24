@@ -1,6 +1,6 @@
 body    { font-family: Arial; font-size: 12px; line-height:15px; color:#454c52; background: #ccc; margin: 0; }
-ul	{ list-style: none; padding: 0; margin: 0; }
-b, strong	{ font-weight: bold; }
+ul    { list-style: none; padding: 0; margin: 0; }
+b, strong    { font-weight: bold; }
 .clear  { clear: both; line-height: 0; }
 
 .website    { margin:0 auto; width: 1280px; }
@@ -34,28 +34,36 @@ b, strong	{ font-weight: bold; }
 .home .main .content .column.bold p  { font-weight: bold; }
 .home .main .content .column a  { color: black; }
 
-.main .menu	{ float: left; padding: 8px 0 0 7px; width: 330px; }
-.main .menu a	{ display: block; text-decoration: none; font-size: 22px; line-height: 26px; }
+.main .menu    { float: left; padding: 8px 0 0 7px; width: 330px; }
+.main .menu a    { display: block; text-decoration: none; font-size: 22px; line-height: 26px; }
 
-.main .menu ul > li > a	{ background: #454c52; padding: 12px 15px; color: white; font-weight: bold; margin-bottom: 10px; }
-.main .menu ul > li	> ul >li > a { background: none; color: #454c52; padding: 0 15px; }
-.main .menu ul > li	> ul >li > ul >li > a { font-weight: normal; }
+.main .menu ul > li > a    { background: #454c52; padding: 12px 15px; color: white; font-weight: bold; margin-bottom: 10px; }
+.main .menu ul > li    > ul >li > a { background: none; color: #454c52; padding: 0 15px; }
+.main .menu ul > li    > ul >li > ul >li > a { font-weight: normal; }
 
-.breadcrumb ul li	{ display: inline; }
+.breadcrumb ul li    { display: inline; }
 .breadcrumb ul li a { color:#454c52; text-decoration: none; }
 
-.contentpage .content	{ float: left; width: 538px; padding:10px 50px 50px 40px; background: white; }
-.contentpage .content h1	{ font-size: 30px; line-height: 33px; }
-.contentpage .content .image	{ margin-bottom: 15px; }
-.contentpage .content .accordeon .element	{ margin-bottom: 6px; }
-.contentpage .content .accordeon .title	{ background: #454c52; color: white; font-size: 14px; font-weight: bold; padding: 5px 15px; }
+.contentpage .content    { float: left; width: 538px; padding:10px 50px 50px 40px; background: white; }
+.contentpage .content h1    { font-size: 30px; line-height: 33px; }
+.contentpage .content .image    { margin-bottom: 15px; }
+.contentpage .content .accordeon .element    { margin-bottom: 6px; }
+.contentpage .content .accordeon .title    { background: #454c52; color: white; font-size: 14px; font-weight: bold; padding: 5px 15px; }
 .contentpage .content .accordeon .body  { background: #ccc; padding: 10px 15px; }
 
-.contentpage .teaser	{ float: left; width: 302px; padding: 8px 0 0 7px; }
+.contentpage .teaser    { float: left; width: 302px; padding: 8px 0 0 7px; }
 .contentpage .teaser .image { background: white; padding: 6px; line-height: 0; }
-.contentpage .teaser .accordeon .element	{ margin-bottom: 6px; }
-.contentpage .teaser .accordeon .title	{ background:white; font-size: 14px; font-weight: bold; padding: 5px 15px; }
+.contentpage .teaser .accordeon .element    { margin-bottom: 6px; }
+.contentpage .teaser .accordeon .title    { background:white; font-size: 14px; font-weight: bold; padding: 5px 15px; }
 .contentpage .teaser .accordeon .body  { padding: 5px 0px 0; }
 
+.contentpage .content.news  { width: 852px; }
+.contentpage .content.news .breadcrumb  { float: left; }
+.contentpage .content.news .browse  { float: right; }
+.contentpage .content.news .browse a  { color:#454c52; text-decoration: none; }
+.contentpage .content.news .newsSearch  { margin:25px 0 0; clear: both; background: #454c52; color: white; padding: 6px 15px; border: 1px solid #454c52; text-align: right; }
+.contentpage .content.news .newsSearch label    { margin: 0 5px 0 15px; }
+.contentpage .content.news .newsSearch select   { background: white; width: 170px; font-size: 12px; }
+.contentpage .content.news .newsElement img { float: right; margin-left: 50px; }
 
 .footer { background: url(../images/footer_bgr.png) repeat-x; padding: 10px 150px; height: 45px; }
