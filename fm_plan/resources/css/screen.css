@@ -64,6 +64,12 @@ b, strong    { font-weight: bold; }
 .contentpage .content.news .newsSearch  { margin:25px 0 0; clear: both; background: #454c52; color: white; padding: 6px 15px; border: 1px solid #454c52; text-align: right; }
 .contentpage .content.news .newsSearch label    { margin: 0 5px 0 15px; }
 .contentpage .content.news .newsSearch select   { background: white; width: 170px; font-size: 12px; }
+.contentpage .content.news .newsElement		{ clear: both; margin-bottom: 20px; }
 .contentpage .content.news .newsElement img { float: right; margin-left: 50px; }
+.contentpage .content.news .newsElement h3	{ font-size: 20px; line-height: 25px; margin: 15px 0 0; }
+.contentpage .content.news .newsElement h3 span	{ font-size: 14px; line-height: 25px; margin-left: 10px; }
+.contentpage .content.news .newsElement h2	{ font-size: 25px; line-height: 30px; margin: 0; }
+.contentpage .content.news .newsElement p	{ margin: 0; }
+.contentpage .content.news .newsElement a	{ color:#454c52; text-decoration: none; font-weight: bold; }
 
 .footer { background: url(../images/footer_bgr.png) repeat-x; padding: 10px 150px; height: 45px; }
