@@ -247,9 +247,11 @@ class Liste {
                     if(!empty($row['name'])){
                         $imageObj  = new ScaleImage($row['name'], $row['extension'], 'images');
                         $imagePath = $imageObj->getImagePath(200, 'auto');
-                        echo "<a class=\"thumb\" href=\"detail.php?uid={$row['uid']}\" target=\"$linkTarget\">";
-                            echo "<img alt=\"{$row['modell']}\" src=\"$imagePath\" width=\"200\" />";
-                        echo "</a>";
+						if($imagePath) {
+	                        echo "<a class=\"thumb\" href=\"detail.php?uid={$row['uid']}\" target=\"$linkTarget\">";
+	                            echo "<img alt=\"{$row['modell']}\" src=\"$imagePath\" width=\"200\" />";
+	                        echo "</a>";
+						}
                     }
                     echo '<div class="cnt">';
                     if(isset($row['distance'])){

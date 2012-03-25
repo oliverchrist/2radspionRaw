@@ -1,5 +1,5 @@
 <?php
-namespace de\zweiradspion;
+#namespace de\zweiradspion;
 
 const DB_SERVER   = 'localhost';
 const DB_USER     = 'root';

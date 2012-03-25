@@ -47,7 +47,6 @@ echo HeaderHelper::getHeader($title);
 <div class="main">
 <div id="content">
 <?php
-echo 'Login::isLoggedIn() = ' . Login::isLoggedIn();
 echo $twig->render('subnavigation.html', array('isLoggedIn' => Login::isLoggedIn()));
 
 $listObj = new Liste();
