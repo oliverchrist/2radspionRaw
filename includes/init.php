@@ -5,10 +5,11 @@ function __autoload($className){
 
     if (0 !== strpos($className, 'Twig')) {
         $fileName = 'includes/' . str_replace('\\', '/', $className) . '.php';
-    }else if (is_file($fileName = '/usr/share/php/'.str_replace(array('_', "\0"), array('/', ''), $className).'.php')) {
+    }else if (is_file($fileName = 'includes/'.str_replace(array('_', "\0"), array('/', ''), $className).'.php')) {
         require $fileName;
     }
 
+    #echo "classpath: $fileName<br>";
     require_once $fileName;
 }
 
@@ -21,7 +22,7 @@ Twig_Autoloader::register();
 
 $loader = new Twig_Loader_Filesystem('templates');
 $twig = new Twig_Environment($loader, array(
-  'cache' => 'compilation_cache',
+  #'cache' => 'compilation_cache',
 ));
 
 

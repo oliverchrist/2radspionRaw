@@ -1,12 +1,15 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
+require_once 'includes/init.php';
+
+echo $twig->render('head.html');
+
 use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\DebugHelper,
     de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
     de\zweiradspion\FormHelper,
-    de\zweiradspion\Liste;
+    de\zweiradspion\Liste,
+    de\zweiradspion\Login;
 
 $title     = 'Alle Angebote';
 $pageClass = '';
@@ -40,12 +43,13 @@ if(isset($_GET['filter'])){
 }
 echo "<body id=\"std\" class=\"$pageClass\">";
 echo HeaderHelper::getHeader($title);
-#echo $twig->render('home.html');
 ?>
 <div class="main">
 <div id="content">
-<?=NavigationHelper::getSubnavigation()?>
 <?php
+echo 'Login::isLoggedIn() = ' . Login::isLoggedIn();
+echo $twig->render('subnavigation.html', array('isLoggedIn' => Login::isLoggedIn()));
+
 $listObj = new Liste();
 
 if($_POST){
