@@ -1,8 +1,4 @@
 <?php
-require_once 'includes/init.php';
-
-echo $twig->render('head.html');
-
 use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\DebugHelper,
     de\zweiradspion\HeaderHelper,
@@ -11,45 +7,44 @@ use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\Liste,
     de\zweiradspion\Login;
 
-$title     = 'Alle Angebote';
+require_once 'includes/init.php';
+
+echo $twig->render('head.html');
+
+$listObj = new Liste();
+
 $pageClass = '';
 if(isset($_GET['filter'])){
     switch ($_GET['filter']) {
         case 'myOffers':
-            $title     = 'Meine Angebote';
             $pageClass = 'myOffers';
             break;
         case 'allOffers':
-            $title     = 'Alle Angebote';
             $pageClass = 'allOffers';
             break;
         case 'notepad':
-            $title     = 'Merkzettel';
             $pageClass = 'notepad';
             break;
         case 'newOffers':
-            $title     = 'Neue Angebote';
             $pageClass = 'newOffers';
             break;
         case 'nearOffers':
-            $title     = 'Angebote in meiner Nähe';
             $pageClass = 'nearOffers';
             break;
         default:
-            $title     = $_GET['filter'];
             $pageClass = '';
             break;
     }
 }
 echo "<body id=\"std\" class=\"$pageClass\">";
-echo HeaderHelper::getHeader($title);
+echo $twig->render('header.html', array('headline' => $listObj->getHeadline(), 'isLoggedIn' => Login::isLoggedIn()));
 ?>
 <div class="main">
 <div id="content">
 <?php
 echo $twig->render('subnavigation.html', array('isLoggedIn' => Login::isLoggedIn()));
 
-$listObj = new Liste();
+
 
 if($_POST){
     $listObj->generateSqlAllOffers();

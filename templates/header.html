@@ -1,0 +1,14 @@
+<div id="header">
+    <img src="resources/images/logo_folgeseiten.png" id="imgLogo" />
+    <div id="mainnavi"><h1>{{ headline }}</h1>
+        <ul>
+        {% if isLoggedIn %}
+            <li><a href="user.php">Benutzerdaten</a></li>
+            <li><a href="logout.php">Logout</a></li>
+        {% else %}
+            <li><a href="login.php">Login</a></li>
+            <li><a href="register.php">Registrieren</a></li>
+        {% endif %}
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="resources/stylesheets/screen.css" type="text/css" rel="stylesheet">
+<link href="resources/stylesheets/print.css" type="text/css" rel="stylesheet" media="print">
+<link href="resources/stylesheets/jquery.lightbox-0.5.css" type="text/css" rel="stylesheet">
+<script src="resources/js/jquery-1.7.1.min.js" type="text/javascript"></script>
+<script src="resources/js/jquery.lightbox-0.5.pack.js" type="text/javascript"></script>
+<script src="resources/js/script.js" type="text/javascript"></script>
+<title>2radspion</title>
+</head>
+
+<body id="std" class="{{ pageClass }}">
+    <div id="header">
+        <img src="resources/images/logo_folgeseiten.png" id="imgLogo" />
+        <div id="mainnavi"><h1>{{ headline }}</h1>
+            <ul>
+            {% if isLoggedIn %}
+                <li><a href="user.php">Benutzerdaten</a></li>
+                <li><a href="logout.php">Logout</a></li>
+            {% else %}
+                <li><a href="login.php">Login</a></li>
+                <li><a href="register.php">Registrieren</a></li>
+            {% endif %}
+            </ul>
+        </div>
+    </div>
+    <div class="main">
+        <div id="content">
+            <div class="subnavi">
+                <a href="list.php?filter=allOffers">Alle Angebote</a>
+                {% if isLoggedIn %}
+                    <a href="list.php?filter=nearOffers">Angebote in<br>meiner Nähe</a>
+                {% endif %}
+                <a href="list.php?filter=newOffers">Neue Angebote</a>
+                <div class="spacer"></div>
+                {% if isLoggedIn %}
+                    <a href="list.php?filter=myOffers">Meine Angebote</a>
+                    <a href="bike.php?action=new">Neues Angebot</a>
+                    <a href="list.php?filter=notepad">Merkzettel</a>
+                {% endif %}
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+        <div class="teaser">
+            <div class="info"></div>
+        </div>
+    </div>
+    <div class="borderBottom">
+        <div class="border"></div>
+    </div>
+    <div class="borderLeft">
+        <div class="border"></div>
+    </div>
+</body>
+</html>

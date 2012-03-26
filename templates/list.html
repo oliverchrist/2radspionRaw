@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {{bikeListElements|length}}
+    {% for bikeListElement in bikeListElements %}
+        <div class="bikeListElement {{ bikeListElement.aktiv }}">
+            {% if bikeListElement.isOnNotepad %}
+                Das Zweirad mit der ID: {{ bikeListElement.nuid }} wurde gelöscht<br>
+                Bemerkung: {{  bikeListElement.remark }}<br>
+                <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
+            {% elseif %}
+                {% if bikeListElement.imagePath %}
+                    <a class="thumb" href="detail.php?uid={{bikeListElement.uid}}" target="{{linkTarget}}">
+                        <img alt="{{bikeListElement.modell}}" src="{{bikeListElement.imagePath}}" width="200" />
+                    </a>
+                {% endif %}
+                <div class="cnt">
+                    {% if bikeListElement.distance %}
+                        Entfernung: {{ bikeListElement.distance }} km<br>
+                    {% endif %}
+                    marke: {{ bikeListElement.marke }}<br>
+                    modell: {{ bikeListElement.modell }}<br>
+                    preis: {{ bikeListElement.preis }}<br>
+                    erstellt: {{ bikeListElement.erstellt }}<br>
+                    geaendert: {{ bikeListElement.geaendert }}<br>
+                </div>
+                <div class="links">
+                    <a class="txtLnk" href="detail.php?uid={{bikeListElement.uid}}" target="{{linkTarget}}">Ansehen</a><br>
+                    {% if bikeListElement.isOnNotepad %}
+                        <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
+                    {% endif %}
+                    {% if bikeListElement.isOwnBike %}
+                        <a class="txtLnk ajaxDelete" href="bikeAjax.php?uid={{bikeListElement.uid}}&process=delete">Angebot löschen</a><br>
+                    {% endif %}
+                </div>
+            {% endif %}
+            <div class="clear"></div>
+        </div>
+    {% endfor %}
+    {% if bikeListElement|length > 0 %}
+        <p>Keine Einträge vorhanden!</p>
+    {% endif %}
+
+{% endblock %}

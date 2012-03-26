@@ -22,6 +22,23 @@ class Liste {
         $this->dbObject  = new DatabaseHelper();
     }
 
+    public function getHeadline() {
+        $headlines = array(
+            'myOffers' => 'Meine Angebote',
+            'allOffers' => 'Alle Angebote',
+            'notepad' => 'Merkzettel',
+            'newOffers' => 'Neue Angebote',
+            'nearOffers' => 'Angebote in meiner Nähe');
+        if(isset($_GET['filter']) && isset($headlines[$_GET['filter']])) {
+            return $headlines[$_GET['filter']];
+        }
+        if(isset($_GET['filter'])) {
+            return $_GET['filter'];
+        }
+        return 'Alle Angebote';
+    }
+
+
     public function printAreaSearch() {
         echo '<form class="search" method="post">';
         echo '<select name="area">';
@@ -285,6 +302,74 @@ class Liste {
             echo '<p class="error">Fehler in der Datenbankabfrage</p>';
         }
     }
+    
+    public function getList($linkTarget = '_top') {
+        $bikeListElements = array();
+        $bikeListElement = array();
+        $sqlAdditionalCondition = '';
+        $sqlAdditionalJoin      = '';
+        $sqlAdditionalColumn    = '';
+        $sqlOrder               = (isset($_POST['orderDistance']) && isset($_SESSION['lat']) && isset($_SESSION['lng'])) ? 'distance ASC, ' : '';
+        if(!empty($this->condition)) {
+             $sqlAdditionalCondition = 'where ' . implode(' and ', $this->condition);
+        }
+        if(!empty($this->join)) {
+            $sqlAdditionalJoin = ' ' . implode(' ', $this->join);
+        }
+        if(!empty($this->column)) {
+            $sqlAdditionalColumn = ', ' . implode(', ', $this->column);
+        }
+        $sql = "select bike.uid,bike.pid,marke,modell,preis,bike.erstellt,bike.geaendert,aktiv"
+            . ",images.name,extension,reihenfolge" . $sqlAdditionalColumn;
+        if(isset($_SESSION['lat']) && isset($_SESSION['lng'])){
+            $sql .= ",user.lat, user.lng, (111.3 * ({$_SESSION['lat']} - user.lat)) as dy, (71.5 * ({$_SESSION['lng']} - user.lng)) as dx"
+                . ", sqrt( POW((71.5 * ({$_SESSION['lng']} - user.lng)),2) + POW((111.3 * ({$_SESSION['lat']} - user.lat)),2) ) as distance";
+        }
+        $sql .= " from bike LEFT JOIN images ON bike.uid = images.pid LEFT JOIN user ON user.uid = bike.pid {$sqlAdditionalJoin}"
+            . " {$sqlAdditionalCondition} group by bike.uid order by {$sqlOrder}bike.erstellt";
+
+        #echo $sql;
+        $result = mysql_query($sql);
+        if($result){
+            while ($row = mysql_fetch_assoc($result)) {
+                unset($bikeListElement);
+                $bikeListElement['aktiv'] = (($row['aktiv']) ? '' : ' inactive');
+                if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){
+                    $bikeListElement['isOwnBike'] = TRUE;
+                }
+                if(isset($row['nuid'])) {
+                    $bikeListElement['isOnNotepad'] = TRUE;
+                    $bikeListElement['nuid'] = $row['nuid'];
+                }else{
+                    $bikeListElement['isOnNotepad'] = FALSE;
+                }
+                if($row['uid'] == NULL && isset($row['nuid'])){
+                    $bikeListElement['deleted'] = TRUE;
+                    $bikeListElement['remark'] = $row['remark'];
+                }else{
+                    if(!empty($row['name'])){
+                        $imageObj  = new ScaleImage($row['name'], $row['extension'], 'images');
+                        $imagePath = $imageObj->getImagePath(200, 'auto');
+                        if($imagePath) {
+	                    $bikeListElement['uid'] = $row['uid'];
+	                    $bikeListElement['modell'] = $row['modell'];
+                            $bikeListElement['imagePath'] = $imagePath;
+			}
+                    }
+                    if(isset($row['distance'])){
+                        $bikeListElement['distance'] = $row['distance'];
+                    }
+                    $bikeListElement['marke'] = $row['marke'];
+                    $bikeListElement['modell'] = $row['modell'];
+                    $bikeListElement['preis'] = $row['preis'];
+                    $bikeListElement['erstellt'] = $row['erstellt'];
+                    $bikeListElement['geaendert'] = $row['geaendert'];
+                }
+                $bikeListElements[] = $bikeListElement;
+            }
+        }
+        return $bikeListElements;
+    }    
 }
 
 ?>
