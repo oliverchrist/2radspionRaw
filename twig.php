@@ -31,7 +31,7 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['ui
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'newOffers'){
     $listObj->initNewOffers();
-    $listObj->printTimeSearch();
+    #$listObj->printTimeSearch();
 }
 
 if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
@@ -39,12 +39,14 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
     $listObj->printAreaSearch();
 }
 
-var_dump($listObj->getList());
+#var_dump($listObj->getList());
 
 echo $twig->render('list.html', array(
         'headline' => $listObj->getHeadline(),
         'isLoggedIn' => Login::isLoggedIn(),
         'pageClass' => $pageClass,
         'linkTarget' => '_top',
+        'filter' => $listObj->getFilter(),
+        'post' => $_POST,
         'bikeListElements' => $listObj->getList()
     ));

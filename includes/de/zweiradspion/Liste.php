@@ -37,6 +37,13 @@ class Liste {
         }
         return 'Alle Angebote';
     }
+	
+	public function getFilter() {
+		if(isset($_GET['filter'])) {
+			return $_GET['filter'];
+		}
+		return FALSE;
+	}
 
 
     public function printAreaSearch() {

@@ -1,14 +1,32 @@
 {% extends "base.html" %}
 
 {% block content %}
-    {{bikeListElements|length}}
+	{% if filter == 'newOffers' %}
+        <form class="search" method="post">
+	        <select name="time">
+	        	<option value="1"{% if post.time == 1 %} selected="selected"{% endif %}>1 Monat</option>
+	        	<option value="2"{% if post.time == 2 %} selected="selected"{% endif %}>2 Monate</option>
+	        	<option value="3"{% if post.time == 3 %} selected="selected"{% endif %}>3 Monate</option>
+	        	<option value="4"{% if post.time == 4 %} selected="selected"{% endif %}>4 Monate</option>
+	        	<option value="5"{% if post.time == 5 %} selected="selected"{% endif %}>5 Monate</option>
+	        	<option value="6"{% if post.time == 6 %} selected="selected"{% endif %}>6 Monate</option>
+	        	<option value="12"{% if post.time == 7 %} selected="selected"{% endif %}>12 Monate</option>
+	        	<option value="-1"{% if post.time == -1 %} selected="selected"{% endif %}>egal</option>
+	        </select>
+	        <div class="clear"></div>
+	        <div class="control">
+		        <input type="reset" class="reset" value="Reset">
+		        <input type="submit" class="submit" value="Filtern">
+	        </div>
+        </form>
+    {% endif %}
     {% for bikeListElement in bikeListElements %}
         <div class="bikeListElement {{ bikeListElement.aktiv }}">
             {% if bikeListElement.isOnNotepad %}
                 Das Zweirad mit der ID: {{ bikeListElement.nuid }} wurde gelöscht<br>
                 Bemerkung: {{  bikeListElement.remark }}<br>
                 <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
-            {% elseif %}
+            {% else %}
                 {% if bikeListElement.imagePath %}
                     <a class="thumb" href="detail.php?uid={{bikeListElement.uid}}" target="{{linkTarget}}">
                         <img alt="{{bikeListElement.modell}}" src="{{bikeListElement.imagePath}}" width="200" />
@@ -16,7 +34,7 @@
                 {% endif %}
                 <div class="cnt">
                     {% if bikeListElement.distance %}
-                        Entfernung: {{ bikeListElement.distance }} km<br>
+                        Entfernung: {{ bikeListElement.distance|number_format(2, ',', '.') }} km<br>
                     {% endif %}
                     marke: {{ bikeListElement.marke }}<br>
                     modell: {{ bikeListElement.modell }}<br>
