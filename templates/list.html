@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+	Filter: {{ filter }}
 	{% if filter == 'newOffers' %}
         <form class="search" method="post">
 	        <select name="time">
@@ -19,6 +20,25 @@
 		        <input type="submit" class="submit" value="Filtern">
 	        </div>
         </form>
+    {% endif %}
+    {% if filter == 'nearOffers' %}
+        <form class="search" method="post">
+	        <select name="area">
+	        	<option value="3"{% if post.area == 3 %} selected="selected"{% endif %}>3 km</option>
+	        	<option value="10"{% if post.area == 10 %} selected="selected"{% endif %}>10 km</option>
+	        	<option value="20"{% if post.area == 20 %} selected="selected"{% endif %}>20 km</option>
+	        	<option value="50"{% if post.area == 50 %} selected="selected"{% endif %}>50 km</option>
+	        	<option value="100"{% if post.area == 100 %} selected="selected"{% endif %}>100 km</option>
+	        	<option value="200"{% if post.area == 200 %} selected="selected"{% endif %}>200 km</option>
+	        	<option value="500"{% if post.area == 500 %} selected="selected"{% endif %}>500 km</option>
+	        	<option value="-1"{% if post.area == -1 %} selected="selected"{% endif %}>egal</option>
+	        </select>
+	        <div class="clear"></div>
+	        <div class="control">
+		        <input type="reset" class="reset" value="Reset">
+		        <input type="submit" class="submit" value="Filtern">
+	        </div>
+        </form>    
     {% endif %}
     {% for bikeListElement in bikeListElements %}
         <div class="bikeListElement {{ bikeListElement.aktiv }}">
@@ -55,7 +75,7 @@
             <div class="clear"></div>
         </div>
     {% endfor %}
-    {% if bikeListElement|length > 0 %}
+    {% if bikeListElement|length == 0 %}
         <p>Keine Einträge vorhanden!</p>
     {% endif %}
 

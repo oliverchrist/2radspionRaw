@@ -29,16 +29,16 @@
     <div class="main">
         <div id="content">
             <div class="subnavi">
-                <a href="list.php?filter=allOffers">Alle Angebote</a>
+                <a href="twig.php?filter=allOffers">Alle Angebote</a>
                 {% if isLoggedIn %}
-                    <a href="list.php?filter=nearOffers">Angebote in<br>meiner Nähe</a>
+                    <a href="twig.php?filter=nearOffers">Angebote in<br>meiner Nähe</a>
                 {% endif %}
-                <a href="list.php?filter=newOffers">Neue Angebote</a>
+                <a href="twig.php?filter=newOffers">Neue Angebote</a>
                 <div class="spacer"></div>
                 {% if isLoggedIn %}
-                    <a href="list.php?filter=myOffers">Meine Angebote</a>
+                    <a href="twig.php?filter=myOffers">Meine Angebote</a>
                     <a href="bike.php?action=new">Neues Angebot</a>
-                    <a href="list.php?filter=notepad">Merkzettel</a>
+                    <a href="twig.php?filter=notepad">Merkzettel</a>
                 {% endif %}
             </div>
             {% block content %}{% endblock %}

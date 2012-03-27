@@ -226,10 +226,12 @@ class Liste {
         if($area) {
             $this->condition[] = 'sqrt( POW((71.5 * (8.11974639999994 - user.lng)),2) + POW((111.3 * (50.1250784 - user.lat)),2) ) < ' .$area;
         }
+		/*
         if(isset($_SESSION['uid'])) {
             $this->join[]   = 'left join notepad on (bike.uid = notepad.id and notepad.pid = ' . $_SESSION['uid'] . ')';
             $this->column[] = 'notepad.uid as nuid';
         }
+		 */
         $this->condition[] = 'aktiv = 1';
     }
 
@@ -358,10 +360,10 @@ class Liste {
                         $imageObj  = new ScaleImage($row['name'], $row['extension'], 'images');
                         $imagePath = $imageObj->getImagePath(200, 'auto');
                         if($imagePath) {
-	                    $bikeListElement['uid'] = $row['uid'];
-	                    $bikeListElement['modell'] = $row['modell'];
+		                    $bikeListElement['uid'] = $row['uid'];
+		                    $bikeListElement['modell'] = $row['modell'];
                             $bikeListElement['imagePath'] = $imagePath;
-			}
+						}
                     }
                     if(isset($row['distance'])){
                         $bikeListElement['distance'] = $row['distance'];

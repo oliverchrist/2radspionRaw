@@ -24,19 +24,16 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'allOffers'){
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
     $listObj->initMyOffers();
-    #$listObj->printSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['uid'])){
     $listObj->initNotepad();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'newOffers'){
     $listObj->initNewOffers();
-    #$listObj->printTimeSearch();
 }
 
 if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
     $listObj->initNearOffers();
-    $listObj->printAreaSearch();
 }
 
 #var_dump($listObj->getList());
