@@ -130,13 +130,12 @@ p { margin-bottom:14px}
 
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
-#content    { width:720px; margin:12px 0 60px 180px; position:relative; float:left;
-    .subnavi { position:absolute; left:-160px; top:0; z-index:1;
-        a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
-            &:hover { text-decoration:underline; }
-        }
-        .spacer { height:20px; }
+#content    { width:720px; margin:12px 0 60px 0; position:relative; float:left; }
+.subnavi { float:left; width:160px; padding:10px; 
+    a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
+        &:hover { text-decoration:underline; }
     }
+    .spacer { height:20px; }
 }
 
 

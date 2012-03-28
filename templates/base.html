@@ -27,20 +27,20 @@
         </div>
     </div>
     <div class="main">
+        <div class="subnavi">
+            <a href="twig.php?filter=allOffers">Alle Angebote</a>
+            {% if isLoggedIn %}
+                <a href="twig.php?filter=nearOffers">Angebote in<br>meiner Nähe</a>
+            {% endif %}
+            <a href="twig.php?filter=newOffers">Neue Angebote</a>
+            <div class="spacer"></div>
+            {% if isLoggedIn %}
+                <a href="twig.php?filter=myOffers">Meine Angebote</a>
+                <a href="bike.php?action=new">Neues Angebot</a>
+                <a href="twig.php?filter=notepad">Merkzettel</a>
+            {% endif %}
+        </div>
         <div id="content">
-            <div class="subnavi">
-                <a href="twig.php?filter=allOffers">Alle Angebote</a>
-                {% if isLoggedIn %}
-                    <a href="twig.php?filter=nearOffers">Angebote in<br>meiner Nähe</a>
-                {% endif %}
-                <a href="twig.php?filter=newOffers">Neue Angebote</a>
-                <div class="spacer"></div>
-                {% if isLoggedIn %}
-                    <a href="twig.php?filter=myOffers">Meine Angebote</a>
-                    <a href="bike.php?action=new">Neues Angebot</a>
-                    <a href="twig.php?filter=notepad">Merkzettel</a>
-                {% endif %}
-            </div>
             {% block content %}{% endblock %}
         </div>
         <div class="teaser">
