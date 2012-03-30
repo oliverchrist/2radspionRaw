@@ -1,44 +1,50 @@
 {% extends "base.html" %}
 
 {% block content %}
-	Filter: {{ filter }}
-	{% if filter == 'newOffers' %}
+    {#Filter: {{ filter }}<br>
+    bikeListElements|length: {{ bikeListElements|length }#}
+    {% if filter == 'newOffers' %}
         <form class="search" method="post">
-	        <select name="time">
-	        	<option value="1"{% if post.time == 1 %} selected="selected"{% endif %}>1 Monat</option>
-	        	<option value="2"{% if post.time == 2 %} selected="selected"{% endif %}>2 Monate</option>
-	        	<option value="3"{% if post.time == 3 %} selected="selected"{% endif %}>3 Monate</option>
-	        	<option value="4"{% if post.time == 4 %} selected="selected"{% endif %}>4 Monate</option>
-	        	<option value="5"{% if post.time == 5 %} selected="selected"{% endif %}>5 Monate</option>
-	        	<option value="6"{% if post.time == 6 %} selected="selected"{% endif %}>6 Monate</option>
-	        	<option value="12"{% if post.time == 7 %} selected="selected"{% endif %}>12 Monate</option>
-	        	<option value="-1"{% if post.time == -1 %} selected="selected"{% endif %}>egal</option>
-	        </select>
-	        <div class="clear"></div>
-	        <div class="control">
-		        <input type="reset" class="reset" value="Reset">
-		        <input type="submit" class="submit" value="Filtern">
-	        </div>
+            <select name="time">
+                <option value="1"{% if post.time == 1 %} selected="selected"{% endif %}>1 Monat</option>
+                <option value="2"{% if post.time == 2 %} selected="selected"{% endif %}>2 Monate</option>
+                <option value="3"{% if post.time == 3 %} selected="selected"{% endif %}>3 Monate</option>
+                <option value="4"{% if post.time == 4 %} selected="selected"{% endif %}>4 Monate</option>
+                <option value="5"{% if post.time == 5 %} selected="selected"{% endif %}>5 Monate</option>
+                <option value="6"{% if post.time == 6 %} selected="selected"{% endif %}>6 Monate</option>
+                <option value="12"{% if post.time == 7 %} selected="selected"{% endif %}>12 Monate</option>
+                <option value="-1"{% if post.time == -1 %} selected="selected"{% endif %}>egal</option>
+            </select>
+            <div class="clear"></div>
+            <div class="control">
+                <input type="reset" class="reset" value="Reset">
+                <input type="submit" class="submit" value="Filtern">
+            </div>
         </form>
     {% endif %}
     {% if filter == 'nearOffers' %}
         <form class="search" method="post">
-	        <select name="area">
-	        	<option value="3"{% if post.area == 3 %} selected="selected"{% endif %}>3 km</option>
-	        	<option value="10"{% if post.area == 10 %} selected="selected"{% endif %}>10 km</option>
-	        	<option value="20"{% if post.area == 20 %} selected="selected"{% endif %}>20 km</option>
-	        	<option value="50"{% if post.area == 50 %} selected="selected"{% endif %}>50 km</option>
-	        	<option value="100"{% if post.area == 100 %} selected="selected"{% endif %}>100 km</option>
-	        	<option value="200"{% if post.area == 200 %} selected="selected"{% endif %}>200 km</option>
-	        	<option value="500"{% if post.area == 500 %} selected="selected"{% endif %}>500 km</option>
-	        	<option value="-1"{% if post.area == -1 %} selected="selected"{% endif %}>egal</option>
-	        </select>
-	        <div class="clear"></div>
-	        <div class="control">
-		        <input type="reset" class="reset" value="Reset">
-		        <input type="submit" class="submit" value="Filtern">
-	        </div>
-        </form>    
+            <select name="area">
+                <option value="3"{% if post.area == 3 %} selected="selected"{% endif %}>3 km</option>
+                <option value="10"{% if post.area == 10 %} selected="selected"{% endif %}>10 km</option>
+                <option value="20"{% if post.area == 20 %} selected="selected"{% endif %}>20 km</option>
+                <option value="50"{% if post.area == 50 %} selected="selected"{% endif %}>50 km</option>
+                <option value="100"{% if post.area == 100 %} selected="selected"{% endif %}>100 km</option>
+                <option value="200"{% if post.area == 200 %} selected="selected"{% endif %}>200 km</option>
+                <option value="500"{% if post.area == 500 %} selected="selected"{% endif %}>500 km</option>
+                <option value="-1"{% if post.area == -1 %} selected="selected"{% endif %}>egal</option>
+            </select>
+            <div class="clear"></div>
+            <div class="control">
+                <input type="reset" class="reset" value="Reset">
+                <input type="submit" class="submit" value="Filtern">
+            </div>
+        </form>
+    {% endif %}
+    {% if filter == 'allOffers' %}
+        {% autoescape false %}
+            {{ searchHtml }}
+        {% endautoescape %}
     {% endif %}
     {% for bikeListElement in bikeListElements %}
         <div class="bikeListElement {{ bikeListElement.aktiv }}">
@@ -75,7 +81,7 @@
             <div class="clear"></div>
         </div>
     {% endfor %}
-    {% if bikeListElement|length == 0 %}
+    {% if bikeListElements|length == 0 %}
         <p>Keine Einträge vorhanden!</p>
     {% endif %}
 

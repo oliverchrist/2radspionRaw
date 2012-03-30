@@ -11,6 +11,7 @@ require_once 'includes/init.php';
 
 $listObj = new Liste();
 $pageClass = '';
+$searchHtml = '';
 if(isset($_GET['filter'])) {
     $pageClass = $_GET['filter'];
 }
@@ -20,7 +21,7 @@ if($_POST){
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'allOffers'){
     $listObj->initAllOffers();
-    $listObj->printSearch();
+    $searchHtml = $listObj->getSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
     $listObj->initMyOffers();
@@ -45,5 +46,6 @@ echo $twig->render('list.html', array(
         'linkTarget' => '_top',
         'filter' => $listObj->getFilter(),
         'post' => $_POST,
+        'searchHtml' => $searchHtml,
         'bikeListElements' => $listObj->getList()
     ));

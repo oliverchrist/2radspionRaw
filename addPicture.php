@@ -1,16 +1,11 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
 use de\zweiradspion\NavigationHelper;
-?>
-<body id="std">
-    <?=HeaderHelper::getHeader('Bild hinzufügen')?>
-    <div id="content">
-<?=NavigationHelper::getSubnavigation()?>
-<?
+
+include 'includes/init.php';
+
 function getExtension($str) {
     $i = strrpos($str,".");
     if (!$i) { return ""; }
@@ -45,25 +40,14 @@ if(mysql_num_rows($result) == 1) {
             }
         }
     }
-    ?>
-    <form method="post" enctype="multipart/form-data">
-        <input type="hidden" name="uid" value="<?=$_GET['uid']?>" />
-        <div class="formField">
-            <p class="error">Bitte wählen Sie einen Bild aus</p>
-            <label>Bild</label><input type="file" name="image" value="<?=$image?>" />
-        </div>
-        <div class="formField">
-            <input class="submit" type="submit" />
-        </div>
-    </form>
-    <?php
-    if(isset($uid)){ ?>
-        <a class="txtLnk" href="detail.php?uid=<?=$uid?>">Zurück</a>
-        <?php
-    } ?>
-<?
-} ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+}
+echo $twig->render('addPicture.html', array(
+        'headline' => 'Bild hinzufügen',
+        'isLoggedIn' => Login::isLoggedIn(),
+        'pageClass' => $pageClass,
+        'linkTarget' => '_top',
+        'post' => $_POST,
+        'uid => $uid',
+        'image' => $image
+    ));
+?>

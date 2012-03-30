@@ -9,75 +9,43 @@ use de\zweiradspion\DatabaseHelper,
 
 require_once 'includes/init.php';
 
-echo $twig->render('head.html');
-
 $listObj = new Liste();
-
 $pageClass = '';
-if(isset($_GET['filter'])){
-    switch ($_GET['filter']) {
-        case 'myOffers':
-            $pageClass = 'myOffers';
-            break;
-        case 'allOffers':
-            $pageClass = 'allOffers';
-            break;
-        case 'notepad':
-            $pageClass = 'notepad';
-            break;
-        case 'newOffers':
-            $pageClass = 'newOffers';
-            break;
-        case 'nearOffers':
-            $pageClass = 'nearOffers';
-            break;
-        default:
-            $pageClass = '';
-            break;
-    }
+$searchHtml = '';
+if(isset($_GET['filter'])) {
+    $pageClass = $_GET['filter'];
 }
-echo "<body id=\"std\" class=\"$pageClass\">";
-echo $twig->render('header.html', array('headline' => $listObj->getHeadline(), 'isLoggedIn' => Login::isLoggedIn()));
-?>
-<div class="main">
-<div id="content">
-<?php
-echo $twig->render('subnavigation.html', array('isLoggedIn' => Login::isLoggedIn()));
-
-
 
 if($_POST){
     $listObj->generateSqlAllOffers();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'allOffers'){
     $listObj->initAllOffers();
-    $listObj->printSearch();
+    $searchHtml = $listObj->getSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
     $listObj->initMyOffers();
-    #$listObj->printSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['uid'])){
     $listObj->initNotepad();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'newOffers'){
     $listObj->initNewOffers();
-    $listObj->printTimeSearch();
 }
 
 if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
     $listObj->initNearOffers();
-    $listObj->printAreaSearch();
 }
 
-$listObj->printList();
+#var_dump($listObj->getList());
 
-?>
-</div>
-<div class="teaser">
-    <div class="info"></div>
-</div>
-</div>
-<?php include 'includes/footer.php'; ?>
-</body>
-</html>
+echo $twig->render('list.html', array(
+        'headline' => $listObj->getHeadline(),
+        'isLoggedIn' => Login::isLoggedIn(),
+        'pageClass' => $pageClass,
+        'linkTarget' => '_top',
+        'filter' => $listObj->getFilter(),
+        'post' => $_POST,
+        'searchHtml' => $searchHtml,
+        'bikeListElements' => $listObj->getList()
+    ));

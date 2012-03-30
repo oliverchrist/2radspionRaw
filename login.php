@@ -1,11 +1,11 @@
 <?php
-include 'includes/init.php';
-require_once 'includes/properties/properties.php';
+use de\zweiradspion\DatabaseHelper,
+    de\zweiradspion\DebugHelper,
+    de\zweiradspion\HeaderHelper,
+    de\zweiradspion\NavigationHelper,
+    de\zweiradspion\Login;
 
-use de\zweiradspion\DatabaseHelper;
-use de\zweiradspion\DebugHelper;
-use de\zweiradspion\HeaderHelper;
-use de\zweiradspion\NavigationHelper;
+include 'includes/init.php';
 
 $showForm    = TRUE;
 $showError   = FALSE;
@@ -35,36 +35,20 @@ if($_POST){
         $showError = TRUE;
     }
 }
-include 'includes/head.php';
+
+if(isset($_SESSION['uid'])){
+    $showForm = FALSE;
+}
+
+echo $twig->render('login.html', array(
+        'headline' => 'Login',
+        'isLoggedIn' => Login::isLoggedIn(),
+        'pageClass' => $pageClass,
+        'linkTarget' => '_top',
+        'showError' => $showError,
+        'emailErr' => $emailErr,
+        'email' => $email,
+        'passwordErr' => $passwordErr,
+        'password' => $password
+    ));
 ?>
-<body id="std">
-    <?=HeaderHelper::getHeader('Login')?>
-    <div id="content">
-        <?=NavigationHelper::getSubnavigation()?>
-        <? if(isset($_SESSION['uid'])){
-            $showForm = FALSE;
-        }
-        if($showForm){ ?>
-            <?php
-            if($showError){ ?>
-                <span class=\"error\">Sie konnten nicht eingeloggt werden.<br>Email oder Passwort fehlerhaft.<br>
-            <? } ?>
-            <form method="post">
-                <div class="formField<?=$emailErr?>">
-                    <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
-                    <label>E-Mail-Adresse</label><input type="text" name="email" value="<?=$email?>" />
-                </div>
-                <div class="formField<?=$passwordErr?>">
-                    <p class="error">Bitte geben Sie das richtige Passwort ein</p>
-                    <label>Passwort</label><input type="password" name="password" value="<?=$password?>" />
-                </div>
-                <div class="formField">
-                    <input class="submit" type="submit" />
-                </div>
-            </form>
-            <p><a href="passwordRequest.php" class="txtLnk">Passwort vergessen?</a></p>
-        <? } ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
