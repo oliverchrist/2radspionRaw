@@ -1,86 +1,38 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
     de\zweiradspion\Fahrrad,
-    de\zweiradspion\ScaleImage;
-?>
-<body id="std">
-    <?=HeaderHelper::getHeader('Detailansicht')?>
-    <div id="content">
-        <?=NavigationHelper::getSubnavigation()?>
-<?php
-if(isset($_GET['uid'])){
-    $fahrrad = new Fahrrad($_GET['uid']);
-    ?>
-    <div class="fahrradSingle" >
-        Marke: <?=$fahrrad->getMarke()->getValue()?><br>
-        modell: <?=$fahrrad->getModell()?><br>
-        preis: <?=$fahrrad->getPreis()?><br>
-        Radtyp: <?=$fahrrad->getRadtyp()->getText()?><br>
-        Geschlecht: <?=$fahrrad->getGeschlecht()->getText()?><br>
-        Zustand: <?=$fahrrad->getZustand()->getText()?><br>
-        Laufleistung: <?=$fahrrad->getLaufleistung()?><br>
-        Radgroesse: <?=$fahrrad->getRadgroesse()?><br>
-        Rahmenhoehe: <?=$fahrrad->getRahmenhoehe()?><br>
-        Farbe: <?=$fahrrad->getFarbe()->getText()?><br>
-        Bremssystem: <?=$fahrrad->getBremssystem()->getText()?><br>
-        Schaltungstyp: <?=$fahrrad->getSchaltungstyp()->getText()?><br>
-        Rahmenmaterial: <?=$fahrrad->getRahmenmaterial()->getText()?><br>
-        Beleuchtungsart: <?=$fahrrad->getBeleuchtungsart()->getText()?><br>
-        Einsatzbereich: <?=$fahrrad->getEinsatzbereich()->getText()?><br>
-        aktiv: <?=($fahrrad->getAktiv()) ? 'aktiv' : 'inaktiv' ?><br>
-        erstellt: <?=$fahrrad->getErstellt()?><br>
-        geaendert: <?=$fahrrad->getGeaendert()?><br>
-        Beschreibung: <?=$fahrrad->getBeschreibung()?><br>
-    <?
-    $imageWidth = 510;
-    foreach($fahrrad->getBilder() as $bild) {
-        $scaleObj = new ScaleImage($bild->getName(), $bild->getExtension(), 'images');
-        #var_dump($scaleObj->getOriginalImageSize());
-        $imagePath         = $scaleObj->getImagePath($imageWidth, 'auto');
-        $originalImageWidth = $scaleObj->getOriginalImageWidth();
-        if($originalImageWidth > 1000) {
-            $imagePathLightbox = $scaleObj->getImagePath(1000, 'auto');
-        }else{
-            $imagePathLightbox = $scaleObj->getOriginalImagePath();
-        }
-        echo '<a class="lightbox" title="' . $fahrrad->getModell() . '" href="' . $imagePathLightbox . '">
-            <img alt="' . $fahrrad->getModell() . '" src="' . $imagePath . '" width="' . $imageWidth . '" />
-        </a>';
-        $imageWidth = 160;
+    de\zweiradspion\ScaleImage,
+    de\zweiradspion\Login;
+
+include 'includes/init.php';
+
+
+$fahrrad = new Fahrrad($_GET['uid']);
+
+$imageWidth = 510;
+foreach($fahrrad->getBilder() as $bild) {
+    $scaleObj = new ScaleImage($bild->getName(), $bild->getExtension(), 'images');
+    #var_dump($scaleObj->getOriginalImageSize());
+    $imagePath         = $scaleObj->getImagePath($imageWidth, 'auto');
+    $originalImageWidth = $scaleObj->getOriginalImageWidth();
+    if($originalImageWidth > 1000) {
+        $imagePathLightbox = $scaleObj->getImagePath(1000, 'auto');
+    }else{
+        $imagePathLightbox = $scaleObj->getOriginalImagePath();
     }
-    ?>
-    <br>
-    <div class="links">
-    <? # angemeldet und eigenes Zweirad
-    if(isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid']){ ?>
-        <a class="txtLnk" href="bike.php?uid=<?=$fahrrad->getUid()?>">Bearbeiten</a><br />
-        <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Angebot löschen</a><br>
-        <?
-    }
-    # angemeldet und fremdes Zweirad
-    $nuid = $fahrrad->getNuid();
-    if(isset($_SESSION['uid']) && $fahrrad->getPid() != $_SESSION['uid'] && empty($nuid)){ ?>
-        <a class="txtLnk" href="notepad.php?uid=<?=$fahrrad->getUid()?>">Auf Merkzettel speichern</a><br />
-        <?
-    }
-    if(!empty($nuid)) {
-        echo "<a class=\"txtLnk ajaxNotepadDelete\" href=\"notepadAjax.php?uid={$fahrrad->getNuid()}&process=delete\">Vom Merkzettel löschen</a><br>";
-    }
-    # alle Bikes
-    ?>
-    <a class="txtLnk" href="contact.php?uid=<?=$fahrrad->getUid()?>">Kontakt</a><br />
-    <a class="txtLnk" href="tellAFriend.php?uid=<?=$fahrrad->getUid()?>">Weiterleiten</a><br />
-    <a class="txtLnk" href="location.php?uid=<?=$fahrrad->getUid()?>&pid=<?=$fahrrad->getPid()?>">Karte</a><br />
-    <a class="txtLnk print" href="#">Drucken</a><br />
-    <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
-    </div>
-    </div>
-    <?
-} ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+    $bild->setImagePath($imagePath);
+    $bild->setOriginalImagePath($imagePathLightbox);
+    $bild->setImageWidth($imageWidth);
+    $imageWidth = 160;
+}
+
+echo $twig->render('detail.html', array(
+    'headline' => 'Detailansicht',
+    'isLoggedIn' => Login::isLoggedIn(),
+    'isOwnBike' => isset($_SESSION['uid']) && $fahrrad.getPid == $_SESSION['uid'],
+    'isOnNotepad' => !empty($fahrrad->getNuid),
+    'pageClass' => 'detail',
+    'linkTarget' => '_top',
+    'fahrrad' => $fahrrad
+));

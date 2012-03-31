@@ -77,7 +77,7 @@ p { margin-bottom:14px}
 }
 
 
-#std .main { width:1260px; }
+#std .main {  }
 #std .borderBottom  { position: fixed; bottom: 0; left: 0; width: 100%; }
 #std .borderBottom .border  { border-bottom: 1px solid #fff; border-left: 1px solid #fff; margin: 0 0 24px 156px; height: 12px;
   -moz-border-radius-bottomleft: 12px;
@@ -130,8 +130,8 @@ p { margin-bottom:14px}
 
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
-#content    { width:720px; margin:12px 0 60px 0; position:relative; float:left; }
-.subnavi { float:left; width:160px; padding:10px; 
+#content    { margin:0 0 60px 160px; padding:12px; position:relative; border-left:1px solid white; border-bottom:1px solid white; border-radius:0 0 0 12px; }
+.subnavi { float:left; width:160px; padding:10px;
     a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
         &:hover { text-decoration:underline; }
     }
@@ -153,7 +153,6 @@ p { margin-bottom:14px}
         img { border-radius:12px; width:200px; }
     }
     .cnt { float: left; margin-right: 10px; }
-    .links { clear:both; }
 }
 body.notepad .bikeListElement.notepadDeleted {
     height:0 !important; width:0; padding:0; margin-bottom:0; border:none; overflow:hidden;

@@ -43,7 +43,7 @@ if(isset($_SESSION['uid'])){
 echo $twig->render('login.html', array(
         'headline' => 'Login',
         'isLoggedIn' => Login::isLoggedIn(),
-        'pageClass' => $pageClass,
+        'pageClass' => 'login',
         'linkTarget' => '_top',
         'showError' => $showError,
         'emailErr' => $emailErr,
