@@ -1,17 +1,13 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
     de\zweiradspion\Fahrrad,
     de\zweiradspion\Kontakt,
-    de\zweiradspion\Mail;
-?>
-<body id="std">
-<?=HeaderHelper::getHeader('Kontakt')?>
-<div id="content">
-<?=NavigationHelper::getSubnavigation()?>
-<?php
+    de\zweiradspion\Mail,
+    de\zweiradspion\Login;
+
+include 'includes/init.php';
+
 if(isset($_GET['uid'])){
     $fahrrad      = new Fahrrad($_GET['uid']);
     $kontakt      = new Kontakt($fahrrad->getPid());
@@ -48,7 +44,7 @@ if(isset($_GET['uid'])){
             $cc = ' checked="checked"';
         }
         if($formValid){
-            $message = "http://" . de\zweiradspion\DOMAIN . "/detail.php?uid=" . $_GET['uid'] . "\n
+            $message = "http://" . DOMAIN . "/detail.php?uid=" . $_GET['uid'] . "\n
 Name: {$_POST['name']}\n
 Email: {$_POST['email']}\n
 Nachricht: {$_POST['nachricht']}\n
@@ -69,46 +65,23 @@ Das Team von zweiradspion.de";
             $showform = FALSE;
         }
     }
-    if($showform){ ?>
-        <div class="contact">
-            <div class="address">
-                Anbieter:<br>
-                <?=$kontakt->getPostcode()?> <?=$kontakt->getCity()?>
-            </div>
-            <form method="post" action="contact.php?uid=<?=$_GET['uid']?>">
-                <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
-                <input type="hidden" name="pid" value="<?=$kontakt->getUid()?>" />
-                <div class="formField textarea<?=$nachrichtErr?>">
-                    <p class="error">Bitte geben Sie Ihre Nachricht ein</p>
-                    <label>Ihre Nachricht an den Anbieter:</label>
-                    <textarea name="nachricht"><?=$nachricht?></textarea>
-                    <div class="clear"></div>
-                </div>
-                <div class="formField<?=$nameErr?>">
-                    <p class="error">Bitte geben Sie Ihren Namen ein</p>
-                    <label>Ihr Name</label>
-                    <input type="text" name="name" value="<?=$name?>" />
-                </div>
-                <div class="formField<?=$emailErr?>">
-                    <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
-                    <label>Ihre E-Mail-Adresse</label>
-                    <input type="text" name="email" value="<?=$email?>" />
-                </div>
-                <div class="formField">
-                    <label>Bitte schicken Sie eine Kopie dieser Nachricht an meine E-Mail-Adresse</label>
-                    <input type="checkbox" name="cc"<?=$cc?> />
-                </div>
-                <div class="formField">
-                    <input class="submit" type="submit" value="Senden" />
-                </div>
-            </form>
-        </div>
-    <?
-    } ?>
-
-<?
-} ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+    if($showform){
+        echo $twig->render('contact.html', array(
+            'headline' => 'Detailansicht',
+            'isLoggedIn' => Login::isLoggedIn(),
+            'pageClass' => 'contact',
+            'linkTarget' => '_top',
+            'fahrrad' => $fahrrad,
+            'kontakt' => $kontakt,
+            'uid' => $_GET['uid'],
+            'nachrichtErr' => $nachrichtErr,
+            'nachricht' => $nachricht,
+            'nameErr' => $nameErr,
+            'name' => $name,
+            'emailErr' => $emailErr,
+            'email' => $email,
+            'cc' => $cc
+        ));
+    }
+}
+?>

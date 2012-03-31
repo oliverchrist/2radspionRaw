@@ -46,6 +46,17 @@
             {{ searchHtml }}
         {% endautoescape %}
     {% endif %}
+    {% if hasMorePages %}
+    <div class="pageBrowse">
+        {% if hasPrev %}
+            <a href="/list.php?filter={{ filter }}&page={{ page - 1 }}">Zurück</a>
+        {% endif %}
+        Seite {{ page + 1 }} von {{ pages }}
+        {% if hasNext %}
+            <a href="/list.php?filter={{ filter }}&page={{ page + 1 }}">Weiter</a>
+        {% endif %}
+    </div>
+    {% endif %}
     {% for bikeListElement in bikeListElements %}
         <div class="bikeListElement {{ bikeListElement.aktiv }}">
             {% if bikeListElement.isOnNotepad %}
@@ -81,6 +92,17 @@
             {% endif %}
         </div>
     {% endfor %}
+    {% if hasMorePages %}
+    <div class="pageBrowse">
+        {% if hasPrev %}
+            <a href="/list.php?filter={{ filter }}&page={{ page - 1 }}">Zurück</a>
+        {% endif %}
+        Seite {{ page }} von {{ pages }}
+        {% if hasNext %}
+            <a href="/list.php?filter={{ filter }}&page={{ page + 1 }}">Weiter</a>
+        {% endif %}
+    </div>
+    {% endif %}
     {% if bikeListElements|length == 0 %}
         <p>Keine Einträge vorhanden!</p>
     {% endif %}

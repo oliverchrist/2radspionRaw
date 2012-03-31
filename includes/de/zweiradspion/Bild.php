@@ -39,7 +39,7 @@ class Bild {
     }
 
     public function getImageWidth() {
-        return $this->imageWidthh;
+        return $this->imageWidth;
     }
 
     public function setName($name) {

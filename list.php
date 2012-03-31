@@ -15,6 +15,10 @@ $searchHtml = '';
 if(isset($_GET['filter'])) {
     $pageClass = $_GET['filter'];
 }
+$page = 0;
+if(isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
 
 if($_POST){
     $listObj->generateSqlAllOffers();
@@ -38,6 +42,8 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
 }
 
 #var_dump($listObj->getList());
+$list = $listObj->getList();
+
 
 echo $twig->render('list.html', array(
         'headline' => $listObj->getHeadline(),
@@ -47,5 +53,10 @@ echo $twig->render('list.html', array(
         'filter' => $listObj->getFilter(),
         'post' => $_POST,
         'searchHtml' => $searchHtml,
-        'bikeListElements' => $listObj->getList()
+        'bikeListElements' => array_slice($list, $page * ENTRIES_PER_PAGE, ENTRIES_PER_PAGE),
+        'page' => $page,
+        'pages' => ceil(count($list) / ENTRIES_PER_PAGE),
+        'hasMorePages' => $page > 0 || (count($list) > ENTRIES_PER_PAGE),
+        'hasNext' => (count($list) > ($page * ENTRIES_PER_PAGE)),
+        'hasPrev' => $page > 0
     ));

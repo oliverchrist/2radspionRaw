@@ -22,27 +22,27 @@
         geaendert: {{ fahrrad.getGeaendert }}<br>
         Beschreibung: {{ fahrrad.getBeschreibung }}<br>
         {% for bild in fahrrad.getBilder %}
-            <a class="lightbox" title="{{ fahrrad.getModell }}" href="{{ bild.getImagePathLightbox }}">
-                <img alt="{{ fahrrad.getModell }}" src="' . bild.getImagePath . '" width="' . bild.getImageWidth . '" />
+            <a class="lightbox" title="{{ fahrrad.getModell }}" href="{{ bild.getOriginalImagePath }}">
+                <img alt="{{ fahrrad.getModell }}" src="{{ bild.getImagePath }}" width="{{ bild.getImageWidth }}" />
             </a>
         {% endfor %}
         <br>
         <div class="links">
-        {% if isOwnBike %}
-            <a class="txtLnk" href="bike.php?uid={{ fahrrad.getUid }}">Bearbeiten</a><br />
-            <a class="txtLnk delete" href="bike.php?uid={{ fahrrad.getUid }}&process=delete">Angebot löschen</a><br>
-        {% endif %}
-        {% if isLoggedIn and not isOwnBike and isOnNotepad %}
-            <a class="txtLnk" href="notepad.php?uid={{ fahrrad.getUid }}">Auf Merkzettel speichern</a><br />
-        {% endif %}
-        {% if isOnNotepad %}
-            <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{ fahrrad.getNuid }}&process=delete">Vom Merkzettel löschen</a><br>
-        {% endif %}
-        <a class="txtLnk" href="contact.php?uid={{ fahrrad.getUid }}">Kontakt</a><br />
-        <a class="txtLnk" href="tellAFriend.php?uid={{ fahrrad.getUid }}">Weiterleiten</a><br />
-        <a class="txtLnk" href="location.php?uid={{ fahrrad.getUid }}&pid={{ fahrrad.getPid }}">Karte</a><br />
-        <a class="txtLnk print" href="#">Drucken</a><br />
-        <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
+            {% if isOwnBike %}
+                <a class="txtLnk" href="bike.php?uid={{ fahrrad.getUid }}">Bearbeiten</a><br />
+                <a class="txtLnk delete" href="bike.php?uid={{ fahrrad.getUid }}&process=delete">Angebot löschen</a><br>
+            {% endif %}
+            {% if isLoggedIn and not isOwnBike and isOnNotepad %}
+                <a class="txtLnk" href="notepad.php?uid={{ fahrrad.getUid }}">Auf Merkzettel speichern</a><br />
+            {% endif %}
+            {% if isOnNotepad %}
+                <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{ fahrrad.getNuid }}&process=delete">Vom Merkzettel löschen</a><br>
+            {% endif %}
+            <a class="txtLnk" href="contact.php?uid={{ fahrrad.getUid }}">Kontakt</a><br />
+            <a class="txtLnk" href="tellAFriend.php?uid={{ fahrrad.getUid }}">Weiterleiten</a><br />
+            <a class="txtLnk" href="location.php?uid={{ fahrrad.getUid }}&pid={{ fahrrad.getPid }}">Karte</a><br />
+            <a class="txtLnk print" href="#">Drucken</a><br />
+            <a class="txtLnk" href="list.php">Zurück zur Liste</a><br />
         </div>
     </div>
 {% endblock %}

@@ -399,7 +399,6 @@ class Liste {
         }
         $sql .= " from bike LEFT JOIN images ON bike.uid = images.pid LEFT JOIN user ON user.uid = bike.pid {$sqlAdditionalJoin}"
             . " {$sqlAdditionalCondition} group by bike.uid order by {$sqlOrder}bike.erstellt";
-
         #echo $sql;
         $result = mysql_query($sql);
         if($result){
