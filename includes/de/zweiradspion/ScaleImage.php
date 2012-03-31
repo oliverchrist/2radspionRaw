@@ -39,8 +39,11 @@ class ScaleImage {
     }
 
     public function getOriginalImageWidth() {
-        $size = getimagesize ($this->path);
-        return $size[0];
+    	if(file_exists($this->path)) {
+	        $size = getimagesize ($this->path);
+	        return $size[0];
+		}
+		return FALSE;
     }
 
     public function getImagePath($width, $height) {

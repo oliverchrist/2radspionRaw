@@ -30,7 +30,7 @@ foreach($fahrrad->getBilder() as $bild) {
 echo $twig->render('detail.html', array(
     'headline' => 'Detailansicht',
     'isLoggedIn' => Login::isLoggedIn(),
-    'isOwnBike' => isset($_SESSION['uid']) && $fahrrad.getPid == $_SESSION['uid'],
+    'isOwnBike' => isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid'],
     'isOnNotepad' => !empty($fahrrad->getNuid),
     'pageClass' => 'detail',
     'linkTarget' => '_top',

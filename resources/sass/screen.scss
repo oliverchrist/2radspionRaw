@@ -130,7 +130,7 @@ p { margin-bottom:14px}
 
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
-#content    { margin:0 0 60px 160px; padding:12px; position:relative; border-left:1px solid white; border-bottom:1px solid white; border-radius:0 0 0 12px; }
+#content    { float:left; margin:0 0 60px 0; padding:12px; border-left:1px solid white; border-bottom:1px solid white; border-radius:0 0 0 12px; }
 .subnavi { float:left; width:160px; padding:10px;
     a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
         &:hover { text-decoration:underline; }
