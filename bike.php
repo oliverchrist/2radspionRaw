@@ -1,21 +1,12 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
     de\zweiradspion\Fahrrad,
-    de\zweiradspion\DatabaseHelper;
-?>
-<body id="std">
-<?php
-$title = (isset($_GET['uid']))?'Angebot ändern':'Angebot hinzufügen';
-echo HeaderHelper::getHeader($title);
-?>
-<div id="content">
-<?php
-echo NavigationHelper::getSubnavigation();
-?>
-<?php
+    de\zweiradspion\DatabaseHelper,
+    de\zweiradspion\Login;
+
+include 'includes/init.php';
+
 # ist Benutzer eingeloggt?
 if(isset($_SESSION['uid'])) {
     $markeErr        = '';
@@ -107,98 +98,14 @@ if(isset($_SESSION['uid'])) {
     }elseif(isset($_GET['uid'])){
         $fahrrad = new Fahrrad($_GET['uid']);
     }
+}
 
-    if($showForm){ ?>
-        <form method="post" action="bike.php">
-            <input type="hidden" name="uid" value="<?=$fahrrad->getUid()?>" />
-            <div class="formField<?=$markeErr?>">
-                <p class="error">Bitte geben Sie einen Herrsteller ein</p>
-                <label>Marke</label>
-                <?=$fahrrad->getMarke()->getDropdown()?>
-            </div>
-            <div class="formField<?=$modellErr?>">
-                <p class="error">Bitte geben Sie ein Modell ein</p>
-                <label>Modell</label>
-                <input type="text" name="modell" value="<?=$fahrrad->getModell()?>" />
-            </div>
-            <div class="formField<?=$preisErr?>">
-                <p class="error">Bitte geben Sie einen Preis ein</p>
-                <label>Preis</label>
-                <input type="text" name="preis" value="<?=$fahrrad->getPreis()?>" /><span class="unit">EUR</span>
-            </div>
-            <div class="formField">
-                <label>Radtyp</label>
-                <?=$fahrrad->getRadtyp()->getDropdown()?>
-            </div>
-            <div class="formField">
-                <label>Geschlecht</label>
-                <?=$fahrrad->getGeschlecht()->getDropdown()?>
-            </div>
-            <div class="formField">
-                <label>Zustand</label>
-                <?=$fahrrad->getZustand()->getDropdown()?>
-            </div>
-            <div class="formField<?=$laufleistungErr?>">
-                <p class="error">Bitte geben Sie eine Laufleistung ein</p>
-                <label>Laufleistung</label>
-                <input type="text" name="laufleistung" value="<?=$fahrrad->getLaufleistung()?>" /><span class="unit">km</span>
-            </div>
-            <div class="formField<?=$radgroesseErr?>">
-                <p class="error">Bitte geben Sie eine Radgroesse ein</p>
-                <label>Radgroesse</label>
-                <input type="text" name="radgroesse" value="<?=$fahrrad->getRadgroesse()?>" /><span class="unit">Zoll</span>
-            </div>
-            <div class="formField<?=$rahmenhoeheErr?>">
-                <p class="error">Bitte geben Sie eine Rahmenhoehe ein</p>
-                <label>Rahmenhoehe</label>
-                <input type="text" name="rahmenhoehe" value="<?=$fahrrad->getRahmenhoehe()?>" /><span class="unit">cm</span>
-            </div>
-            <div class="formField">
-                <label>Farbe</label>
-                <?=$fahrrad->getFarbe()->getDropdown()?>
-            </div>
-            <div class="formField">
-                <label>Bremssystem</label>
-                <?=$fahrrad->getBremssystem()->getDropdown()?>
-            </div>
-            <div class="formField">
-                <label>Schaltungstyp</label>
-                <?=$fahrrad->getSchaltungstyp()->getDropdown()?>
-            </div>
-            <div class="formField">
-                <label>Rahmenmaterial</label>
-                <?=$fahrrad->getRahmenmaterial()->getDropdown()?>
-            </div>
-            <div class="formField">
-                <label>Beleuchtungsart</label>
-                <?=$fahrrad->getBeleuchtungsart()->getDropdown()?>
-            </div>
-            <div class="formField">
-                <label>Einsatzbereich</label>
-                <?=$fahrrad->getEinsatzbereich()->getDropdown()?>
-            </div>
-            <div class="formField textarea">
-                <label>Beschreibung</label>
-                <textarea name="beschreibung"><?=$fahrrad->getBeschreibung()?></textarea>
-                <div class="clear"></div>
-            </div>
-            <div class="formField">
-                <label>Aktiv</label>
-                <input type="checkbox" name="aktiv" value="<?=$fahrrad->getAktiv()?>"<?=($fahrrad->getAktiv()) ? 'checked="checked"' : ''?> />
-            </div>
-            <div class="formField">
-                <input class="submit" type="submit" value="Senden" />
-            </div>
-        </form>
-        <?php
-        if(isset($_GET['uid'])){ ?>
-            <a class="txtLnk" href="addPicture.php?uid=<?=$fahrrad->getUid()?>">Bild hinzufügen</a>  
-            <a class="txtLnk delete" href="bike.php?uid=<?=$fahrrad->getUid()?>&process=delete">Angebot löschen</a>  
-            <a class="txtLnk" href="detail.php?uid=<?=$fahrrad->getUid()?>">Zurück</a>  
-        <?php } ?>            
-    <? }
-} ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+echo $twig->render('bike.html', array(
+    'headline' => (isset($_GET['uid']))?'Angebot ändern':'Angebot hinzufügen',
+    'isLoggedIn' => Login::isLoggedIn(),
+    'pageClass' => 'contact',
+    'linkTarget' => '_top',
+    'fahrrad' => $fahrrad,
+    'uid' => (isset($_GET['uid']))? $_GET['uid'] : null
+));
+
