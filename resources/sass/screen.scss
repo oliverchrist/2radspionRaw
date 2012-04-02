@@ -130,13 +130,14 @@ p { margin-bottom:14px}
 
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
-#content    { float:left; margin:0 0 60px 0; padding:12px; border-left:1px solid white; border-bottom:1px solid white; border-radius:0 0 0 12px; }
+#content    { float:left; width:720px; padding:12px; border-left:1px solid white; border-bottom:1px solid white; border-radius:0 0 0 12px; }
 .subnavi { float:left; width:160px; padding:10px;
     a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
         &:hover { text-decoration:underline; }
     }
     .spacer { height:20px; }
 }
+.footer { clear:both; border-top:1px solid white; padding:7px 0 7px 0; margin-left:200px; position:relative; top:-1px; }
 
 
 .bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 12px; border-radius: 12px; background: #eeb200; position: relative;
