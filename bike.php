@@ -18,6 +18,7 @@ if(isset($_SESSION['uid'])) {
     $showForm        = TRUE;
     $keineFehler     = TRUE;
     $fahrrad         = new Fahrrad();
+	$message		 = '';
 
     # speichern
     if($_POST){
@@ -53,7 +54,7 @@ if(isset($_SESSION['uid'])) {
             if(empty($_POST['uid'])){
                 try{
                     $fahrrad->insertInDatabase();
-                    echo 'Das Zweirad wurde erfolgreich gespeichert<br>';
+                    $message .= 'Das Zweirad wurde erfolgreich gespeichert';
                 }catch(Exception $e){
                     print $e->getMessage();
                 }
@@ -61,7 +62,7 @@ if(isset($_SESSION['uid'])) {
                 # update
                 try{
                     $fahrrad->updateInDatabase();
-                    echo 'Die Änderungen wurden erfolgreich gespeichert<br>';
+                    $message .= 'Die Änderungen wurden erfolgreich gespeichert';
                 }catch(Exception $e){
                     print $e->getMessage();
                 }
@@ -75,23 +76,23 @@ if(isset($_SESSION['uid'])) {
         $sql      = 'DELETE FROM bike WHERE uid = ' . $_GET['uid'] . ' and pid = ' . $_SESSION['uid'];
         $result   = mysql_query($sql);
         if($result){
-            echo '<p>Das Angebot wurde erfolgreich gelöscht.</p>';
+            $message .= '<p>Das Angebot wurde erfolgreich gelöscht.</p>';
             # Bilder finden und sicher sein, daß dem User das Bike gehörte (session), deshalb im if Zweig
             $sql    = 'SELECT * FROM images WHERE pid = ' . $_GET['uid'];
             $result = mysql_query($sql);
             while($row = mysql_fetch_assoc($result)){
                 $filename = 'images/' . $row['name'] . '.' . $row['extension'];
                 if(!unlink($filename)){
-                    echo '<p>' . $filename . ' konnte nicht gelöscht werden.</p>';
+                    $message .= '<p>' . $filename . ' konnte nicht gelöscht werden.</p>';
                 }
             }
             $sql    = 'DELETE FROM images WHERE pid = ' . $_GET['uid'];
             $result = mysql_query($sql);
             if(!$result){
-                echo "<p>Bilder mit der pid {$_GET['uid']} konnten nicht gelöscht werden</p>";
+                $message .= "<p>Bilder mit der pid {$_GET['uid']} konnten nicht gelöscht werden</p>";
             }
         }else{
-            echo '<p class="error">Angebot mit der uid ' . $_GET['uid'] . ' konnte nicht gelöscht werden.</p>';
+            $message .= '<p class="error">Angebot mit der uid ' . $_GET['uid'] . ' konnte nicht gelöscht werden.</p>';
         }
 
         $showForm = FALSE;
@@ -103,9 +104,12 @@ if(isset($_SESSION['uid'])) {
 echo $twig->render('bike.html', array(
     'headline' => (isset($_GET['uid']))?'Angebot ändern':'Angebot hinzufügen',
     'isLoggedIn' => Login::isLoggedIn(),
+    'isOwnBike' => isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid'],
     'pageClass' => 'contact',
     'linkTarget' => '_top',
     'fahrrad' => $fahrrad,
-    'uid' => (isset($_GET['uid']))? $_GET['uid'] : null
+    'uid' => (isset($_GET['uid']))? $_GET['uid'] : null,
+    'showForm' => $showForm,
+    'message' => $message
 ));
 

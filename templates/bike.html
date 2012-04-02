@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div>
-    {% is isLoggedIn %}
+    {% if isLoggedIn %}
         {% if showForm %}
+        	{% autoescape false %}
             <form method="post" action="bike.php">
                 <input type="hidden" name="uid" value="{{ fahrrad.getUid }}" />
                 <div class="formField{{ markeErr }}">
@@ -90,7 +90,9 @@
                 <a class="txtLnk delete" href="bike.php?uid={{ fahrrad.getUid }}&process=delete">Angebot löschen</a>
             {% endif %}
             <a class="txtLnk" href="detail.php?uid={{ fahrrad.getUid }}">Zurück</a>
+            {% endautoescape %}
+        {% else %}
+        	{{ message }}
         {% endif %}
     {% endif %}
-    </div>
 {% endblock %}
