@@ -74,6 +74,7 @@ if(Login::isLoggedIn()){
         'pageClass' => 'user',
         'linkTarget' => '_top',
         'showForm' => $showForm,
+        'uid' => $_SESSION['uid'],
         'anbieterErr' => $anbieterErr,
         'user' => $user,
         'anredeErr' => $anredeErr,

@@ -47,9 +47,9 @@
                     <input class="submit" type="button" value="Senden" />
                 </div>
             </form>
-            <a class="txtLnk" href="location.php?pid={{ uid }}">Ort auf Karte zeigen</a>
         {% else %}
             {{ message }}
         {% endif %}
+        <a class="txtLnk" href="location.php?pid={{ uid }}">Ort auf Karte zeigen</a>
     {% endif %}
 {% endblock %}
