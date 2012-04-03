@@ -1,27 +1,24 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\DebugHelper,
     de\zweiradspion\HeaderHelper,
-    de\zweiradspion\NavigationHelper;
-?>
-<body id="std">
-    <?=HeaderHelper::getHeader('Passwort ändern')?>
-    <div id="content">
-<?=NavigationHelper::getSubnavigation()?>
-<?php
+    de\zweiradspion\NavigationHelper,
+    de\zweiradspion\Login;
+
+include 'includes/init.php';
+
 $password     = '';
 $passwordErr  = '';
 $password2    = '';
 $password2Err = '';
 $showForm     = FALSE;
+$message      = '';
 if(isset($_GET['x'])){
     $hash = $_GET['x'];
     if(!$hash) {
         die ('Es wurde kein Hash übergeben<br>');
     }
-    echo '<p>Hash: ' . $hash . '</p>';
+    $message .= '<p>Hash: ' . $hash . '</p>';
 
     $dbObject = new DatabaseHelper();
     $result   = mysql_query("SELECT * FROM user WHERE password = '" . mysql_real_escape_string($hash) . "'");
@@ -54,31 +51,22 @@ if($_POST){
         if(!$result){
             die('<span class="error">Could not write to table user</span><br>');
         }else{
-            echo 'Passwort wurde in Tabelle user geschrieben.<br>';
+            $message .= 'Passwort wurde in Tabelle user geschrieben.<br>';
             $showForm = FALSE;
         }
     }else{
         $showForm = FALSE;
     }
 }
-?>
-<? if($showForm){ ?>
-    <form method="post">
-        <input type="hidden" name="uid" value="<?=$uid?>" />
-        <div class="formField<?=$passwordErr?>">
-            <p class="error">Bitte geben Sie ein Passwort ein</p>
-            <label>Passwort</label><input type="text" name="password" value="<?=$password?>" />
-        </div>
-        <div class="formField<?=$password2Err?>">
-            <p class="error">Die beiden Passwörter stimmen nicht überein</p>
-            <label>Passwort wiederholen</label><input type="text" name="password2" value="<?=$password2?>" />
-        </div>
-        <div class="formField">
-            <input class="submit" type="submit" />
-        </div>
-    </form>
-<? } ?>	    
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+
+echo $twig->render('changePassword.html', array(
+        'headline' => 'Passwort ändern',
+        'isLoggedIn' => Login::isLoggedIn(),
+        'showForm' => $showForm,
+        'pageClass' => 'addPicture',
+        'linkTarget' => '_top',
+        'post' => $_POST,
+        'uid' => $uid,
+        'image' => $image,
+        'message' => $message
+    ));

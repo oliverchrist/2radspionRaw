@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block js %}
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+{% endblock %}
+
+{% block content %}
+    {% if isLoggedIn %}
+        {% if showForm %}
+            <form method="post" id="userdata">
+                <input type="hidden" name="lat" />
+                <input type="hidden" name="lng" />
+                <div class="formField{{ anbieterErr }}">
+                    <p class="error">Bitte geben Sie ein ob Sie Privatanbieter oder Händler sind</p>
+                    <label>Privatanbieter/Händler</label>
+                    <select name="anbieter">
+                        <option value="-1">Bitte wählen</option>
+                        <option value="privat"{% if user.getAnbieter == 'privat' %} selected="selected"{% endif %}>Privatanbieter</option>
+                        <option value="haendler"{% if user.getHaendler == 'privat' %} selected="selected"{% endif %}>Händler</option>
+                    </select>
+                </div>
+                <div class="formField radio{{ anredeErr }}">
+                    <p class="error">Bitte geben Sie Ihre Anrede an</p>
+                    <label class="desc">Anrede</label>
+                    <input type="radio" name="anrede" value="frau" {% if user.getAnrede == 'frau' %} checked="checked"{% endif %} />
+                    <label>Frau</label>
+                    <input type="radio" name="anrede" value="herr" {% if user.getAnrede == 'herr' %} checked="checked"{% endif %} />
+                    <label>Herr</label>
+                </div>
+                <div class="formField{{ nameErr }}">
+                    <p class="error">Bitte geben Sie Ihren Namen ein</p>
+                    <label>Name</label><input type="text" name="name" value="{{ user.getName }}" />
+                </div>
+                <div class="formField{{ vornameErr }}">
+                    <p class="error">Bitte geben Sie Ihren Vornamen ein</p>
+                    <label>Vorname</label><input type="text" name="vorname" value="{{ user.getVorname }}" />
+                </div>
+                <div class="formField{{ firmaErr }}">
+                    <p class="error">Bitte geben Sie Ihren Firmennamen ein</p>
+                    <label>Firma</label><input type="text" name="firma" value="{{ user.getFirma }}" />
+                </div>
+                <div class="formField{{ postcodeErr }}">
+                    <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
+                    <label>Postleitzahl</label><input type="text" name="postcode" value="{{ user.getPostcode }}" />
+                </div>
+                <div class="formField">
+                    <input class="submit" type="button" value="Senden" />
+                </div>
+            </form>
+            <a class="txtLnk" href="location.php?pid={{ uid }}">Ort auf Karte zeigen</a>
+        {% else %}
+            {{ message }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

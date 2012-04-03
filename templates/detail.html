@@ -32,7 +32,7 @@
                 <a class="txtLnk" href="bike.php?uid={{ fahrrad.getUid }}">Bearbeiten</a><br />
                 <a class="txtLnk delete" href="bike.php?uid={{ fahrrad.getUid }}&process=delete">Angebot löschen</a><br>
             {% endif %}
-            {% if isLoggedIn and not isOwnBike and isOnNotepad %}
+            {% if isLoggedIn and not isOwnBike and not isOnNotepad %}
                 <a class="txtLnk" href="notepad.php?uid={{ fahrrad.getUid }}">Auf Merkzettel speichern</a><br />
             {% endif %}
             {% if isOnNotepad %}

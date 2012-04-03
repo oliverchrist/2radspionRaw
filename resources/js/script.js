@@ -22,7 +22,7 @@ $(document).ready(function(){
     $('#register .submit, #userdata .submit').click(function(){
         var form = $(this).parents('form');
         var postcode = $('input[name="postcode"]', form).val();
-        var city = $('input[name="city"]', form).val();
+        //var city = $('input[name="city"]', form).val();
         //alert(postcode + ' ' + city);
         codeAddress(postcode);
     });

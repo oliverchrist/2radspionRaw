@@ -8,3 +8,4 @@ echo $twig->render('agb.html', array(
     'isLoggedIn' => Login::isLoggedIn(),
     'pageClass' => 'datenschutz'
 ));
+?>

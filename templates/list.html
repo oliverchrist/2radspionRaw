@@ -59,8 +59,8 @@
     {% endif %}
     {% for bikeListElement in bikeListElements %}
         <div class="bikeListElement {{ bikeListElement.aktiv }}">
-            {% if bikeListElement.isOnNotepad %}
-                Das Zweirad mit der ID: {{ bikeListElement.nuid }} wurde gelöscht<br>
+            {% if bikeListElement.isOnNotepad and filter == 'notepad' and bikeListElement.deleted %}
+                Das Zweirad mit der ID: {{ bikeListElement.id }} wurde gelöscht<br>
                 Bemerkung: {{  bikeListElement.remark }}<br>
                 <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
             {% else %}
@@ -97,7 +97,7 @@
         {% if hasPrev %}
             <a href="/list.php?filter={{ filter }}&page={{ page - 1 }}">Zurück</a>
         {% endif %}
-        Seite {{ page }} von {{ pages }}
+        Seite {{ page + 1 }} von {{ pages }}
         {% if hasNext %}
             <a href="/list.php?filter={{ filter }}&page={{ page + 1 }}">Weiter</a>
         {% endif %}

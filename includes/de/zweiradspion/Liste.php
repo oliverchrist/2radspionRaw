@@ -256,6 +256,7 @@ class Liste {
         $this->join[]      = 'right join notepad on bike.uid = notepad.id';
         $this->condition[] = 'notepad.pid=' . $_SESSION['uid'];
         $this->column[]    = 'notepad.uid as nuid, notepad.remark';
+        $this->column[] = 'notepad.id as id';
     }
 
     public function initNewOffers() {
@@ -408,13 +409,14 @@ class Liste {
                 if(isset($_SESSION['uid']) && $row['pid'] == $_SESSION['uid']){
                     $bikeListElement['isOwnBike'] = TRUE;
                 }
-                if(isset($row['nuid'])) {
+                if(isset($row['id'])) {
                     $bikeListElement['isOnNotepad'] = TRUE;
                     $bikeListElement['nuid'] = $row['nuid'];
+                    $bikeListElement['id'] = $row['id'];
                 }else{
                     $bikeListElement['isOnNotepad'] = FALSE;
                 }
-                if($row['uid'] == NULL && isset($row['nuid'])){
+                if($row['uid'] == NULL && isset($row['id'])){
                     $bikeListElement['deleted'] = TRUE;
                     $bikeListElement['remark'] = $row['remark'];
                 }else{
@@ -422,14 +424,13 @@ class Liste {
                         $imageObj  = new ScaleImage($row['name'], $row['extension'], 'images');
                         $imagePath = $imageObj->getImagePath(200, 'auto');
                         if($imagePath) {
-                            $bikeListElement['uid'] = $row['uid'];
-                            $bikeListElement['modell'] = $row['modell'];
                             $bikeListElement['imagePath'] = $imagePath;
                         }
                     }
                     if(isset($row['distance'])){
                         $bikeListElement['distance'] = $row['distance'];
                     }
+                    $bikeListElement['uid'] = $row['uid'];
                     $bikeListElement['marke'] = $row['marke'];
                     $bikeListElement['modell'] = $row['modell'];
                     $bikeListElement['preis'] = $row['preis'];
