@@ -1,20 +1,15 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\DebugHelper,
     de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
     de\zweiradspion\FormHelper,
     de\zweiradspion\Mail,
-    de\zweiradspion\User;
-?>
-<body id="std">
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-    <?=HeaderHelper::getHeader('Registrierung')?>
-    <div id="content">
-<?=NavigationHelper::getSubnavigation()?>
-<?php
+    de\zweiradspion\User,
+    de\zweiradspion\Login;
+
+include 'includes/init.php';
+
 $anbieterErr    = '';
 $anredeErr      = '';
 $nameErr        = '';
@@ -29,6 +24,7 @@ $datenschutzErr = '';
 $showForm       = TRUE;
 $keineFehler    = TRUE;
 $user           = new User();
+$message        = '';
 if($_POST){
     $user->loadFromPost($_POST);
     $anbieter = $user->getAnbieter();
@@ -92,7 +88,7 @@ if($_POST){
         $dbObject   = new DatabaseHelper();
         # Prüfen ob email bereits existiert in Tabelle user und userunconfirmed
         if($dbObject->valueInTable($email,'email','user') || $dbObject->valueInTable($email,'email','userunconfirmed')){
-            echo '<p class="error">Diese Email-Adresse gibt es bereits.</p><br>';
+            $message .= '<p class="error">Diese Email-Adresse gibt es bereits.</p><br>';
             $uniqueUser = FALSE;
         }
 
@@ -120,7 +116,7 @@ if($_POST){
             $message = "Guten Tag,\n
 vielen Dank für Ihre Anmeldung bei zweiradspion.de.\n
 Um die Anmeldung abzuschließen klicken Sie folgenden Link, oder kopieren diesen in die Adresszeile Ihres Browser:\n
-http://" . de\zweiradspion\DOMAIN . "/registerConfirm.php?x=" . $hashFinal . "\n
+http://" . DOMAIN . "/registerConfirm.php?x=" . $hashFinal . "\n
 \n
 Sollten Sie sich nicht bei zweiradspion angemeldet haben ignorieren Sie diese Email einfach.\n
 \n
@@ -128,82 +124,31 @@ Mit freundlichen Grüßen\n
 \n
 Das Team von zweiradspion.de";
             if(Mail::send($email, '2radspion Confirm', $message)) {
-                echo '<p>Wir haben Ihnen eine Email zur Überprufung gesendet, bitte sehen Sie in Ihrem Posteingang nach und schließen Sie die Anmeldung ab.</p>';
+                $message .= 'Wir haben Ihnen eine Email zur Überprufung gesendet, bitte sehen Sie in Ihrem Posteingang nach und schließen Sie die Anmeldung ab.';
             }else{
                 die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
             }
         }
     }
 }
-if($showForm){ ?>
-    <form method="post" id="register">
-        <input type="hidden" name="lat" />
-        <input type="hidden" name="lng" />
-        <div class="formField<?=$anbieterErr?>">
-            <p class="error">Bitte geben Sie ein ob Sie Privatanbieter oder Händler sind</p>
-            <label>Privatanbieter/Händler</label>
-            <select name="anbieter">
-                <option value="-1">Bitte wählen</option>
-                <option value="privat"<?if($user->getAnbieter() == 'privat'){?> selected="selected"<?}?>>Privatanbieter</option>
-                <option value="haendler"<?if($user->getHaendler() == 'privat'){?> selected="selected"<?}?>>Händler</option>
-            </select>
-        </div>
-        <div class="formField radio<?=$anredeErr?>">
-            <p class="error">Bitte geben Sie Ihre Anrede an</p>
-            <label class="desc">Anrede</label>
-            <input type="radio" name="anrede" value="frau" <?if($user->getAnrede() == 'frau'){?> checked="checked"<?}?> />
-            <label>Frau</label>
-            <input type="radio" name="anrede" value="herr" <?if($user->getAnrede() == 'herr'){?> checked="checked"<?}?> />
-            <label>Herr</label>
-        </div>
-        <div class="formField<?=$nameErr?>">
-            <p class="error">Bitte geben Sie Ihren Namen ein</p>
-            <label>Name</label><input type="text" name="name" value="<?=$user->getName()?>" />
-        </div>
-        <div class="formField<?=$vornameErr?>">
-            <p class="error">Bitte geben Sie Ihren Vornamen ein</p>
-            <label>Vorname</label><input type="text" name="vorname" value="<?=$user->getVorname()?>" />
-        </div>
-        <div class="formField<?=$firmaErr?>">
-            <p class="error">Bitte geben Sie Ihren Firmennamen ein</p>
-            <label>Firma</label><input type="text" name="firma" value="<?=$user->getFirma()?>" />
-        </div>
-        <div class="formField<?=$emailErr?>">
-            <p class="error">Bitte geben Sie eine gültige Email Adresse ein</p>
-            <label>Email</label><input type="text" name="email" value="<?=$user->getEmail()?>" />
-        </div>
-        <div class="formField<?=$passwordErr?>">
-            <p class="error">Bitte geben Sie ein Passwort ein</p>
-            <label>Passwort</label><input type="password" name="password" value="<?=$user->getPassword()?>" />
-        </div>
-        <div class="formField<?=$password2Err?>">
-            <p class="error">Die Passwörter stimmen nicht überein</p>
-            <label>Passwort wiederholen</label><input type="password" name="password2" value="<?=$user->getPassword2()?>" />
-        </div>
-        <div class="formField<?=$postcodeErr?>">
-            <p class="error">Bitte geben Sie eine gültige Postleitzahl Adresse ein</p>
-            <label>Postleitzahl</label><input type="text" name="postcode" value="<?=$user->getPostcode()?>" />
-        </div>
-        <div class="formField checkbox<?=$agbErr?>">
-            <p class="error">Bitte stimmen Sie den allgemeinen Geschäftsbedingungen zu</p>
-            <input type="checkbox" name="agb" value="1"<?=($user->getAgb()) ? 'checked="checked"' : ''?> />
-            <label>Ja, ich stimme den <a href="agb.php" target="_blank">Allgemeinen Geschäftsbedingungen</a> von zweiradspion.de zu.</label>
-        </div>
-        <div class="formField checkbox<?=$datenschutzErr?>">
-            <p class="error">Bitte stimmen Sie den Datenschutzbedingungen zu</p>
-            <input type="checkbox" name="datenschutz" value="1"<?=($user->getDatenschutz()) ? 'checked="checked"' : ''?> />
-            <label>Ja, ich willige in die Nutzung meiner Daten gemäß der <a href="datenschutz.php" target="_blank">Datenschutz-Erklärung</a> von zweiradspion.de ein.
-                Diese Einwilligung betrifft u. a. die Verwendung Ihrer Daten für Marketingzwecke (z. B. Zusendung von eMails).
-                Nach Ihrer Anmeldung können Sie die Benachrichtigungseinstellungen jederzeit in ihrem Profil ändern.
-            </label>
-        </div>
-        <div class="formField">
-            <input class="submit" type="button" value="Senden" />
-        </div>
-    </form>
-<?
-} ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+echo $twig->render('register.html', array(
+    'headline' => 'Registrierung',
+    'isLoggedIn' => Login::isLoggedIn(),
+    'pageClass' => 'user',
+    'linkTarget' => '_top',
+    'showForm' => $showForm,
+    'anbieterErr' => $anbieterErr,
+    'user' => $user,
+    'anredeErr' => $anredeErr,
+    'nameErr' => $nameErr,
+    'vornameErr' => $vornameErr,
+    'firmaErr' => $firmaErr,
+    'postcodeErr' => $postcodeErr,
+    'emailErr' => $emailErr,
+    'passwordErr' => $passwordErr,
+    'password2Err' => $password2Err,
+    'agbErr' => $agbErr,
+    'datenschutzErr' => $datenschutzErr,
+    'message' => $message
+));
+

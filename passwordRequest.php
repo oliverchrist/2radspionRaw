@@ -1,19 +1,16 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
-use de\zweiradspion\NavigationHelper;
-?>
-<body id="std">
-    <?=HeaderHelper::getHeader('Passwort Anfrage')?>
-    <div id="content">
-<?=NavigationHelper::getSubnavigation()?>
-<?php
+use de\zweiradspion\NavigationHelper,
+    de\zweiradspion\Login;
+
+include 'includes/init.php';
+
 $email    = '';
 $emailErr = '';
 $showForm = TRUE;
+$message  = '';
 if($_POST){
     $email = $_POST['email'];
     if(empty($email)){
@@ -26,38 +23,34 @@ if($_POST){
             or die('Email wurde nicht in Datenbank user gefunden.');
         if(mysql_num_rows($result) > 0){
             $row      = mysql_fetch_assoc($result);
-            $username = $row['username'];
             $password = $row['password'];
             $email    = $row['email'];
             $header   = 'From: webmaster@2radspion.de' . "\r\n" .
                 'Reply-To: webmaster@2radspion.de' . "\r\n" .
                 'X-Mailer: PHP/' . phpversion();
-            $message  = 'Guten Tag ' . $username . ",\nSie haben eine Passwortanfrage geschickt. klicken Sie bitte auf diesen Link: http://" . de\zweiradspion\DOMAIN . "/changePassword.php?x=" . $password;
+            $message  = "Guten Tag,\nSie haben eine Passwortanfrage geschickt. klicken Sie bitte auf diesen Link: http://" . DOMAIN . "/changePassword.php?x=" . $password;
             $mailSend = mail($email, '2radspion Confirm', $message, $header);
             if(!$mailSend){
                 die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
             }else{
-                echo 'Mail wurde an den User geschickt<br>';
-                echo '<p>Eine Email wurde an Sie versand.</p>';
+                $message .= 'Mail wurde an den User geschickt<br>';
+                $message .= '<p>Eine Email wurde an Sie versand.</p>';
             }
             $showForm = FALSE;
         }else{
-            echo '<p class="error">Email unbekannt!</p>';
+            $message .= '<p class="error">Email unbekannt!</p>';
         }
     }
 }
-if($showForm){ ?>
-    <form method="post">
-        <div class="formField<?=$emailErr?>">
-            <p class="error">Bitte geben Sie eine Email ein</p>
-            <label>Email</label><input type="text" name="email" value="<?=$email?>" />
-        </div>
-        <div class="formField">
-            <input class="submit" type="submit" />
-        </div>
-    </form>
-<? } ?>
-    </div>
-    <?php include 'includes/footer.php'; ?>
-</body>
-</html>
+
+echo $twig->render('passwordRequest.html', array(
+    'headline' => 'Passwort Anfrage',
+    'isLoggedIn' => Login::isLoggedIn(),
+    'pageClass' => 'passwordRequest',
+    'linkTarget' => '_top',
+    'showForm' => $showForm,
+    'emailErr' => $emailErr,
+    'email' => $email,
+    'message' => $message
+));
+?>
