@@ -44,7 +44,7 @@ if(isset($_SESSION['uid'])) {
             $rahmenhoeheErr = ' error';
             $keineFehler    = FALSE;
         }
-        if(empty($_POST['laufleistung'])){
+        if(is_int($_POST['laufleistung'])){
             $laufleistungErr = ' error';
             $keineFehler     = FALSE;
         }
@@ -110,6 +110,12 @@ echo $twig->render('bike.html', array(
     'fahrrad' => $fahrrad,
     'uid' => (isset($_GET['uid']))? $_GET['uid'] : null,
     'showForm' => $showForm,
+    'markeErr' => $markeErr,
+    'modellErr' => $modellErr,
+    'preisErr' => $preisErr,
+    'radgroesseErr' => $radgroesseErr,
+    'rahmenhoeheErr' => $rahmenhoeheErr,
+    'laufleistungErr' => $laufleistungErr,
     'message' => $message
 ));
 
