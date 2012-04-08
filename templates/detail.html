@@ -2,25 +2,25 @@
 
 {% block content %}
     <div class="fahrradSingle" >
-        Marke: {{ fahrrad.getMarke.getValue }}<br>
-        modell: {{ fahrrad.getModell }}<br>
-        preis: {{ fahrrad.getPreis }}<br>
+        <h2>{{ fahrrad.getMarke.getValue }}</h2>
+        <h3>{{ fahrrad.getModell }}</h3>
+        Preis: {{ fahrrad.getPreis }} EUR<br>
         Radtyp: {{ fahrrad.getRadtyp.getText }}<br>
         Geschlecht: {{ fahrrad.getGeschlecht.getText }}<br>
         Zustand: {{ fahrrad.getZustand.getText }}<br>
-        Laufleistung: {{ fahrrad.getLaufleistung }}<br>
-        Radgroesse: {{ fahrrad.getRadgroesse }}<br>
-        Rahmenhoehe: {{ fahrrad.getRahmenhoehe }}<br>
+        Laufleistung: {{ fahrrad.getLaufleistung }} km<br>
+        Radgroesse: {{ fahrrad.getRadgroesse }} Zoll<br>
+        Rahmenhoehe: {{ fahrrad.getRahmenhoehe }} cm<br>
         Farbe: {{ fahrrad.getFarbe.getText }}<br>
         Bremssystem: {{ fahrrad.getBremssystem.getText }}<br>
         Schaltungstyp: {{ fahrrad.getSchaltungstyp.getText }}<br>
         Rahmenmaterial: {{ fahrrad.getRahmenmaterial.getText }}<br>
         Beleuchtungsart: {{ fahrrad.getBeleuchtungsart.getText }}<br>
         Einsatzbereich: {{ fahrrad.getEinsatzbereich.getText }}<br>
-        aktiv: {{ fahrrad.getAktiv }}<br>
-        erstellt: {{ fahrrad.getErstellt }}<br>
-        geaendert: {{ fahrrad.getGeaendert }}<br>
-        Beschreibung: {{ fahrrad.getBeschreibung }}<br>
+        Eingestellt am: {{ fahrrad.getErstellt|date }}<br>
+        Zuletzt geändert am: {{ fahrrad.getGeaendert|date }}<br>
+        Beschreibung:<br>
+        {{ fahrrad.getBeschreibung }}<br>
         {% for bild in fahrrad.getBilder %}
             <a class="lightbox" title="{{ fahrrad.getModell }}" href="{{ bild.getOriginalImagePath }}">
                 <img alt="{{ fahrrad.getModell }}" src="{{ bild.getImagePath }}" width="{{ bild.getImageWidth }}" />
