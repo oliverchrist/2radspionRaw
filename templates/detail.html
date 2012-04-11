@@ -22,7 +22,7 @@
         Beschreibung:<br>
         {{ fahrrad.getBeschreibung }}<br>
         {% for bild in fahrrad.getBilder %}
-            <a class="lightbox" title="{{ fahrrad.getModell }}" href="{{ bild.getOriginalImagePath }}">
+            <a class="thickbox" title="{{ fahrrad.getModell }}" href="{{ bild.getOriginalImagePath }}">
                 <img alt="{{ fahrrad.getModell }}" src="{{ bild.getImagePath }}" width="{{ bild.getImageWidth }}" />
             </a>
         {% endfor %}

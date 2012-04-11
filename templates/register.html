@@ -57,12 +57,12 @@
             <div class="formField checkbox{{ agbErr }}">
                 <p class="error">Bitte stimmen Sie den allgemeinen Geschäftsbedingungen zu</p>
                 <input type="checkbox" name="agb" value="1"{% if user.getAgb %} checked="checked"{% endif %} />
-                <label>Ja, ich stimme den <a href="agb.php" target="_blank">Allgemeinen Geschäftsbedingungen</a> von zweiradspion.de zu.</label>
+                <label>Ja, ich stimme den <a href="agbBox.php?height=600&width=600" class="thickbox" title="Allgemeinen Geschäftsbedingungen" target="_blank">Allgemeinen Geschäftsbedingungen</a> von zweiradspion.de zu.</label>
             </div>
             <div class="formField checkbox{{ datenschutzErr }}">
                 <p class="error">Bitte stimmen Sie den Datenschutzbedingungen zu</p>
                 <input type="checkbox" name="datenschutz" value="1"{% if user.getDatenschutz %} checked="checked"{% endif %} />
-                <label>Ja, ich willige in die Nutzung meiner Daten gemäß der <a href="datenschutz.php" target="_blank">Datenschutz-Erklärung</a> von zweiradspion.de ein.
+                <label>Ja, ich willige in die Nutzung meiner Daten gemäß der <a href="datenschutzBox.php?height=600&width=600" class="thickbox" title="Datenschutz-Erklärung">Datenschutz-Erklärung</a> von zweiradspion.de ein.
                     Diese Einwilligung betrifft u. a. die Verwendung Ihrer Daten für Marketingzwecke (z. B. Zusendung von eMails).
                     Nach Ihrer Anmeldung können Sie die Benachrichtigungseinstellungen jederzeit in ihrem Profil ändern.
                 </label>
