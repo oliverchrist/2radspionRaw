@@ -18,7 +18,7 @@ if(isset($_SESSION['uid'])) {
     $showForm        = TRUE;
     $keineFehler     = TRUE;
     $fahrrad         = new Fahrrad();
-	$message		 = '';
+    $message         = '';
 
     # speichern
     if($_POST){
@@ -32,7 +32,7 @@ if(isset($_SESSION['uid'])) {
             $modellErr   = ' error';
             $keineFehler = FALSE;
         }
-        if(empty($_POST['preis'])){
+        if(empty($_POST['preis']) || !is_numeric($_POST['preis']) || $_POST['preis'] < 50){
             $preisErr    = ' error';
             $keineFehler = FALSE;
         }

@@ -3,7 +3,7 @@
 {% block content %}
     {% if isLoggedIn %}
         {% if showForm %}
-        	{% autoescape false %}
+            {% autoescape false %}
             <form method="post" action="bike.php">
                 <input type="hidden" name="uid" value="{{ fahrrad.getUid }}" />
                 <div class="formField{{ markeErr }}">
@@ -17,7 +17,7 @@
                     <input type="text" name="modell" value="{{ fahrrad.getModell }}" />
                 </div>
                 <div class="formField{{ preisErr }}">
-                    <p class="error">Bitte geben Sie einen Preis ein</p>
+                    <p class="error">Bitte geben Sie einen Mindestpreis von 50 ein</p>
                     <label>Preis</label>
                     <input type="text" name="preis" value="{{ fahrrad.getPreis }}" /><span class="unit">EUR</span>
                 </div>
@@ -92,7 +92,7 @@
             <a class="txtLnk" href="detail.php?uid={{ fahrrad.getUid }}">Zurück</a>
             {% endautoescape %}
         {% else %}
-        	{{ message }}
+            {{ message }}
         {% endif %}
     {% endif %}
 {% endblock %}
