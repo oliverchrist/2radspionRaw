@@ -248,6 +248,8 @@ fieldset legend { margin-top: 12px; }
    }
 }
 
+.pageBrowse { margin:0 0 10px 0; }
+
 body.facebook { background:white;
     .borderBottom, .borderLeft {
         display:none;
@@ -262,5 +264,15 @@ body.facebook { background:white;
                 width:auto;
             }
         }
+    }
+}
+
+body.dealer { background:white;
+    #content { border:none;
+        .bikeListElement, .fahrradSingle {
+            background: white;
+            border: 1px solid #000;
+        }
+        .txtLnk { color:black; }
     }
 }

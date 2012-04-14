@@ -65,7 +65,7 @@
                 <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
             {% else %}
                 {% if bikeListElement.imagePath %}
-                    <a class="thumb" href="detail.php?uid={{bikeListElement.uid}}" target="{{linkTarget}}">
+                    <a class="thumb" href="detail.php?uid={{bikeListElement.uid}}{% if dealerView %}&filter=dealer{% endif %}" target="{{linkTarget}}">
                         <img alt="{{bikeListElement.modell}}" src="{{bikeListElement.imagePath}}" width="200" />
                     </a>
                 {% endif %}
@@ -80,12 +80,14 @@
                     geaendert: {{ bikeListElement.geaendert }}<br>
                 </div>
                 <div class="links">
-                    <a class="txtLnk" href="detail.php?uid={{bikeListElement.uid}}" target="{{linkTarget}}">Ansehen</a><br>
-                    {% if bikeListElement.isOnNotepad %}
-                        <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
-                    {% endif %}
-                    {% if bikeListElement.isOwnBike %}
-                        <a class="txtLnk ajaxDelete" href="bikeAjax.php?uid={{bikeListElement.uid}}&process=delete">Angebot löschen</a><br>
+                    <a class="txtLnk" href="detail.php?uid={{bikeListElement.uid}}{% if dealerView %}&filter=dealer{% endif %}" target="{{linkTarget}}">Ansehen</a><br>
+                    {% if not dealerView %}
+                        {% if bikeListElement.isOnNotepad %}
+                            <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
+                        {% endif %}
+                        {% if bikeListElement.isOwnBike %}
+                            <a class="txtLnk ajaxDelete" href="bikeAjax.php?uid={{bikeListElement.uid}}&process=delete">Angebot löschen</a><br>
+                        {% endif %}
                     {% endif %}
                 </div>
                 <div class="clear"></div>

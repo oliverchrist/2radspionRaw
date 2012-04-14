@@ -252,6 +252,10 @@ class Liste {
         $this->condition[] = 'bike.pid = ' . $_SESSION['uid'];
     }
 
+    public function initDealer($pid) {
+        $this->condition[] = 'bike.pid = ' . $pid;
+    }
+
     public function initNotepad() {
         $this->join[]      = 'right join notepad on bike.uid = notepad.id';
         $this->condition[] = 'notepad.pid=' . $_SESSION['uid'];

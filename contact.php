@@ -19,12 +19,17 @@ $kontakt      = null;
 $showform     = TRUE;
 $formValid    = TRUE;
 $message      = '';
+$pageClass    = 'contact';
 try{
     $fahrrad      = new Fahrrad($_GET['uid']);
     $kontakt      = new Kontakt($fahrrad->getPid());
 }catch (Exception $e) {
     $showform = FALSE;
     $message  = $e->getMessage();
+}
+if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
+    $dealerView = TRUE;
+    $pageClass  = 'dealer';
 }
 if($_POST){
     # Validierung
@@ -75,8 +80,8 @@ Das Team von zweiradspion.de";
 echo $twig->render('contact.html', array(
     'headline' => 'Detailansicht',
     'isLoggedIn' => Login::isLoggedIn(),
-    'pageClass' => 'contact',
-    'linkTarget' => '_top',
+    'pageClass' => $pageClass,
+    'dealerView' => $dealerView,
     'showform' => $showform,
     'message' => $message,
     'fahrrad' => $fahrrad,

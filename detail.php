@@ -7,8 +7,9 @@ use de\zweiradspion\HeaderHelper,
 
 include 'includes/init.php';
 
-
-$fahrrad = new Fahrrad($_GET['uid']);
+$dealerView = FALSE;
+$pageClass  = 'detail';
+$fahrrad    = new Fahrrad($_GET['uid']);
 
 $imageWidth = 510;
 foreach($fahrrad->getBilder() as $bild) {
@@ -27,12 +28,18 @@ foreach($fahrrad->getBilder() as $bild) {
     $imageWidth = 160;
 }
 
+if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
+    $dealerView = TRUE;
+    $pageClass  = 'dealer';
+}
+
 echo $twig->render('detail.html', array(
     'headline' => 'Detailansicht',
     'isLoggedIn' => Login::isLoggedIn(),
     'isOwnBike' => isset($_SESSION['uid']) && $fahrrad->getPid() == $_SESSION['uid'],
     'isOnNotepad' => !empty($fahrrad->getNuid),
-    'pageClass' => 'detail',
+    'pageClass' => $pageClass,
     'linkTarget' => '_top',
+    'dealerView' => $dealerView,
     'fahrrad' => $fahrrad
 ));

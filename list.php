@@ -9,9 +9,10 @@ use de\zweiradspion\DatabaseHelper,
 
 require_once 'includes/init.php';
 
-$listObj = new Liste();
-$pageClass = '';
+$listObj    = new Liste();
+$pageClass  = '';
 $searchHtml = '';
+$dealerView = FALSE;
 if(isset($_GET['filter'])) {
     $pageClass = $_GET['filter'];
 }
@@ -41,6 +42,11 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
     $listObj->initNearOffers();
 }
 
+if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
+    $listObj->initDealer($_GET['pid']);
+    $dealerView = TRUE;
+}
+
 #var_dump($listObj->getList());
 $list = $listObj->getList();
 
@@ -49,7 +55,7 @@ echo $twig->render('list.html', array(
         'headline' => $listObj->getHeadline(),
         'isLoggedIn' => Login::isLoggedIn(),
         'pageClass' => $pageClass,
-        'linkTarget' => '_top',
+        'dealerView' => $dealerView,
         'filter' => $listObj->getFilter(),
         'post' => $_POST,
         'searchHtml' => $searchHtml,
