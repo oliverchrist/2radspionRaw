@@ -27,7 +27,8 @@ if(isset($_GET['uid'])) {
     $cc         = '';
     $showForm   = TRUE;
     $formValid  = TRUE;
-    $message = '';
+    $message    = '';
+	$emailBody  = '';
     if($_POST) {
         # Validierung
         if(empty($_POST['email'])) {
@@ -65,21 +66,21 @@ if(isset($_GET['uid'])) {
             $cc = ' checked="checked"';
         }
         if($formValid){
-            $message = "http://" . DOMAIN . "/detail.php?uid=" . $_GET['uid'] . "\n
+            $emailBody = "http://" . DOMAIN . "/detail.php?uid=" . $_GET['uid'] . "\n
 Name: {$_POST['name']}\n
 Email: {$_POST['email']}\n
 Nachricht: {$_POST['nachricht']}\n
 \n
 Das Team von zweiradspion.de";
             # Email an Empfänger
-            if(Mail::send($_POST['email'], 'Weiterleitung', $message, $_POST['email2'])) {
+            if(Mail::send($_POST['email'], 'Weiterleitung', $emailBody, $_POST['email2'])) {
                 $message .= '<p>Ihre Email wurde versendet.</p>';
             }else{
                 die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
             }
             # Email an Versender
             if($_POST['cc']){
-                if(Mail::send($_POST['email2'], 'Anfrage', $message)) {
+                if(Mail::send($_POST['email2'], 'Anfrage', $emailBody)) {
                     $message .= '<p>Ihre CC Email wurde versendet.</p>';
                 }else{
                     die('<span class="error">Mail konnte nicht verschickt werden</span><br>');

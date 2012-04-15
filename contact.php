@@ -63,13 +63,13 @@ Email: {$_POST['email']}\n
 Nachricht: {$_POST['nachricht']}\n
 \n
 Das Team von zweiradspion.de";
-        if(Mail::send($kontakt->getEmail(), 'Anfrage', $message)) {
+        if(Mail::send($kontakt->getEmail(), 'Anfrage', $emailBody)) {
             $message .= 'Ihre Email wurde versendet.';
         }else{
             $message .= 'Mail konnte nicht verschickt werden';
         }
         if($_POST['cc']){
-            if(Mail::send($_POST['email'], 'Anfrage', $message)) {
+            if(Mail::send($_POST['email'], 'Anfrage', $emailBody)) {
                 $message .= 'Ihre CC Email wurde versendet.';
             }else{
                 $message .= 'Mail konnte nicht verschickt werden';
