@@ -20,6 +20,7 @@ $showform     = TRUE;
 $formValid    = TRUE;
 $message      = '';
 $pageClass    = 'contact';
+$dealerView   = FALSE;
 try{
     $fahrrad      = new Fahrrad($_GET['uid']);
     $kontakt      = new Kontakt($fahrrad->getPid());
