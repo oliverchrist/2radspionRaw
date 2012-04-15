@@ -19,6 +19,7 @@ $kontakt      = null;
 $showform     = TRUE;
 $formValid    = TRUE;
 $message      = '';
+$emailBody    = '';
 $pageClass    = 'contact';
 $dealerView   = FALSE;
 try{
@@ -56,22 +57,22 @@ if($_POST){
         $cc = ' checked="checked"';
     }
     if($formValid){
-        $message = "http://" . DOMAIN . "/detail.php?uid=" . $_GET['uid'] . "\n
+        $emailBody = "http://" . DOMAIN . "/detail.php?uid=" . $_GET['uid'] . "\n
 Name: {$_POST['name']}\n
 Email: {$_POST['email']}\n
 Nachricht: {$_POST['nachricht']}\n
 \n
 Das Team von zweiradspion.de";
         if(Mail::send($kontakt->getEmail(), 'Anfrage', $message)) {
-            echo '<p>Ihre Email wurde versendet.</p>';
+            $message .= 'Ihre Email wurde versendet.';
         }else{
-            die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
+            $message .= 'Mail konnte nicht verschickt werden';
         }
         if($_POST['cc']){
             if(Mail::send($_POST['email'], 'Anfrage', $message)) {
-                echo '<p>Ihre CC Email wurde versendet.</p>';
+                $message .= 'Ihre CC Email wurde versendet.';
             }else{
-                die('<span class="error">Mail konnte nicht verschickt werden</span><br>');
+                $message .= 'Mail konnte nicht verschickt werden';
             }
         }
         $showform = FALSE;
