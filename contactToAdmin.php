@@ -22,13 +22,7 @@ $message      = '';
 $emailBody    = '';
 $pageClass    = 'contact';
 $dealerView   = FALSE;
-try{
-    $fahrrad      = new Fahrrad($_GET['uid']);
-    $kontakt      = new Kontakt($fahrrad->getPid());
-}catch (Exception $e) {
-    $showform = FALSE;
-    $message  = $e->getMessage();
-}
+
 if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
     $dealerView = TRUE;
     $pageClass  = 'dealer';
@@ -57,13 +51,10 @@ if($_POST){
         $cc = ' checked="checked"';
     }
     if($formValid){
-        $emailBody = "http://" . DOMAIN . "/detail.php?uid=" . $_GET['uid'] . "\n
-Name: {$_POST['name']}\n
+        $emailBody = "Name: {$_POST['name']}\n
 Email: {$_POST['email']}\n
-Nachricht: {$_POST['nachricht']}\n
-\n
-Das Team von zweiradspion.de";
-        if(Mail::send($kontakt->getEmail(), 'Anfrage', $emailBody, $_POST['email'])) {
+Nachricht: {$_POST['nachricht']}";
+        if(Mail::send('oliver.christ@web.de', 'Anfrage', $emailBody, $_POST['email'])) {
             $message .= 'Ihre Email wurde versendet.';
         }else{
             $message .= 'Mail konnte nicht verschickt werden';
@@ -79,16 +70,13 @@ Das Team von zweiradspion.de";
     }
 }
 
-echo $twig->render('contact.html', array(
+echo $twig->render('contactToAdmin.html', array(
     'headline' => 'Detailansicht',
     'isLoggedIn' => Login::isLoggedIn(),
     'pageClass' => $pageClass,
     'dealerView' => $dealerView,
     'showform' => $showform,
     'message' => $message,
-    'fahrrad' => $fahrrad,
-    'kontakt' => $kontakt,
-    'uid' => $_GET['uid'],
     'nachrichtErr' => $nachrichtErr,
     'nachricht' => $nachricht,
     'nameErr' => $nameErr,

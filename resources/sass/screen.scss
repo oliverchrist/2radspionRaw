@@ -6,87 +6,57 @@
 @import "compass/reset";
 @import "compass/css3";
 
-$red: #e30613;
+$error: #e30613;
+$background: #f5d36e;
 
-
-body        { font-family:Arial; background-color: #f5d36e; font-size: 16px; line-height:20px; }
+body        { font-family:Arial; background-color: $background; font-size: 16px; line-height:20px; }
 
 .clear  { clear: both; line-height: 0; font-size: 0; }
-.txtLnk { color: #fff; background: url(../images/link.png) right no-repeat; padding-right: 15px; text-decoration: none; font-weight: bold; }
-.txtLnk:hover { text-decoration: underline; }
-.error { color:$red; }
+.txtLnk { color: #fff; background: url(../images/link.png) right no-repeat; padding-right: 15px; text-decoration: none; font-weight: bold;
+}
+a { color:#676653; text-decoration:none;
+    &:hover { text-decoration: underline !important; }
+}
+.error { color:$error; }
 img { border: none; }
 h1 { font-size:30px; line-height:40px; color:white; }
 h2 { font-size:25px; line-height:30px; }
 h3 { font-size:20px; line-height:28px; }
 .hidden { display:none; }
-a { color:#676653; }
-a.lightbox { text-decoration:none; }
 p { margin-bottom:14px}
 
 #home { background-color: #eeb200;
 
-    .logoBgr  {
-      background: url(../images/logo_start_a.png) center center no-repeat;
-      position: absolute;
-      top: 15%;
-      width: 100%;
-      height: 407px;
-      filter:alpha(opacity=50); /* IE */
-      opacity:0.5; /* allgemein */
+    .logoBgr  { background: url(../images/logo_start_a.png) center center no-repeat;
+        position: absolute; top: 15%; width: 100%; height: 407px; @include opacity(0.5);
     }
-    .logoBgr2 {
-      background: url(../images/logo_start_b.png) center center no-repeat;
-      position: absolute;
-      top: 15%;
-      width: 100%;
-      height: 407px;
-      filter:alpha(opacity=50); /* IE */
-      opacity:0.5; /* allgemein */
-      -webkit-transition: all 1s ease-in-out;
-      -moz-transition: all 1s ease-in-out;
-      -o-transition: all 1s ease-in-out;
-      -ms-transition: all 1s ease-in-out;
-      transition: all 1s ease-in-out;
-    }
-    .logoBgr2:hover {
-      filter:alpha(opacity=80); /* IE */
-      opacity:0.8; /* allgemein */
+    .logoBgr2 { background: url(../images/logo_start_b.png) center center no-repeat;
+        @include transition-property(all);
+        @include transition-duration(1s);
+        &:hover {
+            @include opacity(0.8);
+        }
     }
 
     .headerBgr  { position: fixed; bottom: 0; width: 100%; background-color: #69674f; height: 60px; }
 
     .borderBottom { position: fixed; bottom: 0; width: 100%; }
     .borderBottom .border { border-bottom: 1px solid #fff; border-right: 1px solid #fff; margin: 0 24px 24px 0; height: 12px;
-      -moz-border-radius-bottomright: 12px;
-      border-bottom-right-radius: 12px;
+        border-radius:0 0 12px 0;
     }
     .borderRight  { position: fixed; right: 0; height: 100%; }
     .borderRight .border  { border-left: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 24px; }
 
-    .menu   { position: fixed; bottom: 0; right: 0; width: 100%; text-align: right; padding: 12px 48px 36px 0; }
-    .menu a { color: #2a2725; text-decoration: none; font-size: 12px; font-size: 12px; margin-left: 12px; }
-    .menu a:hover { text-decoration: underline; }
+    .menu   { position: fixed; bottom: 0; right: 0; width: 100%; text-align: right; padding: 12px 48px 33px 0; }
+    .menu a { color: #2a2725; text-decoration: none; font-size: 16px; margin-left: 12px; }
 
     .claim  { position: fixed; bottom: 0; width: 100%; }
     .claim .text  { color: #fff; padding: 0 48px 12px 0; text-align: right; }
     .claim .border  {
-      border-left: 1px solid #fff; border-top: 1px solid #fff; height: 156px; margin-left: 120px;
-      -moz-border-radius-topleft: 12px;
-      border-top-left-radius: 12px;
-      #imgLogoHome  { position: absolute; right: 48px; bottom: 51px; }
+        border-left: 1px solid #fff; border-top: 1px solid #fff; height: 156px; margin-left: 120px; border-radius:12px 0 0 0;
+        #imgLogoHome  { position: absolute; right: 48px; bottom: 51px; }
     }
 }
-
-
-#std .main { position:relative; }
-#std .borderBottom  { position: fixed; bottom: 0; left: 0; width: 100%; }
-#std .borderBottom .border  { border-bottom: 1px solid #fff; border-left: 1px solid #fff; margin: 0 0 24px 156px; height: 12px;
-  -moz-border-radius-bottomleft: 12px;
-  border-bottom-left-radius: 12px;
-}
-#std .borderLeft  { position: fixed; left: 0; top: 0; height: 100%; }
-#std .borderLeft .border  { border-right: 1px solid #fff; height: 100%; position: relative; top: -36px; width: 156px; }
 
 
 #header     { position: relative; margin:0 48px 0 0; height:115px; border-bottom:1px solid #fff; border-right:1px solid #fff;
@@ -102,14 +72,14 @@ p { margin-bottom:14px}
     }
     .sessionData { position:absolute; right:20px; top:20px; }
 }
-
+/*
 .button {
   border:black solid 1px;
   padding:7px 10px;
   position:relative;
-  -moz-box-shadow:5px 5px 5px rgba(0,0,0,0.5); /* Firefox */
-  -webkit-box-shadow:5px 5px 5px rgba(0,0,0,0.5); /* Safari, Chrome */
-  box-shadow:5px 5px 5px rgba(0,0,0,0.5); /* W3C Standard, Opera, Firefox4, IE9 */
+  -moz-box-shadow:5px 5px 5px rgba(0,0,0,0.5);
+  -webkit-box-shadow:5px 5px 5px rgba(0,0,0,0.5);
+  box-shadow:5px 5px 5px rgba(0,0,0,0.5);
   text-decoration:none;
   color:black;
 }
@@ -119,9 +89,9 @@ p { margin-bottom:14px}
   position:relative;
   top:2px;
   left:2px;
-  -moz-box-shadow:3px 3px 3px rgba(0,0,0,0.5); /* Firefox */
-  -webkit-box-shadow:3px 3px 3px rgba(0,0,0,0.5); /* Safari, Chrome */
-  box-shadow:3px 3px 3px rgba(0,0,0,0.5); /* W3C Standard, Opera, Firefox4, IE9 */
+  -moz-box-shadow:3px 3px 3px rgba(0,0,0,0.5);
+  -webkit-box-shadow:3px 3px 3px rgba(0,0,0,0.5);
+  box-shadow:3px 3px 3px rgba(0,0,0,0.5);
   font-weight:bold;
   text-decoration:none;
   color:black;
@@ -132,6 +102,9 @@ p { margin-bottom:14px}
 
 .buttonList   { padding-left: 0; }
 .buttonList li  { display:inline; margin-right: 12px; }
+*/
+#std .main { position:relative; }
+
 #content    { float:left; width:720px; min-height:235px; padding:12px; border-left:1px solid white; border-bottom:1px solid white; border-radius:0 0 0 12px; }
 .subnavi { float:left; width:160px; padding:10px;
     a { color:white; text-decoration:none; font-weight:bold; display:block; padding:5px 0;
@@ -139,7 +112,11 @@ p { margin-bottom:14px}
     }
     .spacer { height:20px; }
 }
-.footer { clear:both; border-top:1px solid white; padding:7px 0 7px 0; margin-left:200px; position:relative; top:-1px; }
+.footer { clear:both; border-top:1px solid white; padding:7px 0 7px 0; margin-left:200px; position:relative; top:-1px;
+    a { color:white; font-weight:bold; text-decoration:none; margin-right:20px;
+        &:hover { text-decoration:underline; }
+    }
+}
 
 
 .bikeListElement  { width: 510px; border: #fff solid 1px; padding: 12px; margin-bottom: 17px; -moz-border-radius: 12px; border-radius: 12px; background: #eeb200; position: relative;
@@ -181,7 +158,7 @@ fieldset legend { margin-top: 12px; }
 #std form {
     .formField { margin-bottom:10px;
         p.error { display:none; margin-bottom:5px; }
-        &.error { color:$red;
+        &.error { color:$error;
             p.error { display:block; }
         }
         label { width:200px; display:inline-block; }
@@ -213,7 +190,7 @@ fieldset legend { margin-top: 12px; }
     }
     select { width:220px; margin:0 20px 0 -3px; background:white; }
 
-    input.submit,input.reset { margin-left:200px; width:220px; background:$red; color:white; cursor:pointer;
+    input.submit,input.reset { margin-left:200px; width:220px; background:$error; color:white; cursor:pointer;
         &:hover { text-decoration:underline; }
     }
     .unit { padding-left:10px; }
