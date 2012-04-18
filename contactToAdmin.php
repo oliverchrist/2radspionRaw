@@ -7,13 +7,16 @@ use de\zweiradspion\HeaderHelper,
     de\zweiradspion\Login;
 
 include 'includes/init.php';
+include 'includes/org/phpcaptcha/securimage/securimage.php';
 
+$grund        = '';
 $nachricht    = '';
 $nachrichtErr = '';
 $name         = '';
 $nameErr      = '';
 $email        = '';
 $emailErr     = '';
+$captchaErr   = '';
 $cc           = '';
 $kontakt      = null;
 $showform     = TRUE;
@@ -29,6 +32,12 @@ if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
 }
 if($_POST){
     # Validierung
+    if(empty($_POST['grund'])) {
+        #$emailErr  = ' error';
+        #$formValid = FALSE;
+    }else{
+        $grund = $_POST['grund'];
+    }
     if(empty($_POST['email'])) {
         $emailErr  = ' error';
         $formValid = FALSE;
@@ -47,14 +56,22 @@ if($_POST){
     }else{
         $nachricht = $_POST['nachricht'];
     }
+    if(!isset($_SESSION['email'])) {
+        $securimage = new \Securimage();
+        if ($securimage->check($_POST['captcha_code']) == FALSE) {
+            $captchaErr = ' error';
+            $formValid  = FALSE;
+        }
+    }
     if(isset($_POST['cc'])) {
         $cc = ' checked="checked"';
     }
     if($formValid){
         $emailBody = "Name: {$_POST['name']}\n
 Email: {$_POST['email']}\n
+Grund: {$_POST['grund']}\n
 Nachricht: {$_POST['nachricht']}";
-        if(Mail::send('oliver.christ@web.de', 'Anfrage', $emailBody, $_POST['email'])) {
+        if(Mail::send('oliver.christ@web.de,t.renkel@me.com', 'Anfrage', $emailBody, $_POST['email'])) {
             $message .= 'Ihre Email wurde versendet.';
         }else{
             $message .= 'Mail konnte nicht verschickt werden';
@@ -77,12 +94,15 @@ echo $twig->render('contactToAdmin.html', array(
     'dealerView' => $dealerView,
     'showform' => $showform,
     'message' => $message,
+    'grund' => $grund,
     'nachrichtErr' => $nachrichtErr,
     'nachricht' => $nachricht,
     'nameErr' => $nameErr,
     'name' => $name,
     'emailErr' => $emailErr,
     'email' => $email,
+    'fromEmail' => isset($_SESSION['email']) ? $_SESSION['email'] : NULL,
+    'captchaErr' => $captchaErr,
     'cc' => $cc
 ));
 ?>
