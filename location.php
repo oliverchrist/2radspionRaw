@@ -4,7 +4,7 @@ use de\zweiradspion\DatabaseHelper;
 use de\zweiradspion\DebugHelper;
 use de\zweiradspion\HeaderHelper;
 use de\zweiradspion\NavigationHelper,
-	de\zweiradspion\Login;
+    de\zweiradspion\Login;
 
 if(isset($_GET['pid'])){
     $dbObject = new DatabaseHelper();
@@ -15,10 +15,18 @@ if(isset($_GET['pid'])){
     $postcode = $row['postcode'];
     $city     = $row['city'];
 
+    $pageClass  = '';
+    $dealerView = FALSE;
+    if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
+        $dealerView = TRUE;
+        $pageClass  = 'dealer';
+    }
+
     echo $twig->render('location.html', array(
         'headline' => 'Standort',
         'isLoggedIn' => Login::isLoggedIn(),
-        'pageClass' => 'location',
+        'pageClass' => $pageClass,
+        'dealerView' => $dealerView,
         'linkTarget' => '_top',
         'hasCoordinates' => !empty($lat) && !empty($lng),
         'lat' => $lat,

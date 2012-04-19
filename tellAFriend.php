@@ -28,7 +28,13 @@ if(isset($_GET['uid'])) {
     $showForm   = TRUE;
     $formValid  = TRUE;
     $message    = '';
-	$emailBody  = '';
+    $emailBody  = '';
+    $pageClass  = '';
+    $dealerView = FALSE;
+    if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
+        $dealerView = TRUE;
+        $pageClass  = 'dealer';
+    }
     if($_POST) {
         # Validierung
         if(empty($_POST['email'])) {
@@ -93,7 +99,8 @@ Das Team von zweiradspion.de";
     echo $twig->render('tellAFriend.html', array(
         'headline' => 'Weiterleiten',
         'isLoggedIn' => Login::isLoggedIn(),
-        'pageClass' => 'tellAFriend',
+        'pageClass' => $pageClass,
+        'dealerView' => $dealerView,
         'linkTarget' => '_top',
         'showForm' => $showForm,
         'uid' => $fahrrad->getUid(),
