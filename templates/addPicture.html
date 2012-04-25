@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-	{% autoescape false %}
-		{{ message }}
-	{% endautoescape %}
+    {% autoescape false %}
+        {{ message }}
+    {% endautoescape %}
     <form method="post" enctype="multipart/form-data">
         <input type="hidden" name="uid" value="{{ uid }}" />
         <div class="formField">
@@ -14,9 +14,7 @@
             <input class="submit" type="submit" />
         </div>
     </form>
-    <?php
     {% if uid %}
         <a class="txtLnk" href="detail.php?uid={{ uid }}">Zurück</a>
-        <?php
     {% endif %}
 {% endblock %}

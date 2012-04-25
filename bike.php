@@ -44,7 +44,7 @@ if(isset($_SESSION['uid'])) {
             $rahmenhoeheErr = ' error';
             $keineFehler    = FALSE;
         }
-        if(is_int($_POST['laufleistung'])){
+        if(!is_numeric($_POST['laufleistung'])){
             $laufleistungErr = ' error';
             $keineFehler     = FALSE;
         }
