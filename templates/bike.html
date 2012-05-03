@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if isLoggedIn %}
+        {% if showForm %}
+            {% autoescape false %}
+            <form method="post" action="bike.php">
+                <input type="hidden" name="uid" value="{{ fahrrad.getUid }}" />
+                <div class="formField{{ markeErr }}">
+                    <p class="error">Bitte geben Sie einen Herrsteller ein</p>
+                    <label>Marke</label>
+                    {{ fahrrad.getMarke.getDropdown }}
+                </div>
+                <div class="formField{{ modellErr }}">
+                    <p class="error">Bitte geben Sie ein Modell ein</p>
+                    <label>Modell</label>
+                    <input type="text" name="modell" value="{{ fahrrad.getModell }}" />
+                </div>
+                <div class="formField{{ preisErr }}">
+                    <p class="error">Bitte geben Sie einen Mindestpreis von 50 ein</p>
+                    <label>Preis</label>
+                    <input type="text" name="preis" value="{{ fahrrad.getPreis }}" /><span class="unit">EUR</span>
+                </div>
+                <div class="formField">
+                    <label>Radtyp</label>
+                    {{ fahrrad.getRadtyp.getDropdown }}
+                </div>
+                <div class="formField">
+                    <label>Geschlecht</label>
+                    {{ fahrrad.getGeschlecht.getDropdown }}
+                </div>
+                <div class="formField">
+                    <label>Zustand</label>
+                    {{ fahrrad.getZustand.getDropdown }}
+                </div>
+                <div class="formField{{ laufleistungErr }}">
+                    <p class="error">Bitte geben Sie eine Laufleistung ein</p>
+                    <label>Laufleistung</label>
+                    <input type="text" name="laufleistung" value="{{ fahrrad.getLaufleistung }}" /><span class="unit">km</span>
+                </div>
+                <div class="formField{{ radgroesseErr }}">
+                    <p class="error">Bitte geben Sie eine Radgroesse ein</p>
+                    <label>Radgroesse</label>
+                    <input type="text" name="radgroesse" value="{{ fahrrad.getRadgroesse }}" /><span class="unit">Zoll</span>
+                </div>
+                <div class="formField{{ rahmenhoeheErr }}">
+                    <p class="error">Bitte geben Sie eine Rahmenhoehe ein</p>
+                    <label>Rahmenhoehe</label>
+                    <input type="text" name="rahmenhoehe" value="{{ fahrrad.getRahmenhoehe }}" /><span class="unit">cm</span>
+                </div>
+                <div class="formField">
+                    <label>Farbe</label>
+                    {{ fahrrad.getFarbe.getDropdown }}
+                </div>
+                <div class="formField">
+                    <label>Bremssystem</label>
+                    {{ fahrrad.getBremssystem.getDropdown }}
+                </div>
+                <div class="formField">
+                    <label>Schaltungstyp</label>
+                    {{ fahrrad.getSchaltungstyp.getDropdown }}
+                </div>
+                <div class="formField">
+                    <label>Rahmenmaterial</label>
+                    {{ fahrrad.getRahmenmaterial.getDropdown }}
+                </div>
+                <div class="formField">
+                    <label>Beleuchtungsart</label>
+                    {{ fahrrad.getBeleuchtungsart.getDropdown }}
+                </div>
+                <div class="formField">
+                    <label>Einsatzbereich</label>
+                    {{ fahrrad.getEinsatzbereich.getDropdown }}
+                </div>
+                <div class="formField textarea">
+                    <label>Beschreibung</label>
+                    <textarea name="beschreibung">{{ fahrrad.getBeschreibung }}</textarea>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField">
+                    <label>Aktiv</label>
+                    <input type="checkbox" name="aktiv" value="{{ fahrrad.getAktiv }}"{% if fahrrad.getAktiv %} checked="checked"{% endif %} />
+                </div>
+                <div class="formField">
+                    <input class="submit" type="submit" value="Senden" />
+                </div>
+            </form>
+            {% if isOwnBike %}
+                <a class="txtLnk" href="addPicture.php?uid={{ fahrrad.getUid }}">Bild hinzufügen</a>
+                <a class="txtLnk delete" href="bike.php?uid={{ fahrrad.getUid }}&process=delete">Angebot löschen</a>
+            {% endif %}
+            <a class="txtLnk" href="detail.php?uid={{ fahrrad.getUid }}">Zurück</a>
+            {% endautoescape %}
+        {% else %}
+            {{ message }}
+        {% endif %}
+    {% endif %}
+{% endblock %}

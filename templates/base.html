@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+{% include 'head.html' %}
+{% block js %}{% endblock %}
+<title>2radspion</title>
+</head>
+<body id="std" class="{{ pageClass }}">
+    {% if not dealerView %}
+        <div id="header">
+            <img src="resources/images/logo_folgeseiten.png" id="imgLogo" />
+            <div id="mainnavi"><h1>{{ headline }}</h1>
+                <ul>
+                {% if isLoggedIn %}
+                    <li><a href="user.php">Benutzerdaten</a></li>
+                    <li><a href="logout.php">Logout</a></li>
+                {% else %}
+                    <li><a href="login.php">Login</a></li>
+                    <li><a href="register.php">Registrieren</a></li>
+                {% endif %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+    <div class="main">
+        {% if not dealerView %}
+            <div class="subnavi">
+                <a href="list.php?filter=allOffers">Alle Angebote</a>
+                {% if isLoggedIn %}
+                    <a href="list.php?filter=nearOffers">Angebote in<br>meiner Nähe</a>
+                {% endif %}
+                <a href="list.php?filter=newOffers">Neue Angebote</a>
+                <div class="spacer"></div>
+                {% if isLoggedIn %}
+                    <a href="list.php?filter=myOffers">Meine Angebote</a>
+                    <a href="bike.php?action=new">Neues Angebot</a>
+                    <a href="list.php?filter=notepad">Merkzettel</a>
+                {% endif %}
+            </div>
+        {% endif %}
+        <div id="content">
+            {% block content %}{% endblock %}
+        </div>
+        <div class="teaser">
+            <div class="info"></div>
+        </div>
+    </div>
+    {% if not dealerView %}
+        <div class="footer">
+            <a href="contactToAdmin.php">Kontakt</a>
+            <a href="datenschutz.php">Datenschutz</a>
+            <a href="agb.php">AGB</a>
+            <a href="impressum.php">Impressum</a>
+        </div>
+    {% endif %}
+</body>
+</html>

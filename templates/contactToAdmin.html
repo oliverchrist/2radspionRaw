@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if showform %}
+        <div class="contact">
+            <form method="post">
+                <div class="formField">
+                    <p class="error">Bitte geben Sie einen Grund der Kontaktaufnahme ein</p>
+                    <label>Grund d. Kontaktaufnahme</label>
+                    <select name="grund" class="selectEigenschaft ">
+                        <option{% if grund == 'Kontakt allgemein' %} selected="selected"{% endif %}>Kontakt allgemein</option>
+                        <option{% if grund == 'Datenschutz' %} selected="selected"{% endif %}>Datenschutz</option>
+                        <option{% if grund == 'Frage zu Angeboten' %} selected="selected"{% endif %}>Frage zu Angeboten</option>
+                        <option{% if grund == 'Händleranfrage' %} selected="selected"{% endif %}>Händleranfrage</option>
+                    </select>
+                </div>
+                <div class="formField textarea{{ nachrichtErr }}">
+                    <p class="error">Bitte geben Sie Ihre Nachricht ein</p>
+                    <label>Ihre Nachricht an zweiradspion.de:</label>
+                    <textarea name="nachricht">{{ nachricht }}</textarea>
+                    <div class="clear"></div>
+                </div>
+                <div class="formField{{ nameErr }}">
+                    <p class="error">Bitte geben Sie Ihren Namen ein</p>
+                    <label>Ihr Name</label>
+                    <input type="text" name="name" value="{{ name }}" />
+                </div>
+                {% if not fromEmail %}
+                <div class="formField{{ emailErr }}">
+                    <p class="error">Bitte geben Sie Ihre E-Mail-Adresse ein</p>
+                    <label>Ihre E-Mail-Adresse</label>
+                    <input type="text" name="email" value="{{ email }}" />
+                </div>
+                <div class="formField{{ captchaErr }} captcha">
+                    <p class="error">Bitte geben Sie den richtigen Captcha Code ein</p>
+                    <img id="captcha" src="includes/org/phpcaptcha/securimage/securimage_show.php" alt="CAPTCHA Image" /><br>
+                    <a href="#" onclick="document.getElementById('captcha').src = '/includes/org/phpcaptcha/securimage/securimage_show.php?' + Math.random(); return false" class="txtLnk">neues Bild</a><br>
+                    <label>Captcha Code</label>
+                    <input type="text" name="captcha_code" size="10" maxlength="6" />
+                </div>
+                {% else %}
+                    <input type="hidden" name="email" value="{{ fromEmail }}" />
+                {% endif %}
+
+                <div class="formField">
+                    <label>Bitte schicken Sie eine Kopie dieser Nachricht an meine E-Mail-Adresse</label>
+                    <input type="checkbox" name="cc"{% if cc %} checked="checked"{% endif %} />
+                </div>
+                <div class="formField">
+                    <input class="submit" type="submit" value="Senden" />
+                </div>
+            </form>
+        </div>
+    {% else %}
+        {{ message }}
+    {% endif %}
+{% endblock %}

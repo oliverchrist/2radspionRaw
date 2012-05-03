@@ -23,10 +23,15 @@ class User extends Persistenz implements DatabaseObject {
         $sql    = "select * from {$database} where $field='{$value}'";
         $result = mysql_query($sql);
         $row    = mysql_fetch_assoc($result);
-        foreach($row as $key => $val){
-            $setterFunction = 'set' . ucfirst($key);
-            $this->$setterFunction($val);
+        if($row) {
+            foreach($row as $key => $val){
+                $setterFunction = 'set' . ucfirst($key);
+                $this->$setterFunction($val);
+            }
+        } else {
+            return FALSE;
         }
+        return TRUE;
     }
 
     public function loadFromPost($post) {

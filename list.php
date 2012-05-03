@@ -1,85 +1,68 @@
 <?php
-include 'includes/init.php';
-include 'includes/head.php';
 use de\zweiradspion\DatabaseHelper,
     de\zweiradspion\DebugHelper,
     de\zweiradspion\HeaderHelper,
     de\zweiradspion\NavigationHelper,
     de\zweiradspion\FormHelper,
-    de\zweiradspion\Liste;
+    de\zweiradspion\Liste,
+    de\zweiradspion\Login;
 
-$title     = 'Alle Angebote';
-$pageClass = '';
-if(isset($_GET['filter'])){
-    switch ($_GET['filter']) {
-        case 'myOffers':
-            $title     = 'Meine Angebote';
-            $pageClass = 'myOffers';
-            break;
-        case 'allOffers':
-            $title     = 'Alle Angebote';
-            $pageClass = 'allOffers';
-            break;
-        case 'notepad':
-            $title     = 'Merkzettel';
-            $pageClass = 'notepad';
-            break;
-        case 'newOffers':
-            $title     = 'Neue Angebote';
-            $pageClass = 'newOffers';
-            break;
-        case 'nearOffers':
-            $title     = 'Angebote in meiner Nähe';
-            $pageClass = 'nearOffers';
-            break;
-        default:
-            $title     = $_GET['filter'];
-            $pageClass = '';
-            break;
-    }
+require_once 'includes/init.php';
+
+$listObj    = new Liste();
+$pageClass  = '';
+$searchHtml = '';
+$dealerView = FALSE;
+if(isset($_GET['filter'])) {
+    $pageClass = $_GET['filter'];
 }
-echo "<body id=\"std\" class=\"$pageClass\">";
-echo HeaderHelper::getHeader($title);
-#echo $twig->render('home.html');
-?>
-<div class="main">
-<div id="content">
-<?=NavigationHelper::getSubnavigation()?>
-<?php
-$listObj = new Liste();
+$page = 0;
+if(isset($_GET['page'])) {
+    $page = $_GET['page'];
+}
 
 if($_POST){
     $listObj->generateSqlAllOffers();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'allOffers'){
     $listObj->initAllOffers();
-    $listObj->printSearch();
+    $searchHtml = $listObj->getSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'myOffers' && isset($_SESSION['uid'])){
     $listObj->initMyOffers();
-    #$listObj->printSearch();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'notepad' && isset($_SESSION['uid'])){
     $listObj->initNotepad();
 }
 if(isset($_GET['filter']) && $_GET['filter'] == 'newOffers'){
     $listObj->initNewOffers();
-    $listObj->printTimeSearch();
 }
 
 if(isset($_GET['filter']) && $_GET['filter'] == 'nearOffers'){
     $listObj->initNearOffers();
-    $listObj->printAreaSearch();
 }
 
-$listObj->printList();
+if(isset($_GET['filter']) && $_GET['filter'] == 'dealer'){
+    $listObj->initDealer($_GET['pid']);
+    $dealerView = TRUE;
+}
 
-?>
-</div>
-<div class="teaser">
-    <div class="info"></div>
-</div>
-</div>
-<?php include 'includes/footer.php'; ?>
-</body>
-</html>
+#var_dump($listObj->getList());
+$list = $listObj->getList();
+
+
+echo $twig->render('list.html', array(
+        'headline' => $listObj->getHeadline(),
+        'isLoggedIn' => Login::isLoggedIn(),
+        'pageClass' => $pageClass,
+        'dealerView' => $dealerView,
+        'filter' => $listObj->getFilter(),
+        'post' => $_POST,
+        'searchHtml' => $searchHtml,
+        'bikeListElements' => array_slice($list, $page * ENTRIES_PER_PAGE, ENTRIES_PER_PAGE),
+        'page' => $page,
+        'pages' => ceil(count($list) / ENTRIES_PER_PAGE),
+        'hasMorePages' => $page > 0 || (count($list) > ENTRIES_PER_PAGE),
+        'hasNext' => (count($list) > ($page * ENTRIES_PER_PAGE)),
+        'hasPrev' => $page > 0
+    ));

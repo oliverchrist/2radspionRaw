@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {#Filter: {{ filter }}<br>
+    bikeListElements|length: {{ bikeListElements|length }#}
+    {% if filter == 'newOffers' %}
+        <form class="search" method="post">
+            <select name="time">
+                <option value="1"{% if post.time == 1 %} selected="selected"{% endif %}>1 Monat</option>
+                <option value="2"{% if post.time == 2 %} selected="selected"{% endif %}>2 Monate</option>
+                <option value="3"{% if post.time == 3 %} selected="selected"{% endif %}>3 Monate</option>
+                <option value="4"{% if post.time == 4 %} selected="selected"{% endif %}>4 Monate</option>
+                <option value="5"{% if post.time == 5 %} selected="selected"{% endif %}>5 Monate</option>
+                <option value="6"{% if post.time == 6 %} selected="selected"{% endif %}>6 Monate</option>
+                <option value="12"{% if post.time == 7 %} selected="selected"{% endif %}>12 Monate</option>
+                <option value="-1"{% if post.time == -1 %} selected="selected"{% endif %}>egal</option>
+            </select>
+            <div class="clear"></div>
+            <div class="control">
+                <input type="reset" class="reset" value="Reset">
+                <input type="submit" class="submit" value="Filtern">
+            </div>
+        </form>
+    {% endif %}
+    {% if filter == 'nearOffers' %}
+        <form class="search" method="post">
+            <select name="area">
+                <option value="3"{% if post.area == 3 %} selected="selected"{% endif %}>3 km</option>
+                <option value="10"{% if post.area == 10 %} selected="selected"{% endif %}>10 km</option>
+                <option value="20"{% if post.area == 20 %} selected="selected"{% endif %}>20 km</option>
+                <option value="50"{% if post.area == 50 %} selected="selected"{% endif %}>50 km</option>
+                <option value="100"{% if post.area == 100 %} selected="selected"{% endif %}>100 km</option>
+                <option value="200"{% if post.area == 200 %} selected="selected"{% endif %}>200 km</option>
+                <option value="500"{% if post.area == 500 %} selected="selected"{% endif %}>500 km</option>
+                <option value="-1"{% if post.area == -1 %} selected="selected"{% endif %}>egal</option>
+            </select>
+            <div class="clear"></div>
+            <div class="control">
+                <input type="reset" class="reset" value="Reset">
+                <input type="submit" class="submit" value="Filtern">
+            </div>
+        </form>
+    {% endif %}
+    {% if filter == 'allOffers' %}
+        {% autoescape false %}
+            {{ searchHtml }}
+        {% endautoescape %}
+    {% endif %}
+    {% if hasMorePages %}
+    <div class="pageBrowse">
+        {% if hasPrev %}
+            <a href="/list.php?filter={{ filter }}&page={{ page - 1 }}">Zurück</a>
+        {% endif %}
+        Seite {{ page + 1 }} von {{ pages }}
+        {% if hasNext %}
+            <a href="/list.php?filter={{ filter }}&page={{ page + 1 }}">Weiter</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% for bikeListElement in bikeListElements %}
+        <div class="bikeListElement {{ bikeListElement.aktiv }}">
+            {% if bikeListElement.isOnNotepad and filter == 'notepad' and bikeListElement.deleted %}
+                Das Zweirad mit der ID: {{ bikeListElement.id }} wurde gelöscht<br>
+                Bemerkung: {{  bikeListElement.remark }}<br>
+                <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
+            {% else %}
+                {% if bikeListElement.imagePath %}
+                    <a class="thumb" href="detail.php?uid={{bikeListElement.uid}}{% if dealerView %}&filter=dealer{% endif %}" target="{{linkTarget}}">
+                        <img alt="{{bikeListElement.modell}}" src="{{bikeListElement.imagePath}}" width="200" />
+                    </a>
+                {% endif %}
+                <div class="cnt">
+                    {% if bikeListElement.distance %}
+                        Entfernung: {{ bikeListElement.distance|number_format(2, ',', '.') }} km<br>
+                    {% endif %}
+                    marke: {{ bikeListElement.marke }}<br>
+                    modell: {{ bikeListElement.modell }}<br>
+                    preis: {{ bikeListElement.preis }}<br>
+                    erstellt: {{ bikeListElement.erstellt }}<br>
+                    geaendert: {{ bikeListElement.geaendert }}<br>
+                </div>
+                <div class="links">
+                    <a class="txtLnk" href="detail.php?uid={{bikeListElement.uid}}{% if dealerView %}&filter=dealer{% endif %}" target="{{linkTarget}}">Ansehen</a><br>
+                    {% if not dealerView %}
+                        {% if bikeListElement.isOnNotepad %}
+                            <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{bikeListElement.nuid}}&process=delete">Vom Merkzettel löschen</a><br>
+                        {% endif %}
+                        {% if bikeListElement.isOwnBike %}
+                            <a class="txtLnk ajaxDelete" href="bikeAjax.php?uid={{bikeListElement.uid}}&process=delete">Angebot löschen</a><br>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="clear"></div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    {% if hasMorePages %}
+    <div class="pageBrowse">
+        {% if hasPrev %}
+            <a href="/list.php?filter={{ filter }}&page={{ page - 1 }}">Zurück</a>
+        {% endif %}
+        Seite {{ page + 1 }} von {{ pages }}
+        {% if hasNext %}
+            <a href="/list.php?filter={{ filter }}&page={{ page + 1 }}">Weiter</a>
+        {% endif %}
+    </div>
+    {% endif %}
+    {% if bikeListElements|length == 0 %}
+        <p>Keine Einträge vorhanden!</p>
+    {% endif %}
+
+{% endblock %}

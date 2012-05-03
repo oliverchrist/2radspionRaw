@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="fahrradSingle" >
+        <h2>{{ fahrrad.getMarke.getValue }}</h2>
+        <h3>{{ fahrrad.getModell }}</h3>
+        Preis: {{ fahrrad.getPreis }} EUR<br>
+        Radtyp: {{ fahrrad.getRadtyp.getText }}<br>
+        Geschlecht: {{ fahrrad.getGeschlecht.getText }}<br>
+        Zustand: {{ fahrrad.getZustand.getText }}<br>
+        Laufleistung: {{ fahrrad.getLaufleistung }} km<br>
+        Radgroesse: {{ fahrrad.getRadgroesse }} Zoll<br>
+        Rahmenhoehe: {{ fahrrad.getRahmenhoehe }} cm<br>
+        Farbe: {{ fahrrad.getFarbe.getText }}<br>
+        Bremssystem: {{ fahrrad.getBremssystem.getText }}<br>
+        Schaltungstyp: {{ fahrrad.getSchaltungstyp.getText }}<br>
+        Rahmenmaterial: {{ fahrrad.getRahmenmaterial.getText }}<br>
+        Beleuchtungsart: {{ fahrrad.getBeleuchtungsart.getText }}<br>
+        Einsatzbereich: {{ fahrrad.getEinsatzbereich.getText }}<br>
+        Eingestellt am: {{ fahrrad.getErstellt|date }}<br>
+        Zuletzt geändert am: {{ fahrrad.getGeaendert|date }}<br>
+        Beschreibung:<br>
+        {{ fahrrad.getBeschreibung }}<br>
+        {% for bild in fahrrad.getBilder %}
+            <a class="thickbox" title="{{ fahrrad.getModell }}" href="{{ bild.getOriginalImagePath }}">
+                <img alt="{{ fahrrad.getModell }}" src="{{ bild.getImagePath }}" width="{{ bild.getImageWidth }}" />
+            </a>
+        {% endfor %}
+        <br>
+        <div class="links">
+            {% if not dealerView %}
+                {% if isOwnBike %}
+                    <a class="txtLnk" href="bike.php?uid={{ fahrrad.getUid }}">Bearbeiten</a><br />
+                    <a class="txtLnk delete" href="bike.php?uid={{ fahrrad.getUid }}&process=delete">Angebot löschen</a><br>
+                {% endif %}
+                {% if isLoggedIn and not isOwnBike and not isOnNotepad %}
+                    <a class="txtLnk" href="notepad.php?uid={{ fahrrad.getUid }}">Auf Merkzettel speichern</a><br />
+                {% endif %}
+                {% if isOnNotepad %}
+                    <a class="txtLnk ajaxNotepadDelete" href="notepadAjax.php?uid={{ fahrrad.getNuid }}&process=delete">Vom Merkzettel löschen</a><br>
+                {% endif %}
+            {% endif %}
+            <a class="txtLnk" href="contact.php?uid={{ fahrrad.getUid }}{% if dealerView %}&filter=dealer{% endif %}">Kontakt</a><br />
+            <a class="txtLnk" href="tellAFriend.php?uid={{ fahrrad.getUid }}{% if dealerView %}&filter=dealer{% endif %}">Weiterleiten</a><br />
+            <a class="txtLnk" href="location.php?uid={{ fahrrad.getUid }}&pid={{ fahrrad.getPid }}{% if dealerView %}&filter=dealer{% endif %}">Karte</a><br />
+            <a class="txtLnk print" href="#">Drucken</a><br />
+            <a class="txtLnk" href="list.php{% if dealerView %}?pid={{ fahrrad.getPid }}&filter=dealer{% endif %}">Zurück zur Liste</a><br />
+        </div>
+    </div>
+{% endblock %}

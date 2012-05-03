@@ -8,7 +8,7 @@ use de\zweiradspion\SelectEigenschaft;
  * @author christ
  */
 class Marke extends SelectEigenschaft  {
-    protected $name = 'marke'; 
+    protected $name = 'marke';
     protected $text = array(
         '-' => 'Marke',
         'Bergamont' => 'Bergamont',
@@ -25,6 +25,7 @@ class Marke extends SelectEigenschaft  {
         'Electra' => 'Electra',
         'Felt' => 'Felt',
         'Fusion' => 'Fusion',
+        'Gary Fisher' => 'Gary Fisher',
         'Gazelle' => 'Gazelle',
         'Ghost' => 'Ghost',
         'Giant' => 'Giant',
@@ -49,7 +50,7 @@ class Marke extends SelectEigenschaft  {
         'Peugeot' => 'Peugeot',
         'Pinarello' => 'Pinarello',
         'Principia' => 'Principia',
-        'Raleogh' => 'Raleogh',
+        'Raleigh' => 'Raleigh',
         'Rocky Mountain' => 'Rocky Mountain',
         'Santana' => 'Santana',
         'Schauff' => 'Schauff',

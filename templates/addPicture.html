@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% autoescape false %}
+        {{ message }}
+    {% endautoescape %}
+    <form method="post" enctype="multipart/form-data">
+        <input type="hidden" name="uid" value="{{ uid }}" />
+        <div class="formField">
+            <p class="error">Bitte wählen Sie einen Bild aus</p>
+            <label>Bild</label><input type="file" name="image" value="{{ image }}" />
+        </div>
+        <div class="formField">
+            <input class="submit" type="submit" />
+        </div>
+    </form>
+    {% if uid %}
+        <a class="txtLnk" href="detail.php?uid={{ uid }}">Zurück</a>
+    {% endif %}
+{% endblock %}

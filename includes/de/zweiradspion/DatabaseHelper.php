@@ -53,6 +53,23 @@ class DatabaseHelper {
         }
     }
 
+    public function getFilterDropdown($field, $table) {
+        $sql = "select distinct $field from $table order by $field asc";
+        #echo $_POST[$field];
+        #print_r($_POST);
+        $result = mysql_query($sql);
+        $html = '';
+        if($result){
+            $html .= '<select name="' . $field . '"><option value="-1">' . ucfirst($field) . '</option>';
+            while ($row = mysql_fetch_assoc($result)) {
+                $selected = ($row[$field] != -1 && isset($_POST[$field]) && $row[$field] == $_POST[$field])?' selected':'';
+                $html .= '<option' . $selected . '>' . $row[$field] . '</option>';
+            }
+            $html .= '</select>';
+        }
+        return $html;
+    }
+
     public function generateCondition($condition, $field, $relationalOperator = '=', $value = null) {
         if(empty($value)) { $value = $field; }
         if(isset($_POST[$value]) && $_POST[$value] != -1 && !empty($_POST[$value])){

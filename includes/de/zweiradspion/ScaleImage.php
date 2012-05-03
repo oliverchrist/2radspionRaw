@@ -39,14 +39,20 @@ class ScaleImage {
     }
 
     public function getOriginalImageWidth() {
-        $size = getimagesize ($this->path);
-        return $size[0];
+    	if(file_exists($this->path)) {
+	        $size = getimagesize ($this->path);
+	        return $size[0];
+		}
+		return FALSE;
     }
 
     public function getImagePath($width, $height) {
         $path = 'images_cache/' . $this->name . '_' . $width . '.jpg';
         #echo $path . ', ' . file_exists($path);
         if(!file_exists($path)){
+        	if(!file_exists($this->path)) {
+        		return FALSE;
+        	}
             list($this->width, $this->height) = getimagesize($this->path);
             if($height == 'auto'){
                 $height = ceil($this->height * $width / $this->width);

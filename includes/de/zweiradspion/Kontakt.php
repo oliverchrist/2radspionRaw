@@ -34,9 +34,13 @@ class Kontakt extends Persistenz {
         $sql    = "select * from user where uid=" . $this->uid;
         $result = mysql_query($sql);
         $row    = mysql_fetch_assoc($result);
-        foreach($row as $key => $val){
-            $setterFunction = 'set' . ucfirst($key);
-            $this->$setterFunction($val);
+        if($row) {
+            foreach($row as $key => $val){
+                $setterFunction = 'set' . ucfirst($key);
+                $this->$setterFunction($val);
+            }
+        }else{
+            throw new \Exception('Kontakt nicht in Datenbank');
         }
     }
 
